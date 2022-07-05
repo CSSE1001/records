@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Brae Webb">
+    <title>A2 CSSE1001/7030 Semester 2, 2019</title>
+    
+    <link rel="stylesheet" href="style/index.css" type="text/css">
+</head>
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Sleeping Coders</h1>
+    <p>Assignment 2<br> CSSE1001/7030<br> Semester 2, 2019</p>
+    <p>Version 1.0.1<br> 15 marks </p>
+    <p>Due Friday 20th September, 2019, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>
+                    This assignment follows a programming pattern called MVC
+                    <!-- or at least tries to -->
+                    (the Model, View, Controller) pattern. You have been provided
+                    with the view and controller classes but you will be required
+                    to implement several modelling classes.
+                </p>
+
+                <p>
+                    The modelling classes are based on the children's card game,
+                    Sleeping Queens. Each class you're required to implement has
+                    a specification that is outlined in this document.
+                    A specification is a description of each method in a class
+                    as well as their parameters and return values.
+                </p>
+
+                <p>
+                    Once you have correctly implemented the modelling classes,
+                    you will have completed a digital version of Sleeping Coders.
+                </p>
+
+                <div class="card">
+                    <a name="fig_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/example.png"
+                             alt="Image of An Example Running">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Basic Running of the Game</span>
+                    </div>
+                </div>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Gameplay</h2><a name="sec_gameplay"></a>
+
+            <p>
+                Sleeping Coders (Coders for short) is a card game that is
+                based on the popular children's card game, Sleeping Queens.
+                The aim of the game is to wake as many sleeping coders as possible.
+                A sleeping coder is woken by playing a tutor card.
+            </p>
+
+            <p>
+                At the start of the game there are 16 coders placed face down
+                in the center of the board, a face down coder card means that
+                coder is sleeping. Each player is dealt five cards
+                randomly. Players will take turns playing a card from their
+                deck; number cards have no action and are meant to be disposed
+                of while other cards have actions attributed to their playing.
+            </p>
+
+            <p>
+                A tutor card can be played at any time. When a tutor card is played
+                the player who played it can pick up one of the coder cards from
+                the center of the board.
+            </p>
+
+            <p>
+                Playing a keyboard kidnapper card will allow the player to take
+                a coder card from another player.
+            </p>
+
+            <p>
+                Playing an all-nighter card will allow the player to put another player's
+                coder back to sleep (add it back to the center of the board).
+            </p>
+
+            <p>
+                The aim of the game is to collect coders by waking them up.
+                The first player to collect 4 coders wins the game.
+            </p>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Getting Started</h2><a name="sec_getting_started"></a>
+
+            <section>
+                <h3 class="header">Files</h3><a name="sec_files"></a>
+
+                <ul>
+                    <li>a2.py - file where you write your submission</li>
+                    <li>a2_support.py - contains supporting code and part of the controller</li>
+                    <li>gui.py - contains the view</li>
+                    <li>players.txt - a list of random player names</li>
+                    <li>images/ - a directory of card images</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3 class="header">Classes</h3><a name="sec_classes"></a>
+
+                <p>
+                    In the diagram below, an arrow indicates that one class stores
+                    an instance of another class. An arrow with a head indicates
+                    that one class is a subclass of another class. Red classes are
+                    classes that have been provided already.
+                </p>
+
+                <p>
+                    <strong>
+                        You are encouraged to modify the class structure
+                        by adding classes to reduce code duplication. This
+                        can include adding private helper methods.
+                    </strong>
+                </p>
+
+                <div class="card">
+                    <a name="fig_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/uml.png"
+                             alt="UML Class Diagram">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Class Diagram</span>
+                    </div>
+                </div>
+            </section>
+        </section>
+
+        <section>
+            <p>
+                The type hints shown in the methods below are purely for your
+                own understanding. Type hints do not need to be used in your
+                assignment.
+            </p>
+
+            <p>
+                For all of the examples in the section below, you may assume that
+                the following code has already been executed before each example.
+            </p>
+            <pre>
+>>> from a2 import *
+>>> import a2_support
+>>> peter = Player("Peter O'Shea")
+>>> players = [peter, Player("Jason Storey"), Player("Mike Pham")]
+>>> coders = [CoderCard("anna"), CoderCard("lochie")]
+>>> deck = Deck([NumberCard(2), NumberCard(4), NumberCard(1)])
+>>> game = a2_support.CodersGame(deck, coders, players)
+            </pre>
+
+            <p>
+            	<strong>
+            		It is advisable that you implement the <code>Card.play</code>
+            		and <code>Card.action</code> methods after implementing
+            		all of the classes (including Player and Deck)
+            	</strong>
+            </p>
+
+            <h2 class="header">Cards</h2><a name="sec_cards"></a>
+
+            A card represents a card in the game, which may be a coder card or
+            a playable card held by the players in the game.
+            <section>
+                <h3 class="header">Card</h3><a name="sec_card"></a>
+
+                <p><span data-version="1.0.1">
+                    The base card with methods for playing a card and performing a card action.
+                    Subclasses of Card should override these methods.
+                </span></p>
+
+                <p>The following methods must be implemented:</p>
+
+                <p><strong>play(self, player: Player, game: a2_support.CodersGame):</strong> Called when a player plays a card.
+                    Should remove the card from the player's hand and pickup a new card from the pickup pile in the game.
+                    Should also set the action that needs to be performed (see <code>CodersGame.set_action</code>).
+                    <span data-version="1.0.1">If no action needs to be performed, set the action to 'NO_ACTION'.</span>
+                </p>
+                <p><strong>action(self, player: Player, game:a2_support.CodersGame, slot: int):</strong> Called when an action of a special card is performed.
+                    For tutor cards, this action is selecting a coder from the pile. For keyboard kidnapper and all-nighter cards,
+                    this is selecting a coder from another player's hand.
+                    <span data-version="1.0.1">For all other cards, no action needs to be performed.</span>
+                    <span data-version="1.0.1">When playing a tutor card, the player refers to the current player.
+                        When playing a keyboard kidnapper card or all nighter card, the player refers to the player to which the coder belongs to.</span>
+                </p>
+                <p><strong>__str__(self) -> str:</strong> Returns the string representation of this card, this should be 'Card()'.</p>
+                <p><strong>__repr__(self) -> str:</strong> Same as __str__(self).</p>
+            </section>
+
+            <p><strong>Each of the following classes should be a subclass of Card and should only alter methods required to
+                implement the functionality of the card as described.</strong></p>
+
+            <section>
+                <h3 class="header">NumberCard</h3><a name="sec_number_card"></a>
+
+                <p>A card whose aim is to be disposed of by the player.
+                    A number card has an associated number value.
+                </p>
+
+                <p>A number card should be constructed with <strong>NumberCard(number)</strong>.</p>
+
+                <p>When a number card is played, the game should move on to the next players turn.</p>
+
+                <p><strong>get_number(self) -> int:</strong> Returns the number value of the card.</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = NumberCard(3)
+>>> card.get_number()
+3
+>>> str(card)
+'NumberCard(3)'
+>>> repr(card)
+'NumberCard(3)'
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">CoderCard</h3><a name="sec_coder_card"></a>
+
+                <p>A card which stores the name of a coder card.</p>
+
+                <p>A coder card should be constructed with <strong>CoderCard(name)</strong>.</p>
+
+                <p><strong>get_name(self) -> str:</strong> Returns the card name.</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = CoderCard("hanwei")
+>>> card.get_name()
+'hanwei'
+>>> str(card)
+'CoderCard(hanwei)'
+>>> repr(card)
+'CoderCard(hanwei)'
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">TutorCard</h3><a name="sec_tutor_card"></a>
+
+                <p>A card which stores the name of a tutor card.</p>
+
+                <p>A tutor card can be played by a player to pickup a coder card.</p>
+
+                <p>A tutor card should be constructed with <strong>TutorCard(name)</strong>.</p>
+
+                <p>When a tutor card is played, the game's action should be set to 'PICKUP_CODER'.</p>
+
+                <p>When a tutor card's action is performed, the selected card should be added to the player's deck,
+                    the position of the card in the sleeping coders' deck should be replaced with None, the
+                    action should be set back to 'NO_ACTION' and the game should move on to the next player.
+                </p>
+
+                <p><strong>get_name(self) -> str:</strong> Returns the card name</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = TutorCard("luis")
+>>> card.get_name()
+'luis'
+>>> str(card)
+'TutorCard(luis)'
+>>> repr(card)
+'TutorCard(luis)'
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">KeyboardKidnapperCard</h3><a name="sec_kidnap_card"></a>
+
+                <p>A card which, when played, allows the player to steal a coder card from another player.</p>
+
+                <p>When a keyboard kidnapper card is played the games action should be set to 'STEAL_CODER'.</p>
+
+                <p>When a keyboard kidnapper card's action is performed, the selected card should be added to the current
+                    player's deck and removed from its origin deck, the action should be set back to
+                    'NO_ACTION' and the game should move on to the next player.
+                </p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = KeyboardKidnapperCard()
+>>> str(card)
+'KeyboardKidnapperCard()'
+>>> repr(card)
+'KeyboardKidnapperCard()'
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">AllNighterCard</h3><a name="sec_all_nighter"></a>
+
+                <p>A card which, when played, allows the player to put a coder card from another player back to sleep.</p>
+
+                <p>When an all-nighter card is played, the game's action should be set to 'SLEEP_CODER'.</p>
+
+                <p>When an all-nighter card's action is performed, the selected card should be added to the
+                    first empty slot in the coders' pile and removed from its origin deck,
+                    the action should be set back to 'NO_ACTION' and the game should move on to the next player.
+                </p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = AllNighterCard()
+>>> str(card)
+'AllNighterCard()'
+>>> repr(card)
+'AllNighterCard()'
+                </pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Deck</h2><a name="sec_deck"></a>
+
+            <p>A collection of ordered cards.
+                <span data-version="1.0.1">
+                A Deck should have a constructor with a signature of <code>Deck(starting_cards=None)</code><br/>
+                When <span data-version="1.0.2">starting_cards</span> is None, i.e. constructed with Deck(), it should be created with an empty list.<br/>
+                When <span data-version="1.0.2">starting_cards</span> is provided, i.e. constructed with Deck(starting_cards=cards), it should be created with that list.<br/>
+                </span>
+            </p>
+
+            <p><strong>get_cards(self) -> List[Card]:</strong> Returns a list of cards in the deck.</p>
+            <p><strong>get_card(self, slot) -> Card:</strong> Return the card at the specified slot in a deck.</p>
+            <p><strong>top(self) -> Card:</strong> Returns the card on the top of the deck, i.e. the last added.</p>
+            <p><strong>remove_card(self, slot):</strong> Removes a card at the given slot in a deck.</p>
+            <p><strong>get_amount(self) -> int:</strong> Returns the amount of cards in a deck.</p>
+            <p><strong>shuffle(self):</strong> Shuffles the order of the cards in the deck.</p>
+            <p><strong>pick(self, amount: int=1) -> List[Card]:</strong> Takes the first 'amount' of cards off the deck and returns them.</p>
+            <p><strong>add_card(self, card: Card):</strong> Places a card on top of the deck.</p>
+            <p><strong>add_cards(self, cards: List[Card]):</strong> Places a list of cards on top of the deck.</p>
+            <p><strong>copy(self, other_deck: <span data-version="1.0.1">Deck</span>):</strong> Copies all of the cards from the other_deck parameter into the current deck, <span data-version="1.0.1">extending the list of cards of the current deck</span>.</p>
+            <p><strong>__str__(self) -> str:</strong> Returns the string representation of the deck, for a deck which
+                contains cardA, cardB and cardC, this should be 'Deck(cardA, cardB, cardC)'.</p>
+            <p><strong>__repr__(self) -> str:</strong> Same as __str__(self).</p>
+
+            <section>
+                <h3 class="header">Examples</h3><a name="sec_deck_examples"></a>
+
+                <pre>
+>>> card = NumberCard(3)
+>>> all_nighter = AllNighterCard()
+>>> last_card = NumberCard(2)
+>>> cards = [card, all_nighter, last_card]
+>>> deck = Deck(cards)
+>>> str(deck)
+'Deck(NumberCard(3), AllNighterCard(), NumberCard(2))'
+>>> repr(deck)
+'Deck(NumberCard(3), AllNighterCard(), NumberCard(2))'
+>>> deck.get_cards()
+[NumberCard(3), AllNighterCard(), NumberCard(2)]
+>>> deck.get_amount()
+3
+>>> deck.get_card(0)
+NumberCard(3)
+>>> deck.get_card(2)
+NumberCard(2)
+>>> deck.top()
+NumberCard(2)
+>>> new_card = AllNighterCard()
+>>> deck.add_card(new_card)
+>>> deck.add_cards([card, all_nighter, last_card])
+>>> deck.get_amount()
+7
+>>> deck.get_cards()
+[NumberCard(3), AllNighterCard(), NumberCard(2), AllNighterCard(), NumberCard(3), AllNighterCard(), NumberCard(2)]
+>>> deck.remove_card(1)
+>>> deck.remove_card(4)
+>>> deck.get_cards()
+[NumberCard(3), NumberCard(2), AllNighterCard(), NumberCard(3), NumberCard(2)]
+>>> deck.pick()
+[NumberCard(2)]
+>>> deck.pick(2)
+[NumberCard(3), AllNighterCard()]
+>>> deck.add_cards([card, all_nighter, last_card])
+>>> deck.get_cards()
+[NumberCard(3), NumberCard(2), NumberCard(3), AllNighterCard(), NumberCard(2)]
+>>> deck.shuffle()
+>>> deck.get_cards()
+[NumberCard(2), NumberCard(2), AllNighterCard(), NumberCard(3), NumberCard(3)]
+>>> another_deck = Deck()
+>>> another_deck.get_cards()
+[]
+>>> another_deck.copy(deck)
+>>> another_deck.get_cards()
+[NumberCard(2), NumberCard(2), AllNighterCard(), NumberCard(3), NumberCard(3)]
+                </pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Player</h2><a name="sec_player"></a>
+
+            <p>A player represents one of the players in the game.</p>
+
+            <p>The Player class should be initiated with Player(name) and implement the following methods:</p>
+
+            <p><strong>get_name(self) -> str:</strong> Returns the name of the player.</p>
+            <p><strong>get_hand(self) -> Deck:</strong> Returns the players deck of cards.</p>
+            <p><strong>get_coders(self) -> Deck:</strong> Returns the players deck of collected coder cards.</p>
+            <p><strong>has_won(self) -> bool:</strong> Returns True if and only if the player has 4 or more coders.</p>
+            
+            <p><span data-version="1.0.2"><strong>__str__(self) -> str:</strong> Returns the string representation of the player, for a player with name of 'Luis', hand deck of 'hand' and coder deck of 'coders', this should be 'Player(Luis, hand, coders)'. See the examples for more details.</span></p>
+            <p><span data-version="1.0.2"><strong>__repr__(self) -> str:</strong> Same as __str__(self).</span></p>
+
+            <section>
+                <h3 class="header">Examples</h3><a name="sec_player_examples"></a>
+
+                <pre>
+>>> player = Player("Lochie Deakin-Sharpe")
+>>> player.get_name()
+'Lochie Deakin-Sharpe'
+>>> player.get_hand()
+Deck()
+>>> player.get_coders()
+Deck()
+>>> str(player)
+'Player(Lochie Deakin-Sharpe, Deck(), Deck())'
+>>> repr(player)
+'Player(Lochie Deakin-Sharpe, Deck(), Deck())'
+>>> player.get_hand().add_card(NumberCard(3))
+>>> player.get_hand().add_card(KeyboardKidnapperCard())
+>>> player.get_hand().add_card(AllNighterCard())
+>>> player.get_hand()
+Deck(NumberCard(3), KeyboardKidnapperCard(), AllNighterCard())
+>>> player.has_won()
+False
+>>> player.get_coders().add_card(CoderCard("ashleigh"))
+>>> player.get_coders().add_card(CoderCard("kt"))
+>>> player.get_coders().add_card(CoderCard("sanni"))
+>>> player.has_won()
+False
+>>> player.get_coders().add_card(CoderCard("kaleb"))
+>>> player.has_won()
+True
+>>> str(player)
+'Player(Lochie Deakin-Sharpe, Deck(NumberCard(3), KeyboardKidnapperCard(), AllNighterCard()), Deck(CoderCard(ashleigh), CoderCard(kt), CoderCard(sanni), CoderCard(kaleb)))'
+>>> repr(player)
+'Player(Lochie Deakin-Sharpe, Deck(NumberCard(3), KeyboardKidnapperCard(), AllNighterCard()), Deck(CoderCard(ashleigh), CoderCard(kt), CoderCard(sanni), CoderCard(kaleb)))'
+                </pre>
+            </section>
+
+        </section>
+
+
+        <section><h2 class="header">Marking</h2><a name="sec_marking"></a>
+
+            <p>The marks in this section add to a total of 30, which will
+                be scaled down to the 15 marks available for this assignment.
+                Marks will be awarded based on the formula below:
+            </p>
+
+            <pre style="align-content: center">
+Total Mark = (functionality + style)/2
+            </pre>
+
+            <section><h3>Functionality Assessment</h3><a name="sec_functionality"></a>
+
+                <p>Your assignment will be marked automatically using the test suite provided.
+                    Marks will be awarded based on how many tests pass.
+                </p>
+
+                <p>Syntax errors which prevent your assignment from running will be removed
+                    from your assignment where reasonable, deducting one mark per syntax error for up to 3 syntax errors.
+                    What is considered a reasonable fix to your assignment is left to the
+                    judgement of the tutor who marks your assignment and their judgement is final.
+                </p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Class</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td><code>Card</code></td>
+                        <td>4</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>NumberCard</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>TutorCard</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>CoderCard</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>AllNighterCard</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>KeyboardKidnapperCard</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>Deck</code></td>
+                        <td>6</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>Player</code></td>
+                        <td>4</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Total</td>
+                        <td>25</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Code Style</h3><a name="sec_code_style"></a>
+
+                <p>The style of your assignment will be assessed by one of the tutors, and you will
+                    be marked on the broad categories listed below.
+                </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Code Quality -->
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Readability</span>
+                        </th>
+                        <td>Code is readable. Appropriate and meaningful identifier names have been used. Simple and
+                            clear code structure. Repeated code has been avoided.
+                        </td>
+                        <td><strong>2</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Simplicity</span>
+                        </th>
+                        <td>Code has been simplified where appropriate and is not overly convoluted.
+                        </td>
+                        <td><strong>1</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Documentation</span>
+                        </th>
+                        <td>Documented clearly and concisely, without excessive or extraneous comments.
+                        </td>
+                        <td><strong>2</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Total</span>
+                        </th>
+                        <td></td>
+                        <td><strong>5</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Feedback Sessions</h3><a name="sec_feedback"></a>
+                <p>In week 10, you must attend the practical that you are
+                    signed onto on mySI-net where the tutor who assessed your assignment
+                    will provide you with feedback.
+                </p>
+
+                <p>When you arrive at the feedback session please take a seat but don't sit in the row
+                    furthest from the door as this will be where tutors will be providing feedback and
+                    it will be need to be kept free for privacy.
+                </p>
+
+                <p>Allow for being in attendance at the practical for the full 2 hours, when your name
+                    is called walk over to the tutor who called your name and they will provide you
+                    with feedback on your assignment. You can leave once you have discussed your assignment
+                    with a tutor.
+                </p>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+            <p>Your assignment must be submitted via the assignment one submission link on Blackboard.
+                You must submit a Python file, <code>a2.py</code>, containing your implementation of the assignment.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment <em>well</em>
+                before the submission deadline. Your latest on-time, submission will be marked. Ensure that you submit
+                the correct version of your assignment. An incorrect version that does not work <strong>will</strong>
+                be marked as your final submission.
+            </p>
+
+            <p>
+                In the event of exceptional circumstances, you may submit a request for an extension. See the
+                <a href="https://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=98649">course
+                    profile</a> for details of how to apply for an extension. Requests for extensions must be made
+                <strong>no later</strong> than <u>48 hours</u> prior to the submission deadline. The expectation
+                is that with less than 48 hours before an assignment is due it should be substantially completed
+                and submittable. Applications for extension, and any supporting documentation (e.g. medical
+                certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must retain
+                the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/>
+                <label for="change_highlighter">Toggle Change Highlighting/Details</label>
+            </p>
+
+            <h4 class="star"><span data-version="1.0.2">Version 1.0.2 - Sep 16</span></h4>
+            <h5 class="star">Assignment Sheet</h5>
+            <ul class="browser-default">
+                <li>Explicitly included __str__ and __repr__ methods for Player.</li>
+                <li>Fixed the typo when describing the starting_cards parameter.</li>
+            </ul>
+
+            <h4 class="star"><span data-version="1.0.1">Version 1.0.1 - Sep 2</span></h4>
+            <h5 class="star">Assignment Sheet</h5>
+            <ul class="browser-default">
+                <li>Added various grammar improvements.</li>
+                <li>Clarified the wording of Card class.</li>
+                <li>Clarified the wording of the play and action method.</li>
+                <li>Fixed quotations in code examples.</li>
+                <li>Included import in code examples.</li>
+                <li>Fixed the contradiction about Player class construction.</li>
+                <li>Fixed the type of parameter for the Decks copy method.</li>
+            </ul>
+            <h5 class="star">Support Files</h5>
+            <ul class="browser-default">
+                <li>Fixed the docstring for the <code>Game.pick_card</code> method so that it has the correct return type.</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="index.js"></script>

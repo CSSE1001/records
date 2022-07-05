@@ -1,0 +1,1125 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Martin, Paul Haley">
+    <title>Assignment 3 &mdash; CSSE1001 Semester 1, 2019</title>
+</head>
+<!-- LaTeX? More like LaMeTeX -->
+
+<!--
+8QQQQ%HyffCICCCyCftv<^+~~""''``         "*GMg0gRRggggRRggggRRRMRRRRMbbOOOODDO9$G
+0&QQQ%MhCfCfCCCyInt)|<^+!~:,"''```````     '~r/nGMg000ggRRggRRMRRRRMMbbOOODH99$P
+g%QQQQ8HffCCIICCCft1)*<r=!~~:"''.--```````      `"*4MgggRgggRRMMRRMMMbMMbbOOOHU2
+00&QQQ&0yffCCCCCyC{F(l*r^+!~:""''..`````-..'''....-`"!]ZMRRRggRRRRMMbbMMMMbOOOK2
+%0BQQQQ&KfCfCyyyCCnFF)?*r++!:"''-```````-.'""'"""""''.'.~<C9RRRRMRMMbObMbMMMbbDP
+%00QQQQQ0GnCCooyyCIs{]/|l<^!~"''--``````-.'"",!++!!!~"''.` -!4MMRMRRMbMbMMMMMbHe
+80gBQQQQ&0SfCyyyyCfs{t7))?^+!~"'''-`````-.',~+^>*<r=+!:,,'--.:bRRRRRRMMbbMMMMMOG
+880%QQQQQQ0SCCyyyyCnIttF()*<^+!:"''.-```-'"~+===r*?**<>r^+!:,"PRRgggRMMMbbMMRMMK
+g%%%&QQQQQQByCCCyyCffnn{tF)/*<^+~~:""'-.''"~=r?){CCfCCCIt]\*rr280gRRRMMMMMMMMMMO
+M%%%BQQQQQQQMCCCCyyCCCfICf{7v?<>!!!!~~,"'''"~<tyGOHKkZe5nv*?)){080RRRMbbMMMbMMMM
+G8%BBQQQQQQQQRCCCCyCyCCCCCInF)??\*=!!!!~"'"~!<fOQQQQQ8b9kZyCn]>fg00gRMMMMRMMMMMM
+nR%%BQQQQQQQQQHfCCCyyyyyCCCftF)/ll|r!!~~!!+rr/PQQQQ@@@@@QMA2Cn<~{RgggRMMMRMMMMMM
+<9%%B&QQQQQQQQQXCyCCyyyyCffft17)*<<>^+;+++!~*IK@@@@@@@@@@QM9eoF!~9gggRRMMMMMMMMM
+!yg0%&QQQQQQQQQBCCyCCyyyyyfII{F]/*r^==!~::''!(Q@@@@@@@@@@@@Qg9n+]g0ggRRMMMMMMbMM
+~Fbg8BQQQQ&QQQQQGfCyCCyyyyyCIn17(\>^;!~,""''.4@@@@@@@@@@@@@&m>'`^R0gggRMMMMMMbbb
+!)HR8BQQQQ&QQQQQMyCCyyIsfCCCCI(7F7)*r;~"'.-`.O@@@@@@@@@@@@Qm="``+MgRggRMMMbMbbbb
+>F$M0%&Q&&&&QQQQBXCCfyyCfCCyCCt])])/*r~".```":CQ@@@@@@@@@@P^'``'^MRRgggRMbMMMbbb
+1CXbR0B&&&&&QQQQQ0CCCfCyyCyyCyfn1/|/*r~'`````  '|DRUyC5DR?.  `':(ggRggggRMMMbbOO
+SPXORg8BBBB&QQQQQBGfCCIIyyfyyyfCC{7?^=!"''""``          ``` `':rU00RgggggMMbbbbb
+MOUHMR0BBBB&QQQQQQRyICyfIyCCyoyCCCCn?+=;=+r+,'.-`-`````````'"~<h%800ggRgRMMMbOOb
+BRK9RR0%BB&QQQQQQQQbCsyyffCICyyCCCCfCF(v]?>*<^+!!!!!!!~~~~,~+\KQQB%800gggMMMbbOb
+0MK9RRg8B&&QQQQQQQQQAnfyCsCCCCymmyyCCCCyCFv)))1(v))7](()/vFFFHQQQ&B%%000RRMMMbbb
+MO$KgRg0%&QQQQQQQQQQ82fCyCICCffy544yCCfCyCCffCyCCyyCyCCyomoy9@QQQQ&BB%880gRMRMbb
+OD$Kg0g08&&QQQQQQQQQQRyCCyfCyCfCCy4S5CCCCCyyyyo5yoo545m2PGGD@QQQQ&BB%8000gRRRMbM
+OH$$R%gg8B&QQQQQQQQQQQ9yCCCCoyCfCySeeh2SheGAKKD&QQQQQQQ@@@@@@QQQQ&BB%000gggRRMMM
+Mb9$MB800%B&QQQQQQQQQQBoS5yIC5yfCy54hhhPGGGGkUDQ@@@@@@@@@@@@@QQQQ&BB%0g000gRRRMM
+0RbKOB&%g0BQQQQQQQQQQQQmmeZmfCyyCCyyy4SS2h4m4PGQ@@@@@@@@@@@@QQQQ&Q&%%8000gggRRMM
+B8RHH8QB0%B&QQQQQQQQQQQkC2GAeCC5PP4yyyoo5oyCy5meQ@@@@@@@@@QQQQQQQ&&B%%%0gggRRRRM
+Q&0O9gQQ88B&QQQQQQQQQQQ0fy4XKKyCme$OXyyyyyfnFF{tC%@@@@@@@@QQQQQQQQ&B%%%0gggggRMM
+QQ%MHMQQB8%BQQ&QQQQQQQQQyCySKHKCfySkOb2CyCCn)*>>>?U@@@@@QQQQQQQQQQBB%800gggggRMM
+Q&BMHO&QQ%%BQ&&QQQQQQQQQh{fyG9ODyCy5Z9RbyCyf1*=!~!!)Q@@QQQQQQQQQQ&B%8000ggggRRMM
+QB%MHO0QQB%B&&&QQQQQQQQQ9{IC4UD0QyCyy4KMM4yyC7r!~:,:)QQQQQQQQQQQQQ&B8000gggggRRM
+QB%RDORQQ&%B&&&&QQQQQQQ@0InIyG9B@gCCyCoXMRhCyCF|+~,""=eQQQQQQQQQ&QQB80gggggg0gRM
+B%8RDOMBQQ%%B&&&&&QQQQQ@QPnfye9B@@HCCffyGO09y5yC\=!~,",!oBQQQQQQQQ&&B%0ggggg0gRM
+%0gMDOM0QQB8BB&BB&QQQQ@@@OnfCS9B@@QAyCfCyGO%QGZ4C{F)r!~,"~y&QQQQQ&&&&B80ggggggRR
+8gRMDDMg&Q&%%B%BBQQQQQQ@@gfyy4HB@@@QG4fCyyUMQQPZ4P45{/^=!,"=PRQQQQQ&&B80000ggggR
+gRMbDDMRBQQB%%%%BQQQQQQ@@Qyyy46g@@@@QPyCyy4URQ@MkG42yC]|>=~,""^CRQQQ&%8008000ggR
+RMMbOOMR8QQ&8%%%BQQQQQQQ@@KCyS$M@@@@@Q4o5CCm$g@@@QR$SmyC{F|r!~""~|RQ&B%00%gg0gRM
+RMMOOORR0BQQ%%%%%QQQQQQQ@@0fy5GOQ@@@@@QZ5yyyokB@@@@@QMG44yCI7*^!~~^OQ&%88%0000RM
+RMMOObRR0%QQ%008%QQQQQQQ@@QGCyeOQ@QQ@@@Q5yCIfoAQ@@@@@@@QHGZeSyff{1*CQ&B8008%80RR
+MMMOOMggg%&Q8g08%QQQQQQQ@@@byy2KQ@Q@@@@@B4yCIfoAQ@@@@@@@@Q0OKUKXPy{K&BB8008%80gR
+MMbDOMRgg8BQ%g8%B&QQQQQ@@@@Mfy4$B@QQ@@@@@QeyCCCoKQ@@@@@@@@@@@@@@QgO&Q&B%%8%%80gR
+MbbDHMgg08%B%08%%&QQQQQQ@@@gsy2KB@QQ@@@@@@Q9SoCfyXQ@@@@@@@@@@@@@@@QQQ&B%8%%%%80R
+MbbD9Mgg08%%%08%&&QQQQQQ@@@QyyhKQQQQQ@@@@@@@UmyffykQ@@@@@@@@@@@@@QQQ&&%%%%%BB%0g
+MbO99Mg00888B88%&QQQQQQQ@@@QmyeHQQQQQQ@@@@@@QGoyfIyK@@@@@@@@@@@@QQQQ&&B%%%%%B%0g
+MMbH9Mg00%%8&%0%&QQQQQQ@@@@QmCZM@QQQQQQ@@@@@@QXe4ytC&@@@@@@@@@QQQQQQBBB%%%%BB80g
+RMMODMg00%00&B8BQQQQQQ@@@@@@9PbQQQQQQQ@@@@@@@@QHPhys6@@@@@Q@QQQQQQQQ&B&BBBBB&B0R
+RRRMOMg8080gBB%BQQQQQQ@@@@@@@@@@QQQQQQ@@Q@@@@@@Q9h5ob@@@@@QQQQQQQQQQQ&BBBBBBBB0R
+0ggMOMg0000gBB8BQQQQQQ@@@@@@@@@QQQQQQQ@@Q@@@@@@@QbAR@@@@QQQQQQQQQQQQQQQ&B&BBB%0R
+%%%gMRR00000B&%&QQQQQQ@@@@@@@@QQQQQQQQ@@QQQ@@@@@@@@@@@QQQQQQQQQQQQQQQQQ&%BB&&B%g
+-->
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Ninedraft</h1>
+    <p>Assignment 3<br> CSSE1001/7030<br> Semester 1, 2019</p>
+    <p>Version 1.1.0<br> 20 marks </p>
+    <p>Due Friday 31<sup>st</sup> May, 2019, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>This assignment provides you the opportunity to apply concepts taught throughout the course to extend
+                    the functionality of a basic 2d sandbox game, in the style of
+                    <a href="https://en.wikipedia.org/wiki/Minecraft">Minecraft</a> &amp;
+                    <a href="https://en.wikipedia.org/wiki/Terraria">Terraria</a>.
+
+                <p>
+                    The main concepts involved are Graphical User Interfaces (GUIs) and object-oriented
+                    programming. The assignment tasks are to add features to the game, as described in the requirements
+                    below.
+                </p>
+
+                <p>You are encouraged to review some similar games, to better understand how this type of
+                    game is played, and for inspiration on advanced features. It is better to do this after reading
+                    through this document in its entirety.</p>
+                <!--In other words, procrasta-research ;)-->
+
+                <p>Because this assignment deals with multiple files, while not required, you may wish to investigate a
+                    more sophisticated IDE. A popular option is <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,
+                    which is <a href="https://www.jetbrains.com/student/">free for students</a>.
+                    <a href="https://code.visualstudio.com/download">VS Code</a>, which is also free, is another common
+                    option.
+                    Please note that these tools have significantly more complex user-interfaces than IDLE, so you may
+                    find them a little overwhelming if you are only familiar with IDLE.</p>
+            </section>
+
+            <!--<section>-->
+            <!--<h3>Game Play</h3><a name="sec_gameplay"></a>-->
+
+            <!--<div class="hide-screen">-->
+            <!--&lt;!&ndash;TODO: link to video&ndash;&gt;-->
+            <!--<p>A video overview of the assignment can be found here: TODO</p>-->
+            <!--</div>-->
+            <!--&lt;!&ndash;TODO: embed video&ndash;&gt;-->
+            <!--&lt;!&ndash;<div class="video-container hide-print">&ndash;&gt;-->
+            <!--&lt;!&ndash;<iframe width="560" height="315" src="https://www.youtube.com/embed/roE4p1frvwA?rel=0"&ndash;&gt;-->
+            <!--&lt;!&ndash;frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>&ndash;&gt;-->
+            <!--&lt;!&ndash;</div>&ndash;&gt;-->
+
+            <!--</section>-->
+        </section>
+
+        <section>
+            <h2 class="header">Overview</h2><a name="sec_overview"></a>
+
+            <section>
+                <h3 class="header">Getting Started</h3><a name="sec_getting_started"></a>
+
+                <p>The archive <code>a3_files.zip</code> contains all the necessary files to start this assignment. A
+                    significant amount of support code has been supplied so that you begin with a simple
+                    application that is almost working.</p>
+
+                <!--QUERY: should we mandate not editing support code? perhaps it would be better to permit it,
+                           but encourage the aversion by using inheritance/warn that we will penalise for unwarranted
+                           editing (give examples?)-->
+                <p>The main assignment file is <code>app.py</code>, which contains an incomplete implementation of
+                    <code>Ninedraft</code>,
+                    the top-level GUI application class. The other files are support code which <strong>must
+                        not</strong> be edited. <span data-version="1.1.0"><code>crafting.py</code> is an exception to this rule, as it must be edited for some tasks. </span></p>
+                <p>Initially, you do not need to understand much of
+                    <span data-version="1.1.0">the provided</span> code, but as you
+                    progress through the tasks, you will need to understand more of this code.
+                    <!-- - see the <a href="./appendices.html#sec_support_appendix">support code appendix</a> for an overview-->
+                    You should add code to <code>app.py</code> and modify <code>Ninedraft</code> to implement the
+                    necessary functionality.</p>
+
+                <p>You are permitted to create additional files to simplify the separation of tasks (i.e. task1.py,
+                    task2.py, etc.), although this is not required. If you do this, <code>app.py</code>
+                    <strong>must</strong> be the entry point to your application <span data-version="1.1.0">(i.e. running it will run your assignment)</span>.
+                </p>
+
+                <!--One way to achieve this is to move <code>Ninedraft</code> to a-->
+                <!--separate file, such as <code>base.py</code>. <em>Regardless of how you structure your files, the-->
+                <!--code <strong>must always</strong> be able to be demonstrated by running <code>app.py</code></em>.-->
+                </p>
+                <!--TODO: why should they move the App to another file like base.py -->
+
+            </section>
+
+            <section>
+                <h3 class="header">Pymunk Library</h3><a name="pymunk"></a>
+
+                <p>Physics is implemented in the game using the <a href="http://www.pymunk.org/en/latest/">Pymunk
+                    library</a>.
+                    You will need to install this library in order to implement your tasks for this assignment.
+                    Pymunk can be installed by running the included <code>setup.py</code>.
+                </p>
+
+            </section>
+
+            <!--<section><h3 class="header">Important Concepts</h3><a name="sec_important_concepts"></a>-->
+
+            <!--<p>TODO: any important concepts, such as event emitting</p>-->
+            <!--<p>Perhaps this should be in an appendix</p>-->
+            <!--</section>-->
+
+            <!-- QUERY: should we add appendix with useful concepts?
+                - gameloop/ticking
+                - collision detection/quadtree mention
+                - physics
+            -->
+
+
+        </section>
+
+
+        <section>
+            <h2 class="header">Assignment Tasks</h2><a name="sec_tasks"></a>
+
+            <section><h3>Task Overview</h3><a name="sec_task_overview"></a>
+
+                <p>This assignment is broken down into three main tasks:</p>
+
+                <ol>
+                    <li>The first task involves adding lines of code to clearly marked sections within the main
+                        assignment file.
+                    </li>
+                    <li>The second task involves extending the design to add more interesting functionality to the game.
+                    </li>
+                    <li>And the third task involves adding sophisticated functionality to further improve the gameplay
+                        experience.
+                    </li>
+                </ol>
+                <p><strong>For CSSE7030 students only</strong>, there is an extra task that involves doing
+                    independent research.</p>
+
+                <p>In general, as the tasks progress, they are less clearly prescribed and increase in difficulty.</p>
+
+
+            </section>
+
+            <section><h3>Task Breakdown</h3><a name="sec_task_breakdown"></a>
+
+                <p>CSSE1001 students will be marked out of 20 and CSSE7030 students will be marked out of 26 based on
+                    the following breakdown. Tasks may be attempted in any order, but it is recommended to follow this
+                    breakdown, top-down, completing as much as possible of each task before moving on to the next. </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Sub&ndash;Task</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Task 1 -->
+                    <tr class="task">
+                        <th rowspan="7"><span>Task 1<br><em>Basic Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>9 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>App Class<br/>
+                        </td>
+                        <td>1 mark</td>
+                    </tr>
+                    <tr>
+                        <td>Mouse Controls<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>StatusView Class<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Basic Items<br/>
+                        </td>
+                        <td><span data-version="1.1.0">1.5 marks</span></td>
+                    </tr>
+                    <tr>
+                        <td>Keyboard Controls<br/>
+                        </td>
+                        <td>1 mark</td>
+                    </tr>
+                    <tr>
+                        <td>File Menu &amp; Dialogs<br/>
+                        </td>
+                        <td><span data-version="1.1.0">1.5 marks</span></td>
+                    </tr>
+
+                    <!-- Task 2 -->
+                    <tr class="task">
+                        <th rowspan="5"><span>Task 2<br><em>Intermediate Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>7 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>More Items</td>
+                        <td>2 mark</td>
+                    </tr>
+                    <tr>
+                        <td>Crafting</td>
+                        <td><span data-version="1.1.0">3.5 marks</span></td>
+                    </tr>
+                    <tr>
+                        <td>CraftingTableBlock</span></td>
+                        <td><span data-version="1.1.0">1.5 marks</span></td>
+                    </tr>
+                    <tr></tr>
+
+                    <!-- Task 3 -->
+                    <tr class="task">
+                        <th rowspan="3">
+                            <span>Task 3<br><em>Advanced Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>4 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td><span data-version="1.1.0">Mobs</span><br/>
+                        </td>
+                        <td><span data-version="1.1.0">2 marks</span></td>
+                    </tr>
+                    <tr>
+                        <td>Furnace<br/>
+                        </td>
+                        <td><span data-version="1.1.0">2 marks</span></td>
+                    </tr>
+
+                    <!-- Masters Task -->
+                    <tr class="task">
+                        <th rowspan="3">
+                            <span>Post-Graduate Task<br><em>Independent Research</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>6 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>Arrow Movement<br/>
+                        </td>
+                        <td>4 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Interaction with Blocks<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Mark Breakdown</h3><a name="sec_mark_breakdown"></a>
+
+                For each task, marks will scaled according to the following breakdown.
+
+                <!--TODO: revisit this; add an example-->
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Code Quality -->
+                    <tr class="task">
+                        <th rowspan="3" style="max-width: 150px"><span>Code Quality</span>
+                        </th>
+                        <td>Code is readable. Appropriate and meaningful identifier names have been used. Simple and
+                            clear code structure. Repeated code has been avoided.
+                        </td>
+                        <td><strong>15%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Code has been simplified where appropriate and is not overly convoluted.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Documented clearly and concisely, without excessive or extraneous comments.
+                        </td>
+                        <td><strong>15%</strong></td>
+                    </tr>
+
+                    <!-- Functionality -->
+                    <tr class="task">
+                        <th rowspan="2">
+                            <span>Functionality</span>
+                        </th>
+                        <td>Components are functional, without major bugs or unhandled exceptions. <br/><em>Assessed
+                            through user testing/playing, not automated testing.</em>
+                        </td>
+                        <td><strong>60%</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Task 1 &ndash; Basic GUI</h2><a
+                name="sec_task1"></a>
+
+            <div class="card">
+                <a name="fig_basic_gui"></a>
+                <div class="card-image">
+                    <img src="public/images/basic-gui@1x.png"
+                         srcset="public/images/basic-gui@1x.png 1x, public/images/basic-gui@2x.png 2x"
+                         alt="Image of Basic GUI Example">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Basic GUI Example</span>
+                </div>
+            </div>
+
+            <p>There are a significant number of comments in <code>app.py</code> intended to help you complete this
+                task.
+            </p>
+
+
+            <section>
+                <h3 class="header">App Class</h3><a name="sec_app_class"></a>
+
+                <p>Write a <code>main</code> function that launches the <code>Ninedraft</code> GUI. Call this
+                    <code>main</code>
+                    function inside an <code>if __name__ == ...</code> block.</p>
+
+                <p>Modify <code>Ninedraft</code> so that the title of the window is set to something appropriate
+                    (i.e. Ninedraft, etc.).</p>
+
+            </section>
+            <section>
+                <h3 class="header">Mouse Controls</h3><a name="sec_mouse_controls"></a>
+
+
+                <div data-version="1.1.0">
+                    <section>
+                        <h4>Moving: Target</h4>
+                        <p>When the player's mouse is moving over the game world, show the target cursor over the block
+                            position they have moused over. If the mouse leaves the game world (either to another widget
+                            or out of the window), or moves out of range, hide the preview.
+                        </p>
+                        <p>Due to the program structure, once the appropriate tkinter event is bound, the only code that
+                            needs be added to achieve this is in <code>Ninedraft.redraw</code> (Mouse coordinates for the target cursor are saved
+                            when the mouse moves so that <code>redraw</code> can use them when it is drawing).
+                        </p>
+                        <p>See the <code>_mouse_move, redraw</code> methods on
+                        <code>Ninedraft</code> and the <code>show_target, hide_target</code> methods on
+                        <code>GameView</code> in <code>game.py</code>.</p>
+                    </section>
+
+                    <section>
+                        <h4>Left Click: Attacking (Mining)</h4>
+                        <p>Allow the player to attack (mine) their target block by clicking the left mouse button. Code
+                            already exists to call the attack method of the player's effective item and to mine the
+                            block.</p>
+
+                        <p>Most of this logic is already implemented. You need to bind the mouse button &amp; retrieve
+                            what the block drops when it is fully mined.</p>
+
+                        <p>Further, when a block is successfully mined, reduce the player's health/food by an amount of
+                            your
+                            choosing according to the following rules:</p>
+                        <ul>
+                            <li>If the player has food (> 0), decrease their food</li>
+                            <li>Otherwise, decrease their health</li>
+                        </ul>
+                        <p>See the <code>_left_click</code> method on
+                        <code>Ninedraft</code>.</p>
+                    </section>
+
+                    <section>
+                        <h4>Right Click: Using or Placing</h4>
+                        <p>When the player right clicks, one of two things should happen:</p>
+
+                        <ol>
+                            <li>If the player is targeting a block, use that block</li>
+                            <li>Otherwise, place the active item (see <code>Item.place</code>)</li>
+                        </ol>
+
+                        <p>Code has been provided that implements this functionality. You only need to bind the
+                            appropriate mouse event.</p>
+                        <p>See the <code>_right_click</code> method on
+                        <code>Ninedraft</code>.</p>
+                    </section>
+
+                    <p>See the <code>__init__, _left_click, _right_click, redraw</code> methods on
+                        <code>Ninedraft</code> and the <code>show_target, hide_target</code> methods on
+                        <code>GameView</code> in <code>game.py</code>.</p>
+                </div>
+
+            </section>
+
+
+            <section>
+                <h3 class="header">StatusView Class</h3><a name="sec_status_view"></a>
+
+                <p>Define a class named <code>StatusView</code> which inherits from <code>tk.Frame</code>. This class
+                    is used to display information to the player about their status in the game. The
+                    <code>StatusView</code>'s widgets must:</p>
+
+                <ol>
+                    <li>be updated whenever necessary (i.e. when gaining or losing health or food)
+                    </li>
+                    <li>be laid out <em>approximately</em> according to <a href="#fig_basic_gui">Basic GUI Example</a>
+                    </li>
+                    <li>contain the following widgets:
+                        <ul>
+                            <li><strong>Health (first row; left)</strong> A label to display the amount of health the
+                                player has remaining, with an image of a heart to the left.
+                                The health must be rounded to the nearest 0.5 (i.e. half or whole).
+                            </li>
+                            <li><strong>Food (first row; right)</strong> A label to display the amount of food the
+                                player has remaining, with an image of a drumstick to the left.
+                                The food must be rounded to the nearest 0.5 (i.e. half or whole).
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p><strong>Note: </strong> For convenience, you should have a setter method for each of the relevant
+                    widgets. i.e. <code>set_health(health)</code>, etc.</p>
+
+                <p>The <code>StatusView</code> class should be added to the application in a frame below the
+                    <code>GameView</code>.</p>
+
+            </section>
+
+            <section>
+                <h3 class="header">Basic Items</h3><a name="sec_basic_items"></a>
+
+                <div data-version="1.1.0">
+                    <p>One basic type of item is that which drops a block form of itself when placed. For example: </p>
+                    <ol>
+                        <li>When the stone item is placed, it is logical that a stone block should appear</li>
+                        <li>Further, when a stone block is mined, it also is logical that it should drop a stone
+                            item(s)
+                        </li>
+                    </ol>
+
+                    <p>The class <code>BlockItem</code>, found in <code>item.py</code>, represents an item as per #1
+                        above.</p>
+
+                    <p>For this task, modify the <code>create_item</code> function so that it can generate wood &amp;
+                        stone items. These should
+                        be instances of the <code>BlockItem</code> class.
+                        E.g.</p>
+                    <pre><code>&gt;&gt;&gt; wood = create_item('wood')
+&gt;&gt;&gt; wood
+BlockItem('wood')
+&gt;&gt;&gt; wood.place()
+[('block', ('wood,))]
+&gt;&gt;&gt; block_id = wood.place()[0][1]
+&gt;&gt;&gt; create_block(*block_id)
+ResourceBlock('wood')</code></pre>
+                    <p>You do not need to modify <code>create_block</code>, as the relevant code to create wood &amp;
+                        stone blocks already exists.</p>
+                </div>
+
+            </section>
+
+            <section>
+                <h3 class="header">Keyboard Controls</h3><a name="sec_keyboard"></a>
+
+                <section>
+                    <h4 class="header">Movement</h4><a name="sec_movement"></a>
+
+                    <p>When the player presses the space bar, they should jump into the air. This can be achieved by
+                        modifying their velocity.</p>
+
+                    <p>Set the velocity to something reasonable, that meets the following requirements:</p>
+                    <ul>
+                        <li>The y-component must be negative (because computer graphics are drawn with the positive
+                            y-axis facing down)
+                        </li>
+                        <li>The x-component must not be zero, but should be different to what it was (i.e. if the player
+                            was moving left, when they jump, they should also keep moving left, but at a different
+                            speed)
+                        </li>
+                        <li>Double/triple/etc. jumping is allowed, so you do not need to check that the player is on the
+                            ground before jumping
+                        </li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h4 class="header">Hotbar</h4><a name="sec_hotbar"></a>
+
+                    <p>When the player presses a number key (1-9, 0), the corresponding item in the hotbar should be
+                        selected.
+                        If the corresponding item is already selected, it should instead be deselected. Note that 1
+                        corresponds to the first (leftmost) item in the hotbar, and 0 to the last (rightmost), etc.</p>
+                </section>
+
+            </section>
+
+            <section>
+                <h3 class="header">File Menu &amp; Dialogs</h3><a name="sec_file_menu_dialogs"></a>
+
+                <p>
+                    Implement a menu bar, with a <code>File</code> menu. The File menu should have the following
+                    entries:
+                </p>
+                <ul>
+                    <li><code>New Game</code>: Restarts the game</li>
+                    <li><code>Exit</code>: Exits the application</li>
+                </ul>
+
+                <p>When the player attempts to exit the application, either by the file menu or otherwise, they should
+                    first be prompted with a dialog to confirm that they indeed want to quit the application. Further,
+                    if the player dies, they should be informed of this with a dialog, and asked if they want to restart
+                    the game.</p>
+
+                <p><strong>Note:</strong> On Mac OS X (and similar), the file menu should appear in the global menu bar
+                    (top of the screen).</p>
+
+            </section>
+
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 2 &ndash; Intermediate Features</h2><a name="sec_task2"></a>
+
+            <p>For any subclasses you implement, in addition to the required methods listed, you will also need to
+                override any relevant methods from the super class that would raise <code>NotImplementedError</code>.
+                You will also need to modify the relevant
+                <code>create_*</code> functions to allow your new things/items to be created.
+            </p>
+
+            <section>
+                <h3 class="header">More Items</h3><a name="sec_more_items"></a>
+
+                <p>Implement the following subclasses of the <code>Item</code> class and add them to the game:</p>
+
+                <section>
+                    <h4>FoodItem</h4><a name="sec_food_item"></a>
+
+                    <p>Implement a class called <code>FoodItem</code> which inherits from <code>Item</code>.
+                        When a <code>FoodItem(item_id<span data-version="1.1.0">: str</span>, strength<span
+                                data-version="1.1.0">: float</span>)</code> object is instantiated, it needs to be
+                        given an item identifier and a strength. The class must have the following method:
+                    </p>
+                    <ul>
+                        <li><em>get_strength()<span data-version="1.1.0"> -> float</span></em>: Returns the amount of
+                            food/health to be recovered by the player by when used.
+                        </li>
+                        <li><em>place()<span data-version="1.1.0"> -> float</span></em>: Returns an effect that
+                            represents an increase in the player's food/health
+                        </li>
+
+                    </ul>
+
+                    <p>Add a stack of 4 of these to the starting hotbar, and modify the <code>create_item</code>
+                        function so that leaf blocks can drop apples (a food item with 2-strength)</p>
+
+                    <div data-version="1.1.0">
+                        <p>When food is placed, increase the player's health/food by an amount equal to the food's
+                            strength, according to the following rules:</p>
+                        <ul>
+                            <li>If the player has lost food (< maximum), increase their food</li>
+                            <li>Otherwise, increase their health</li>
+                        </ul>
+
+                        <p>Nothing should physically be "placed" in the world. For example:</p>
+
+                        <pre><code>&gt;&gt;&gt; apple = FoodItem('apple', 2)
+&gt;&gt;&gt; apple.place()
+[('effect', ('food', 2))]
+&gt;&gt;&gt; apple.get_strength()
+2</code></pre>
+
+                        <p>See <code>Ninedraft.run_effect</code></p>
+                    </div>
+                </section>
+
+                <section>
+                    <h4>ToolItem</h4><a name="sec_tool_item"></a>
+
+                    <p>Implement a class called <code>ToolItem</code> which inherits from <code>Item</code>.
+                        When equipped, tools damage certain blocks faster than the hands, and are able to mine
+                        materials that the hands cannot (such as stone from stone blocks). A tool is depleted when its
+                        durability reaches zero.
+                    </p>
+
+                    <p>When a <code>ToolItem(item_id<span data-version="1.1.0">: str</span>, tool_type<span
+                            data-version="1.1.0">: str</span>, durability<span
+                            data-version="1.1.0">: float</span>)</code> object is instantiated, it needs
+                        to be given an item identifier, the type of tool it will be and the tool's durability. The
+                        class must have the following methods:
+                    </p>
+                    <ul>
+                        <li><em>get_type()<span data-version="1.1.0"> -> str</span></em>: Returns the tool's type.</li>
+                        <li><em>get_durability()<span data-version="1.1.0"> -> float</span></em>: Returns the tool's
+                            remaining durability.
+                        </li>
+                        <li><em>can_attack()<span data-version="1.1.0"> -> bool</span></em>: Returns True iff the tool
+                            is not depleted.
+                        </li>
+                        <li><em>attack(successful<span data-version="1.1.0">: bool</span>)</em>: Attacks with the tool;
+                            if the attack was not
+                            successful, the tool's
+                            durability should be reduced by one.
+                        </li>
+                    </ul>
+
+                    <p>Note: For tools made of a material, such as the stone axe, the <code>item_id</code> should be
+                        <code>{material}_{tool_type}</code>, according to the break tables in <code>item.py</code></p>
+
+                    <p>For example</p>
+                    <pre><code>&gt;&gt;&gt; diamond_axe = ToolItem('diamond_axe', 'axe', 1337)
+&gt;&gt;&gt; diamond_axe.get_type()
+'axe'
+&gt;&gt;&gt; diamond_axe.get_max_stack<span data-version="1.1.0">_size</span>()
+1
+&gt;&gt;&gt; for _ in range(<span data-version="1.1.0">1295</span>):
+...    diamond_axe.attack(False)
+&gt;&gt;&gt; diamond_axe.get_durability()
+42</code></pre>
+
+                    <!--<p>TODO: are we going to provide the crafting recipe for this?</p>-->
+
+                </section>
+
+            </section>
+
+            <section>
+                <h3 class="header">Crafting</h3><a
+                    name="sec_crafting"></a>
+
+            <div class="card hide-print">
+                <a name="fig_basic_crafter"></a>
+                <div class="card-image">
+                    <img src="public/images/crafting-screens/basic-crafter-post@1x.png"
+                         srcset="public/images/crafting-screens/basic-crafter-post@1x.png 1x, public/images/crafting-screens/basic-crafter-post@2x.png 2x"
+                         alt="Image of Basic Crafter Example">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Basic Crafter Example</span>
+                </div>
+            </div>
+
+                <p>The process of turning items into new items is called Crafting. The <span
+                        data-version="1.1.0">player</span> can craft items and
+                    reorder their inventory/hotbar in a crafting screen. When the player presses the 'e' key,
+                    the basic crafting screen should toggle (switch between showing in a new window &amp; hiding). <span
+                            data-version="1.1.0">You may assume the player will not interact with the game world while a crafting window is open.</span>
+                </p>
+
+                <div data-version="1.1.0">
+
+                    <p>Add the <code>CRAFTING_RECIPES_2x2</code> constant to <code>app.py</code> with
+                        at least three additional recipes of your own, and modify
+                        <code>Ninedraft._trigger_crafting</code> to open the simple crafting window. Initially, this
+                        will only show the inventory &amp; hotbar.</p>
+
+                    <p>Next, in the file <code>crafting.py</code>, complete the <code>GridCrafterView</code> class
+                        according to the comments. You do not need to modify any other code in this file (<code>GridCrafterView</code>
+                        is already instantiated in <code>CraftingWindow._load_crafter_view</code>).</p>
+
+                    <p>See <code>CraftingWindow</code> &amp; <code>GridCrafter</code> in <code>crafting.py</code></p>
+
+                </div>
+
+                <section data-version="1.1.0">
+                    <h4>Snippets</h4><a name="sec_crafting_snippets"></a>
+                    <ul class="collapsible hide-print">
+                        <li>
+                            <div class="collapsible-header">2x2 Crafting Recipes</div>
+                            <div class="collapsible-body">
+          <pre><code class="python">
+CRAFTING_RECIPES_2x2 = [
+    (
+        (
+            (None, 'wood'),
+            (None, 'wood')
+        ),
+        Stack(create_item('stick'), 4)
+    )
+]
+</code></pre>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p><em>These can also be found in <code>a3_files/snippets.txt</code></em></p>
+                </section>
+
+            </section>
+
+
+            <section>
+
+                <h3>CraftingTableBlock</h3><a name="sec_crafting_table"></a>
+
+            <div class="card hide-print">
+                <a name="fig_crafting_table"></a>
+                <div class="card-image">
+                    <img src="public/images/crafting-screens/crafting-table-pickaxe-post@1x.png"
+                         srcset="public/images/crafting-screens/crafting-table-pickaxe-post@1x.png 1x, public/images/crafting-screens/crafting-table-pickaxe-post@2x.png 2x"
+                         alt="Image of Crafting Table Example">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Crafting Table Example</span>
+                </div>
+            </div>
+
+                <p>Implement a class called <code>CraftingTableBlock</code> which inherits from
+                    <code>ResourceBlock</code>. When used, this block should trigger the crafting
+                    table screen. From the block's perspective, this can be achieved by returning
+                    an effect from the <code>use</code> method. <span data-version="1.1.0">When mined with the correct tool, this block should drop an item form of itself.</span>
+                    For example: </p>
+
+                <pre><code>&gt;&gt;&gt; table = CraftingTableBlock()
+&gt;&gt;&gt; table.use()
+('crafting', 'crafting_table')
+&gt;&gt;&gt; table.get_drops(0, True)
+[('item', ('crafting_table',))]</code></pre>
+
+                <div data-version="1.1.0">
+
+                    <p>Add the 2x2 recipe to create the crafting table to <code>CRAFTING_RECIPES_2x2</code>. Further,
+                        add the <code>CRAFTING_RECIPES_3x3</code> constant to <code>app.py</code> with
+                        at least three additional recipes of your own.</p>
+
+                </div>
+
+                <p>Lastly, extend the <code>Ninedraft._trigger_crafting</code> method to open the crafting table screen.
+                </p>
+
+                <section data-version="1.1.0">
+                    <h4>Snippets</h4><a name="sec_crafting_table_snippets"></a>
+                    <ul class="collapsible hide-print">
+                        <li>
+                            <div class="collapsible-header">Another 2x2 Recipe</div>
+                            <div class="collapsible-body">
+          <pre><code class="python">
+(
+    (
+        ('wood', 'wood'),
+        ('wood', 'wood')
+    ),
+    Stack(create_item('crafting_table'), 1)
+)
+</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">3x3 Crafting Recipes</div>
+                            <div class="collapsible-body">
+          <pre><code class="python">
+CRAFTING_RECIPES_3x3 = {
+    (
+        (
+            (None, None, None),
+            (None, 'wood', None),
+            (None, 'wood', None)
+        ),
+        Stack(create_item('stick'), 16)
+    ),
+    (
+        (
+            ('wood', 'wood', 'wood'),
+            (None, 'stick', None),
+            (None, 'stick', None)
+        ),
+        Stack(create_item('pickaxe', 'wood'), 1)
+    ),
+    (
+        (
+            ('wood', 'wood', None),
+            ('wood', 'stick', None),
+            (None, 'stick', None)
+        ),
+        Stack(create_item('axe', 'wood'), 1)
+    ),
+    (
+        (
+            (None, 'wood', None),
+            (None, 'stick', None),
+            (None, 'stick', None)
+        ),
+        Stack(create_item('shovel', 'wood'), 1)
+    ),
+    (
+        (
+            (None, 'stone', None),
+            (None, 'stone', None),
+            (None, 'stick', None)
+        ),
+        Stack(create_item('sword', 'wood'), 1)
+    )
+}
+</code></pre>
+                            </div>
+                        </li>
+                    </ul>
+
+                    <p><em>These can also be found in <code>a3_files/snippets.txt</code></em></p>
+                </section>
+
+            </section>
+
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 3 &ndash; Advanced Features</h2><a name="sec_task3"></a>
+
+
+            <section>
+                <h3>Mobs</h3><a name="sec_mobs"></a>
+
+                <p>Mobs are non-player-characters in the game. They are living (have health) and can move around.
+                    Some mobs can harm the player.</p>
+
+                <p>To complete this sub-task, in addition to subclassing <code>Mob</code>, you will need to add
+                    additional blocks &amp; items to the game, including the relevant <code>create_*</code> function,
+                    and drawing method(s) to the <code>WorldViewRouter</code> class. <span data-version="1.1.0">Further, you will need to handle
+                        the case where the player attacks (left-clicks) a mob.</span></p>
+
+                <section>
+                    <h4>Sheep</h4>
+                    <p>Implement a class called <code>Sheep</code> which inherits from <code>Mob</code>.</p>
+                    <p>Sheep move around randomly and do not damage the player.</p>
+
+                    <p>When attacked, a sheep should drop wool (<code>wool = <span data-version="1.1.0">Block</span>Item('wool')</code>), without taking
+                        damage. <span data-version="1.1.0">This wool should be able to be dropped as a block and should
+                            be included in at least one crafting recipe.</span>
+                    </p>
+                </section>
+
+                <section>
+                    <h4>Bees</h4><a name="sec_bees"></a>
+                    <p>Implement a class called <code>Bee</code> which inherits from <code>Mob</code>.</p>
+                    <p>Bees swarm the player, and individually cause a small amount of damage. They move slightly
+                        quicker than the player, and swarm toward the player in a semi-random fashion. If there is a
+                        honey block (<code>honey = ResourceBlock('honey', ...)</code>) nearby (within 10 blocks), they
+                        will instead swarm to the honey.</p>
+
+                    <p>The player can attack bees, and with simple tools they should individually be destroyed in one
+                        hit.</p>
+
+                    <p>When the player mines a hive block (<code>hive = HiveBlock("hive")</code>), 5 bees should spawn
+                        and begin to swarm toward the player.</p>
+                </section>
+
+            </section>
+
+
+        </section>
+
+        <section>
+            <h3 class="header">Furnace</h3><a name="sec_furnace"></a>
+
+            <div class="card hide-print">
+                <a name="fig_furnace_smelting"></a>
+                <div class="card-image">
+                    <img src="public/images/crafting-screens/furnace-cooked-apple-post@1x.png"
+                         srcset="public/images/crafting-screens/furnace-cooked-apple-post@1x.png 1x, public/images/crafting-screens/furnace-cooked-apple-post@2x.png 2x"
+                         alt="Image of Furnace Smelting Example">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Furnace Smelting Example</span>
+                </div>
+            </div>
+
+            <p>The furnace allows the player access to another form of crafting, called smelting
+                (also known as cooking, baking, melting, drying, or burning). This process involves two items,
+                a fuel source and the item to be heated. For example, the player can cook <span data-version="1.1.0">an apple on wood to produce
+                    a cooked apple</span>.</p>
+
+            <p>Allow the player to craft a furnace on the crafting table by using a ring of stone (a 3x3 grid, with
+                nothing in the centre). This should yield an item that can be placed as
+                a furnace block, which when used opens the smelting screen, <span data-version="1.1.0">and when mined with a pickaxe drops an item form of itself</span>.
+            </p>
+
+            <p>Ensure that the smelting screen shows some sort of icon to represent the smelting &mdash; you may use
+                a simple canvas shape in place of the flame shown above.</p>
+
+            <p data-version="1.1.0">Lastly, add at least five smelting recipes to create items. You are encouraged to
+                add new items/blocks to make this interesting (i.e. diamond, gold, grain, etc.), although this is not required.</p>
+
+        </section>
+
+        <section>
+            <h2 class="header">CSSE7030 Task &ndash; Independent Research</h2><a name="sec_postgraduate_task"></a>
+
+            <section>
+                <h3 class="header">Advanced Feature</h3><a name="sec_advanced_feature"></a>
+
+                <p>This task involves adding a bow &amp; arrow tool to the game. Add it to the player's starting
+                    inventory.</p>
+
+                <p>When attacking, the bow should fire a flaming arrow at a trajectory matching the mouse's position
+                    relative to the player. For example, if the player is centred at <code>(200, 200)</code>, and the
+                    cursor is at <code>(100, 100)</code>, the bow should fire at a 45 degree angle to the left. The
+                    further the mouse is from the player, the stronger the arrow should fire, up to some maximum (i.e. 4
+                    blocks away).</p>
+
+                <p>It is intended that gravity should cause the arrow to drop, and not necessarily pass through the
+                    position on the cursor. Further, the bow should always fire, regardless of whether the target is in
+                    range.</p>
+
+                <p>Physics in Ninedraft is implemented in the <code>World</code> class using the <a
+                        href="http://www.pymunk.org/en/latest/pymunk.html">pymunk library</a>, so to successfully
+                    complete this task, you will need to research this library and subclass <code>World</code>.</p>
+
+                <p>Further, to achieve full marks for this task, the flaming arrow must immediately destroy certain
+                    blocks on
+                    contact:</p>
+                <ul>
+                    <li>Wood is instantly destroyed and drops nothing</li>
+                    <li>Hive blocks are instantly destroyed, and drop honey (<code>BlockItem('honey')</code>) without
+                        spawning any bees.
+                    </li>
+                </ul>
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+
+            <p>
+                <strong>Note:</strong> There will not be a practical interview for the third assignment.
+            </p>
+
+            <p>Your assignment must be submitted via the assignment three submission link on Blackboard.
+
+                You must submit a zip file, <code>a3.zip</code>, containing <code>app.py</code> and all the files
+                required to run your application (including images). Your zip file must include all the support code.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment <em>well</em>
+                before the submission deadline. Your latest, on time, submission will be marked. Ensure that you submit
+                the correct version of your assignment. An incorrect version that does not work <strong>will</strong>
+                be marked as your final submission.
+            </p>
+
+            <p>
+                In the event of exceptional circumstances, you may submit a request for an extension. See the
+                <a href="https://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=98649">course
+                    profile</a> for details of how to apply for an extension. Requests for extensions must be made
+                <strong>no later</strong> than <u>48 hours</u> prior to the submission deadline. The expectation
+                is that with less than 48 hours before an assignment is due it should be substantially completed
+                and submittable. Applications for extension, and any supporting documentation (e.g. medical
+                certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must retain
+                the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <!--<section data-version="1.1.0">-->
+        <!--<h2 class="header">Appendices</h2><a-->
+        <!--name="sec_appendices"></a>-->
+
+        <!--<p>See the <a href="./appendices.html">online appendices</a>.</p>-->
+        <!---->
+        <!--</section>-->
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <!--<p>Any changes to this document will be listed here.</p>-->
+
+            <!--<h4 class="star"><span data-version="1.1.1">Version 1.1.1 - May 18</span></h4>-->
+
+            <!--<ul>-->
+            <!--<li>Clarified <a href="#sec_sell_tower"></a></li>-->
+            <!--<li>Moved <code>SimpleTower._get_target</code> to <code>AbstractTower</code></li>-->
+            <!--</ul>-->
+
+            <h4 class="star"><span data-version="1.1.0">Version 1.1.0 - May 17</span></h4>
+            <p>
+                <a id="update-to-1-1-0" class="btn btn-floating pulse hide-print">!!!</a> It is recommended that you
+                <strong>immediately</strong> update your support code. However, if you began working on the assignment
+                in version 1.0.0, you may submit it with version 1.0.0 of the support code.
+            </p>
+            <h5 class="star">Assignment Sheet</h5>
+            <ul>
+                <li>Redistributed some marks within tasks to more accurately reflect difficulty</li>
+                <li>Clarified how food/health changes in <a href="#sec_mouse_controls"></a> &amp; <a
+                        href="#sec_food_item"></a></li>
+                <li>Clarified terms <code>target/attack/mine/use/place</code> in <a href="#sec_mouse_controls"></a></li>
+                <li>Clarified concepts &amp; expanded description in <a href="#sec_basic_items"></a></li>
+                <li>Significantly clarified crafting in <a href="#sec_crafting"></a>, <a href="#sec_crafting_table"></a>, &amp; <a href="#sec_furnace"></a> (added snippets to the first two)</li>
+                <li>Fixed typographical errors, annotated relevant types, &amp; added minor clarifications</li>
+                <li>Added screenshots of crafting to online view; also available in blackboard</li>
+                <li>Reformatted example code to be in the same form as running in IDLE</li>
+            </ul>
+            <h5 class="star">Support Files</h5>
+            <ul>
+                <li>Standardised parameter names:
+                    <ul>
+                        <li>app.py: <code>create_block(<strong>block_id</strong>)</code>, <code>create_item(<strong>item_id</strong>)</code>
+                        </li>
+                        <li>block.py: <code>get_drops(..., <strong>correct_item_used</strong>)</code> method of
+                            <code>Block</code> &amp; its subclasses
+                        </li>
+                    </ul>
+                </li>
+                <li>Added comments to 100% of provided source code that requires them</li>
+                <li>Moved <code>WorldViewRouter</code> to <code>game.py</code>, and added parameters to
+                    <code>__init__</code>; should now be instantiated in <code>app.py</code> with <code>WorldViewRouter(BLOCK_COLOURS,
+                        ITEM_COLOURS)</code></li>
+                <li>Added <code>Item.get_max_durability</code> method &amp; added durability display to hotbar</li>
+                <li>Fixed items not being picked up when colliding with player</li>
+                <li>Mobs:
+                    <ul>
+                        <li>Renamed <code>creature.py</code> to <code>mob.py</code></li>
+                        <li>Renamed all instances of creature in <code>world.py</code> to mob (case-insensitive)</li>
+                        <li>Added abstract <code>Mob</code> class &amp; example <code>Bird</code> class</li>
+                        <li>Added <code>time_delta</code> &amp; <code>game_data</code> parameters to
+                            <code>PhysicalThing.step</code> to prevent hacky solutions for task3/post-grad
+                        </li>
+                        <li>Moved <code>Player</code>'s health to parent class to share with <code>Mob</code></li>
+                    </ul>
+                </li>
+                <li>Merged <code>geometry.py</code> into <code>core.py</code> (to try and reduce overwhelming number of
+                    files)
+                </li>
+                <li>Added optional parameters <code>collision_types, thing_categories</code> to <code>World</code> in
+                    <code>world.py</code> to simplify post-graduate task
+                </li>
+                <li>Added <code>crafting.py</code> with template for crafting view widget</li>
+            </ul>
+
+        </section>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="index_bundle.js"></script></body>
+
+<!--Holy sheet, this is a big document!-->
+<!--   ¯\_(ツ)_/¯   -->
+
+</html>

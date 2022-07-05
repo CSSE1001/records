@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Martin, Brae Webb">
+    <title>Assignment 3 &mdash; CSSE1001 Semester 2, 2017</title>
+<link href="styles.css" rel="stylesheet"></head>
+<!-- LaTeX? More like LaMeTeX -->
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Dots &amp; Co</h1>
+    <p>Assignment 3<br> CSSE1001/7030<br> Semester 2, 2017</p>
+    <p>Version 1.1.2<br> 25 marks / 30 marks</p>
+    <p>Due Friday 27 October, 2017, 21:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>This assignment provides you the opportunity to apply concepts taught throughout the course to extend
+                    the functionality of a basic dot game, which has been modelled on <a
+                            href="https://www.dots.co/dotsandco/">Dots &amp; Co</a>.
+
+                <p>
+                    The assignment will focus on the concept of Graphical User Interfaces (GUIs). You will be required
+                    to extend the base game with basic, intermediate, and advanced features. Postgraduate students will
+                    have an additional task.
+                </p>
+
+                <p>Students are encouraged to review <a href="https://www.dots.co/dotsandco/">Dots &amp; Co</a>, as well
+                    as other similar games, to better understand how the game is played and for inspiration on advanced
+                    features.</p>
+
+                <p>Because this assignment deals with multiple files, students are encouraged to investigate a more
+                    capable IDE. The author recommends <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>, which
+                    is <a href="https://www.jetbrains.com/student/">free for students</a>.</p>
+            </section>
+
+            <section>
+                <h3>Game Play</h3><a name="sec_gameplay"></a>
+
+
+                <div class="row">
+                    <div class="col s4">
+                        <div class="card">
+                            <div class="card-image">
+                                <div class="hide-print"><img src="public/images/animated/gameplay1_small.gif"></div>
+                                <div class="hide-screen"><img src="public/images/animated/gameplay1_small_freeze.png">
+                                </div>
+                            </div>
+                            <div class="card-content">
+                                <p style="text-align:center;">Game Play Example</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Dots &amp; Co is a simple game where the player tries to create connections between dots on a
+                        grid in order to reach objectives.</p>
+
+                    <p>The player can click on a dot and drag to an adjacent dot (up/down/left/right only) to select a
+                        dot to form a connection, continuing on to another adjacent dot to select it to form another
+                        connection, et cetera. When the player stops dragging and releases, all dots in that have been
+                        selected will be activated and removed. <span data-version="1.1.0">The most basic dots do not have any effect when activated.</span>
+                        Replacements drop down from the cells above, and new dots are generated off-screen.
+                    </p>
+                    <p>
+                        If the player drags back to their second-most-recently selected dot, the most-recently selected
+                        dot is deselected.
+                    </p>
+
+                    <p><span data-version="1.1.0">When the user finishes their selection, if the selection contains a loop,
+                        all dots of the selected kind will also be included in the activation.</span></p>
+
+
+                    <p><em>Shortly after this assignment's release, a link to a video overview will be added here.</em>
+                    </p>
+                </div>
+
+            </section>
+        </section>
+
+
+        <section>
+            <h2 class="header">Assignment Tasks</h2><a name="sec_tasks"></a>
+
+            <section><h3>Task Breakdown</h3><a name="sec_task_breakdown"></a>
+
+                <p>CSSE1001 students will be marked out of 25 and CSSE7030 students will be marked out of 30 based on
+                    the following breakdown. Tasks may be attempted in any order, but it is recommended to follow this
+                    breakdown, top-down. </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Sub&ndash;Task</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Task 1 -->
+                    <tr class="task">
+                        <th rowspan="5"><span>Task 1<br><em>Basic Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>10 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>App Class<br/>
+                        </td>
+                        <td>5 marks</td>
+                    </tr>
+                    <tr>
+                        <td>InfoPanel Class</td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>File Menu/Popup Dialogs</td>
+                        <td>1 mark</td>
+                    </tr>
+                    <tr>
+                        <td>IntervalBar Class</td>
+                        <td>2 marks</td>
+                    </tr>
+
+                    <!-- Task 2 -->
+                    <tr class="task">
+                        <th rowspan="4"><span>Task 2<br><em>Intermediate Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>7 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>CompanionDot</td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Dots</td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Companion</td>
+                        <td>3 mark</td>
+                    </tr>
+
+                    <!-- Task 3 -->
+                    <tr class="task">
+                        <th>
+                            <span>Task 3<br><em>Advanced Features</em></span>
+                        </th>
+                        <td><em>Sophisticated, additional functionality</em></td>
+                        <th><strong>8 marks</strong></th>
+                    </tr>
+
+                    <!-- Postgrad Open-ended -->
+                    <tr class="task">
+                        <th rowspan="3">
+                            <span>Postgraduate<br><em>CSSE7030 only</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>5 marks for CSSE7030;</strong><br><strong>0 marks for CSSE1001</strong></th>
+                    </tr>
+                    <tr>
+                        <td>ActionBar</td>
+                        <td>3 marks</td>
+                    </tr>
+                    <tr>
+                        <td>More Dots &amp; Companions</td>
+                        <td>2 marks</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Mark Breakdown</h3><a name="sec_mark_breakdown"></a>
+
+                For each task, marks will scaled according to the following breakdown.
+
+                <!--TODO: revisit this-->
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Code Quality -->
+                    <tr class="task">
+                        <th rowspan="3" style="max-width: 150px"><span>Code Quality</span>
+                        </th>
+                        <td>Code is readable. Appropriate and meaningful identifier names have been used. Simple and
+                            clear code structure. Repeated code has been avoided.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Code has been simplified where appropriate and is not overly convoluted.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Documented clearly and concisely, without excessive or extraneous comments.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+
+                    <!-- Functionality -->
+                    <tr class="task">
+                        <th rowspan="2">
+                            <span>Functionality</span>
+                        </th>
+                        <td>Components are functional, without major bugs or unhandled exceptions.
+                        </td>
+                        <td><strong>70%</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section>
+                <h3>Getting Started</h3><a name="sec_getting_started"></a>
+                <p>
+                    Before beginning work on the assignment you must download <a
+                        href="https://csse1001.uqcloud.net/assignments/assignment3/a3_files.zip"><code>a3_files.zip</code></a>
+                    provided from the course website.
+                </p>
+                <p>
+                    Inside <a href="https://csse1001.uqcloud.net/assignments/assignment3/a3_files.zip"><code>a3_files.zip</code></a>,
+                    there should be a file called <code>a3.py</code>. This is the file where you will write your
+                    assignment. The other files are support files. These <strong>must not</strong> be edited. Their
+                    purpose is explained below.
+                </p>
+            </section>
+
+            <p>Some tasks require you to submit brief descriptions of features implemented (<a
+                    href="#sec_task2"></a>, <a href="#sec_task3"></a>, <a href="#sec_postgrad"></a>). These descriptions
+                <strong>must</strong> be submitted in a single PDF document called <code>description.pdf</code>
+                &mdash; other formats such as Microsoft Word or misnamed files may not be accepted.</p>
+        </section>
+
+        <section>
+            <h2 class="header">Support Code</h2><a name="sec_support"></a>
+
+            <p>The file <code>a3.py</code> is the main assignment file. This file includes a few hundred lines of code
+                that leverages the support code to help you get started. You must modify &amp; add to this file in order
+                to complete the assignment tasks.</p>
+            <p><em>You are also permitted to create other files to simplify the separation of tasks (i.e.
+                <code>task1.py</code>, <code>task2.py</code>, etc.). If you do this, <code>a3.py</code> must be the
+                entry point to your application. One way to achieve this is to move <code>DotsApp</code> to a separate
+                file, such as <code>base.py</code>. <strong>Regardless of how you structure your files, the code must
+                    all be able to be demonstrated by running <code>a3.py</code></strong></em>.</p>
+
+            <p>You have been supplied with a copious amount of support code to help you complete this assignment. To
+                begin the assignment, you do not need to understand much of this code. As you progress through the
+                tasks, the degree to which you should understand this code will increase.</p>
+
+            <table class="mark-breakdown striped">
+                <thead>
+                <tr>
+                    <th>File</th>
+                    <th>Description</th>
+                    <th>Understanding</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <th>images/companions/</th>
+                    <td>Images of companions</td>
+                    <td>Task 2</td>
+                </tr>
+                <tr>
+                    <th>images/dots/</th>
+                    <td>Images of dots</td>
+                    <td>Task 2</td>
+                </tr>
+                <tr>
+                    <th>modules/</th>
+                    <td>Third&ndash;party libraries</td>
+                    <td>Task 3</td>
+                </tr>
+                <tr data-version="1.1.0">
+                    <th>cell.py</th>
+                    <td>Cell classes</td>
+                    <td>Task 3 (<code>AbstractDot</code> class)</td>
+                </tr>
+                <tr>
+                    <th>companion.py</th>
+                    <td>Companion classes</td>
+                    <td>Task 2 (<code>AbstractCompanion</code> class)</td>
+                </tr>
+                <tr>
+                    <th>dot.py</th>
+                    <td>Dot classes</td>
+                    <td>Task 2 (<code>AbstractDot</code> class)</td>
+                </tr>
+                <tr>
+                    <th>game.py</th>
+                    <td>Modelling classes for the game</td>
+                    <td>Task 2 (<code>DotGrid, DotGame</code> classes)</td>
+                </tr>
+                <tr>
+                    <th>factory.py</th>
+                    <td>Classes to manage creation of dots<span data-version="1.1.0">, cells</span>, etc.</td>
+                    <td>Task 3</td>
+                </tr>
+                <tr>
+                    <th>util.py</th>
+                    <td>Collection of helpful utility functions</td>
+                    <td>Task 2 (<code>ImageManager</code> class)</td>
+                </tr>
+                <tr>
+                    <th>view.py</th>
+                    <td></td>
+                    <td>Task 1 (<code>ObjectivesView</code> class)<br/></td>
+                </tr>
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p><strong>Note:</strong> Only required understanding has been listed. Since task 3 is open-ended, it
+                    would be helpful to have a good understanding of most of the support code to know what can be
+                    leveraged to your advantage.</p>
+            </blockquote>
+
+            <h3>Event Listeners</h3><a name="sec_event_listeners"></a>
+            <blockquote><strong>Note: </strong>In this section, the word function is used to mean anything that is able
+                to be called like a function, such as a method, a lambda, etc. The generic technical term for this is
+                <code>callable</code>.
+            </blockquote>
+            <p>
+
+                The <code>DotGame</code> &amp; <code>GridView</code> classes follow a pattern which allows a function to
+                be attached to an event. When the event is triggered/emitted, the function is called. This function is
+                called a listener or a callback, and this attaching action can also be referred to as binding to or
+                listening for an event. Code that triggers an event can also supply arguments to the event functions.
+            </p>
+            <p>
+                This pattern is called the Event Emitter pattern, and is an implementation of the Observer pattern (the
+                Publisher/Subscriber pattern is similar). It is also an example of a <a
+                    href="https://en.wikipedia.org/wiki/Higher-order_function#Python_2">higher&ndash;order function</a>
+                (the function does the binding accepts the listener function as an argument).
+            </p>
+            <p>
+                While it is also quite a similar approach to how Tkinter handles commands for button presses, the Event
+                Emitter pattern is far more flexible in general, primarily because multiple listeners can be attached to
+                the same event.
+
+            </p>
+            <p>
+                The events emitted by the <code>DotGame</code> &amp; <code>GridView</code> classes are very useful,
+                particularly for creating non-blocking animation. The supplied code binds to every relevant event
+                emitted by these classes. See <code>DotsApp.bind_events</code> in the <code>a3.py</code> file.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Task 1 &ndash; Basic GUI</h2><a
+                name="sec_task1"></a>
+
+            <p>
+                The purpose of this task is to create the basic graphical user interface (GUI) for the Dots game. There
+                are several sub&ndash;tasks that need to be completed for this task. You will be working towards
+                creating the user interface demonstrated below.
+            </p>
+
+            <div class="card">
+                <a name="fig_basic_gui"></a>
+                <div class="card-image">
+                    <div style="height: 2em;">&nbsp;</div>
+                    <!--This was the only thing missing from the final draft, exactly like its placeholder, ironically -->
+                    <!--<img src="public/images/so-close.gif" alt="TODO"/>-->
+                    <img src="public/images/basic-gui_small.png"
+                         srcset="public/images/basic-gui_small.png 1x, public/images/basic-gui.png 2x" alt="TODO"/>
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Basic GUI Example</span>
+                </div>
+            </div>
+
+            <section>
+                <h3>Basic GUI</h3><a name="sec_app"></a>
+
+                <p>You have been supplied with an incomplete implementation of <code>DotsApp</code> to start with. You
+                    should modify this class to implement the required functionality.</p>
+
+                <p>The very first part of this task is to get the app onto the screen. Add your GUI instantiation code
+                    to the <code>main</code> function in <code>a3.py</code></p>
+
+                <p>Next, review the <code>DotsApp</code> class and modify the code as required to implement the basic
+                    GUI.</p>
+
+                <p>The title of the window should be set to something appropriate (i.e. <code>Dots</code>). This also
+                    applies to any window in subsequent tasks.</p>
+                <p>
+
+                    As the basic GUI is improved in subsequent tasks, <strong>the <code>DotsApp</code> class will need
+                    to be modified accordingly</strong>. It is also permitted, to create separate classes for each task
+                    using inheritance &mdash; this is not required.
+                </p>
+            </section>
+
+            <section>
+                <h3>InfoPanel</h3><a name="sec_info_panel"></a>
+
+                <p>
+                    Define a class named <code>InfoPanel</code>, which inherits from <code>tk.Frame</code>. This class
+                    is used to display information to the user, such as their score, remaining moves and objectives,
+                    etc. The <code>InfoPanel</code>'s widgets must: </p>
+                <ol>
+                    <li>be updated whenever <span data-version="1.1.2">necessary</span> (i.e. after the user makes a move
+                        that joins some dots <span data-version="1.1.2">, etc. &ndash; see <code>DotsApp._refresh_status</code></span>),
+                    </li>
+                    <li>be laid out <em>approximately</em> according<a href="#info_panel_layout"><sup>1</sup></a> to <a
+                            href="#fig_basic_gui">Basic GUI Example</a>, and
+                    </li>
+                    <li>contain the following widgets:
+                        <ul class="">
+                            <li data-version="1.1.0"><strong>Remaining Moves <em>(top&ndash;left)</em></strong> A label
+                                to display the number of moves remaining
+                            </li>
+                            <li><strong>Score <em>(top&ndash;left<span data-version="1.1.0">; below &amp; to the right of Remaining Moves</span>)</em>:</strong>
+                                A label to display the user's score, in a larger fontsize
+                            </li>
+                            <li><strong>Objectives <em>(top&ndash;right)</em>:</strong> An instance of <code>ObjectivesView</code>
+                                from <code>view.py</code> to display the objectives and how many of each remain
+                            </li>
+                            <li><strong>Companion <em>(centre)</em>:</strong> An image of a character of your <span
+                                    data-version="1.1.0">choosing</span>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <blockquote>
+                    <p><a name="info_panel_layout"><sup>1</sup></a> Matching the layout of the example precisely can be
+                        achieved far more easily using <a href="http://effbot.org/tkinterbook/grid.htm">Tkinter's Grid
+                            Geometry Manager</a> (instead of pack). Students are permitted to use this if they wish, but
+                        for simplicity, an approximation using pack is equally acceptable.</p>
+                </blockquote>
+
+
+                <p><strong>Note: </strong> For convenience, you should have a setter method for each of the relevant
+                    widgets. I.e. <code>set_score(score)</code>, etc.
+                </p>
+
+
+                <p>The <code>InfoPanel</code> will be expanded in <span data-version="1.1.0"><a
+                        href="#sec_interval_bar"></a> &amp;</span> <a href="#sec_task2"></a>.</p>
+            </section>
+
+
+            <section>
+                <h3>File Menu &amp; Dialogs</h3><a name="sec_menu_dialogs"></a>
+
+                <p>
+                    Implement a menu bar, with a <code>File</code> menu. The File menu should have the following
+                    entries:
+                </p>
+                <ul>
+                    <li><code>New Game</code>: Restarts the game</li>
+                    <li><code>Exit</code>: Exits the application</li>
+                </ul>
+
+                <p>When the user attempts to exit the application, either by the file menu or otherwise, they should
+                    first be prompted with a dialog to confirm that they indeed want to quit the application. Further,
+                    when the game is over, the user should be shown a dialog informing them of the outcome (either win
+                    or loss).</p>
+
+                <p><strong>Note:</strong> On Mac OS X, the file menu should appear in the global menu bar (top of the
+                    screen).</p>
+            </section>
+
+            <section>
+                <h3>IntervalBar</h3><a name="sec_interval_bar"></a>
+
+
+                <div class="card">
+                    <a name="fig_interval_bar"></a>
+                    <div class="card-image">
+                        <div style="height: 2em;">&nbsp;</div>
+                        <!--This is what writing the table felt like :/-->
+                        <!--<img src="public/images/css.gif" alt="TODO"/>-->
+                        <table class="interval-bar"
+                               style="width: calc(100% - 4em); position: relative; margin: 0 auto;">
+                            <tbody>
+                            <tr>
+                                <td style="width: 16%;" class="filled">&nbsp;</td>
+                                <td style="width: 16%;" class="filled">&nbsp;</td>
+                                <td style="width: 16%;">&nbsp;</td>
+                                <td style="width: 16%;">&nbsp;</td>
+                                <td style="width: 16%;">&nbsp;</td>
+                                <td style="width: 16%;">&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Interval Bar Example</span>
+                        <p style="text-align: center">Progress 2/6</p>
+                    </div>
+                </div>
+
+                <p>Implement a class, <code>IntervalBar</code>, which inherits from <code>tk.Canvas</code>. This class
+                    should display a horizontal progress bar with vertical lines dividing each <code>step</code>,
+                    allowing the user to see progress from <code>0, 1, &hellip;, steps-1, steps</code>, inclusive. For
+                    example, in <a
+                            href="#fig_interval_bar">Interval Bar Example</a> above, there are 6 steps and the current
+                    progress is 2.</p>
+
+                <p>Add the interval bar to the application and increase its progress every time the user makes a move.
+                    When maximum progress is reached, reset the progress to for the next turn <span data-version="1.1.2">(it can start at 0 or 1)</span>.</p>
+
+                <p><code>IntervalBar</code> must be a subclass of <code>tk.Canvas</code>. <a
+                        href="https://docs.python.org/3/library/tkinter.ttk.html"><code>tkinter.ttk.Progressbar</code></a>
+                    must not be used.</p>
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 2 &ndash; Intermediate Features</h2><a
+                name="sec_task2"></a>
+
+            <p>
+                The purpose of this task is to extend the functionality of the basic GUI by adding additional dots and
+                companion functionality.
+            </p>
+
+            <p>
+                Companions are helpful side characters that can be activated to perform a special ability. Every time a
+                companion dot is activated, the companion is charged (by one). When a companion is fully charged, their
+                ability is activated. Once activated, a companion's charge is reset to zero, ready to be charged again.
+                By default, a companion is fully charged when it has been charged six times.
+            </p>
+
+            <p>Add another item to the file menu to allow the user to choose between a New Game either with or without a
+                companion.</p>
+
+            <section>
+                <h3>Companion Dot</h3><a name="sec_companion_dot"></a>
+
+                <div class="row">
+
+                    <div class="col s4">
+                        <div class="card">
+                            <div class="card-image">
+
+                                <div style="height: 2em;">&nbsp;</div>
+                                <img src="public/images/dots/companion/1.png" width="80" height="80">
+                            </div>
+                            <div class="card-content">
+                                <p style="text-align:center;">Companion Dot</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <p>Implement the CompanionDot class by extending <code>BasicDot</code> in <code>game.py</code>, and
+                        include it in your game.</p>
+
+                    <p>It may be helpful to use <code>CompanionGame</code> from the <code>game.py</code> file. During
+                        development of the companion dot, it may be helpful to use <code>UselessCompanion</code>. A
+                        custom companion will be implemented in the next section.</p>
+
+                </div>
+            </section>
+
+            <section>
+                <h3>Dot &amp; Companion</h3><a name="sec_companion_and_dots"></a>
+                <p>Implement the following, and add them to your game:</p>
+
+                <ul>
+                    <li>Any <span data-version="1.1.0"><strong>one</strong> dot</span> from <a
+                            href="#sec_dot_options"></a></li>
+                    <li>Any <strong>one</strong> companion from <a href="#sec_companion_options"></a></li>
+                </ul>
+
+                <p>Some companions require a certain type of dot (i.e. when activated they may place a special type of
+                    dot). If you choose such a companion, you should choose the dot it requires as one of your dots.</p>
+
+                <p>You should also add an <code>IntervalBar</code> to your <code>InfoPanel</code> and update it to show
+                    how much charge the companion has after each move <span data-version="1.1.2">(this replaces the <code>IntervalBar</code> added to the application in <a href="#sec_task1"></a>)</span>. </p>
+
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 3 &ndash; Advanced Features</h2><a
+                name="sec_task3"></a>
+            <p>
+                This task is open ended. It is up to you to decide what to do for this task. Marks will be awarded based
+                on the sophistication of the features you choose to implement. Ensure that you consult with course staff
+                before you commence this task to ensure that the features are sufficiently sophisticated.
+            </p>
+            <p>
+                You are encouraged to utilize extra Python modules to help you implement your desired functionality.
+            </p>
+
+
+            <h3>Description Document</h3><a name="sec_description"></a>
+
+            <p>
+                You must also submit a brief description of the features you have implemented for this task. This must
+                be included in <code>description.pdf</code>, along with any other required descriptions &mdash;
+                see <a href="#sec_submission"></a>.
+
+                The description for this task should also contain an outline of any third party Python modules you have
+                used, and instructions on how to install them. For example if you have used Pillow module, then the
+                following would be sufficient:
+            </p>
+
+            <blockquote>Version 4.2.1 of Pillow has been used. Install the Pillow module with pip using the command:<br>
+                <code>pip install Pillow</code>
+            </blockquote>
+
+            <p>If using multiple third&ndash;party libraries, it is a good idea to list their names and versions first,
+                using bullet points, and then provide specific installation instructions afterwards.</p>
+
+            <p><strong>Be sure to format the description document neatly to ensure that the marker can quickly scan the
+                document for relevant information (i.e. by using larger, bold headings, vertical whitespace between
+                sections, section numbers, etc.).</strong></p>
+
+            <h3>Suggestions</h3><a name="sec_suggestions"></a>
+
+            <ul>
+                <li>Saving and loading a game</li>
+                <li>Background music/event sounds</li>
+                <li>Additional dots &amp; companions</li>
+                <li>Campaign style storyline</li>
+                <li>Various animations</li>
+            </ul>
+
+            <p><em>These suggestions are not necessarily equal in difficulty, and the complexity will likely vary based
+                upon the particular implementation. Students should discuss potential features with course staff prior
+                to implementing them, to get feedback on the sophistication.</em></p>
+        </section>
+
+        <section>
+            <h2 class="header">Post&ndash;Graduate &mdash; CSSE7030 Only</h2><a
+                name="sec_postgrad"></a>
+
+            <p>This task is only required for CSSE7030 students. CSSE1001 students are permitted to attempt this task,
+                but will be not be awarded marks for it. Along with functionality &amp code quality, robustness of code
+                design will be a major factor in the awarding of marks.</p>
+
+
+            <section>
+                <h3>Action Bar</h3><a name="sec_action_bar"></a>
+
+                <div class="card">
+                    <a name="fig_basic_gui"></a>
+                    <div class="card-image">
+                        <div style="height: 2em;">&nbsp;</div>
+                        <img src="public/images/action-bar.png" alt="TODO"/>
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Action Bar Example</span>
+                    </div>
+                </div>
+
+                <p>The action bar will allows the user access to special actions. Implement the <code>ActionBar</code>
+                    class, which inherits from <code>tk.Frame</code> and add it to your game.
+                </p>
+
+                <ol>
+                    <li>be placed at the bottom of the window, below the game grid,</li>
+                    <li>be laid out reasonably, and</li>
+                    <li>have a button that activates its action when clicked, for <span data-version="1.1.0">any two (at least)</span>
+                        of the following actions:
+                        <ul>
+                            <li>Companion Charge: Immediately activates the companion</li>
+                            <li>Colour Remover: Immediately <span data-version="1.1.0">activates (&amp; removes)</span>
+                                all dots of a random kind (colour)
+                            </li>
+                            <li>Eraser<sup>*</sup>: Allows the user to choose any one dot; <span data-version="1.1.0">activates (&amp; removes)</span>
+                                that dot
+                            </li>
+                            <li>Axial Bomb<sup>*</sup>: Allows the user to choose any dot; <span data-version="1.1.0">activates (&amp; removes)</span>
+                                that dot along with all dots in the same row &amp; column
+                            </li>
+                        </ul>
+                        <em>(actions marked with <sup>*</sup> are more difficult to implement)</em>
+                    </li>
+                </ol>
+
+                <p>The user should only be able to activate each action once per game.</p>
+
+                <p><em>It is worth noting the overlap of functionality between these actions and the <a
+                        href="#penguin_companion">Penguin</a> companion &amp; <a
+                        href="#beam_dot">BeamDot</a>.</em>
+                </p>
+
+            </section>
+
+            <section>
+                <h3>More Dots &amp; Companions</h3><a name="sec_more_dots_and_companions"></a>
+
+                <p>Implement the following:</p>
+
+                <ul>
+                    <li>Any <strong>two</strong> additional dots from <a href="#sec_dot_options"></a></li>
+                    <li>Any <strong>two</strong> additional companions from <a href="#sec_companion_options"></a>
+                    </li>
+                </ul>
+
+                <p>Add a way for the user to choose the companion they want to play with (i.e. a separate menu item for
+                    each companion).</p>
+
+                <p>Be sure to include a brief description of these in <code>description.pdf</code> &mdash see <a
+                        href="#sec_submission"></a></p>
+            </section>
+
+
+        </section>
+
+
+        <section>
+            <h2>Dot &amp; Companion Options</h2><a name="sec_dot_and_companion_options"></a>
+
+            <p>If any any dots or companions are implemented, the submission must include a brief description of what
+                has been implemented. This must be included in <code>description.pdf</code> &mdash; see <a
+                        href="#sec_submission"></a></p>
+
+            <p data-version="1.1.0">Students may use the supplied images for dots/companions, but may also use images of
+                their own choosing.</p>
+
+            <p>Students are also permitted to implement dots/companions of their own choosing, but should discuss this
+                with course staff prior to doing so.</p>
+
+            <p>Any dots implemented <strong>must inherit</strong> from <code>AbstractDot</code> (or one of its
+                subclasses) in the <code data-version="1.1.0">dot.py</code> file. Similarly, any companions implemented
+                <strong>must inherit</strong> from <code>AbstractCompanion</code> (or one of its subclasses) in the
+                <code data-version="1.1.0">companion.py</code> file. <strong>This is very important</strong>, as these
+                <code>Abstract</code> classes define a common interface with all dots/companions (i.e. one can expect
+                that any method defined on <code>AbstractDot</code> will also be available on any type of Dot class).
+            </p>
+
+            <section>
+                <h3>Dot Options</h3><a name="sec_dot_options"></a>
+
+                <p>For the following descriptions, the term <code>adjacent dots</code> includes dots that are diagonally
+                    adjacent.</p>
+
+                <div class="row flex-container">
+                    <div class="col s12 m6 l4">
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">ButterflyDot<a name="butterfly_dot"></a></span>
+                                <p>A butterfly dot starts in a cocoon. The first time an adjacent dot is connected, the
+                                    coocoon cracks. The second time, the butterfly emerges. The third time, the
+                                    butterfly dot is activated. When a butterfly dot is activated, it activates all dots
+                                    a 3-by-3 area around itself. A butterfly dot cannot be selected.</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/butterfly-0.png" width="64" heigh="64">
+                                    <img src="public/images/dots/butterfly-1.png" width="64" heigh="64">
+                                    <img src="public/images/dots/butterfly-2.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">AnchorDot<a name="anchor_dot"></a></span>
+                                <p>Anchor dots are activated when they reach the bottom of the grid (the lowest row in
+                                    their column). Anchor dots cannot be selected.</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/anchor.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">BalloonDot<a name="balloon_dot"></a></span>
+                                <p>Balloon dots appear along the bottom row of the grid, instead of the top. After each
+                                    turn a balloon dot will swap positions with the dot above it. When a Balloon dot
+                                    reaches the top row, it will be activated. Balloon dots cannot be selected.</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/balloon.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">TurtleDot<a name="turtle_dot"></a></span>
+                                <p>After each turn the turtle randomly swaps with an adjacent dot. When a dot adjacent
+                                    to the turtle is connected the turtle hides in its shell. When hiding the turtle
+                                    does not move and if another adjacent dot is connected it be activated.</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/turtle.png" width="64" heigh="64">
+                                    <img src="public/images/dots/shell.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title"
+                                      onclick="javascript:window.open('https://youtu.be/0d5eP0wWLQY')">FlowerDot<a
+                                        name="flower_dot"></a></span>
+                                <p>When a flower dot is activated, it will automatically connect to all adjacent dots
+                                    within its reach that are of the same kind (colour).</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/flower/1.png" width="64" heigh="64">
+                                    <img src="public/images/dots/flower/2.png" width="64" heigh="64">
+                                    <img src="public/images/dots/flower/3.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">SwirlDot<a name="swirl_dot"></a></span>
+                                <p>When activated, the swirl dot changes the kind (colour) of adjacent dots to its
+                                    kind.</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/swirl/1.png" width="64" heigh="64">
+                                    <img src="public/images/dots/swirl/2.png" width="64" heigh="64">
+                                    <img src="public/images/dots/swirl/3.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">BeamDot<a name="beam_dot"></a></span>
+                                <p>Beam dots can be orientated horizontally, vertically, or both. When a beam dot is
+                                    activated, it will activate all dots along the same horizontal and vertical axis</p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/beam/x/1.png" width="64" heigh="64">
+                                    <img src="public/images/dots/beam/xy/2.png" width="64" heigh="64">
+                                    <img src="public/images/dots/beam/y/3.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4">
+
+                        <div class="dot card">
+                            <div class="card-content">
+                                <span class="card-title">WildcardDot<a name="wildcard_dot"></a></span>
+                                <p><em>Included in <code>dot.py</code></em></p>
+                                <p>Wildcard dots do not have a kind (colour), but can be connected to any other kind of
+                                    dot. </p>
+
+                                <span class="images">
+                                    <img src="public/images/dots/wildcard.png" width="64" heigh="64">
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <div data-version="1.1.0"><h3>Companion Options</h3><a name="sec_companion_options"></a></div>
+
+                <div class="row flex-container">
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title">EskimoCompanion<a name="eskimo_companion"></a></span>
+                                <p>Randomly places a few <a href="#swirl_dot">swirl dots</a> on the grid.</p>
+
+                                <p>Requires: <a href="#swirl_dot">SwirlDot</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title">BuffaloCompanion<a name="buffalo_companion"></a></span>
+                                <p>Randomly places a few <a href="#wildcard_dot">wildcard dots</a> on the grid.</p>
+
+                                <p>Requires: <a href="#wildcard_dot">WildcardDot</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title"
+                                      onclick="javascript:window.open('https://youtu.be/mCDA-m-TQdU')">CaptainCompanion<a
+                                        name="captain_companion"></a></span>
+                                <p>Randomly places a few <a href="#beam_dot">beam dots</a> on the grid.</p>
+
+                                <p>Requires: <a href="#beam_dot">BeamDot</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title">AristotleCompanion<a name="aristotle_companion"></a></span>
+                                <p>Randomly places a few <a href="#butterfly_dot">butterfly dots</a> on the grid.</p>
+
+                                <p>Requires: <a href="#butterfly_dot">ButterflyDot</a></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title"
+                                      onclick="javascript:window.open('https://youtu.be/xxnv_5ONaHE')">DeerCompanion<a
+                                        name="deer_companion"></a></span>
+                                <p>Randomly places a square of dots on the grid. The dots will be the kind (colour) of
+                                    the most common kind on the board.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title"
+                                      onclick="javascript:window.open('https://youtu.be/nlYlNF30bVg')">GoatCompanion<a
+                                        name="goat_companion"></a></span>
+                                <p>Randomly selects a few dots and changes their kind (colour) to the most common kind
+                                    of dot on the grid.</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col s12 m6 l4 xl3">
+                        <div class="dot card">
+                            <!--<div class="card-image">-->
+                            <!--<div style="height: 2em;">&nbsp;</div>-->
+                            <!--<img src="public/images/companions/penguin.png">-->
+                            <!--</div>-->
+                            <div class="card-content">
+                                <span class="card-title"
+                                      onclick="javascript:window.open('https://youtu.be/uJlWLVgozVs')">PenguinCompanion<a
+                                        name="penguin_companion"></a></span>
+                                <p>Selects a random kind (colour) of dot from the grid, and activates all dots of that
+                                    kind.</p>
+
+                                <p><em>This is the most difficult companion, because it requires animation</em></p>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+
+            <p>
+                <strong>Note:</strong> There will not be a practical interview for the third assignment.
+            </p>
+
+            <p>Your assignment must be submitted via the assignment three submission link on Blackboard.
+
+                You must submit a zip file, <code>a3.zip</code>, containing <code>a3.py</code> and all the files
+                required to run your application <span data-version="1.1.0">(including images)</span>. You may omit the
+                support code &mdash; if you do so, the most recent version will be used. If you have attempted a
+                relevant task, this zip file must also contain your <code>description.pdf</code> file.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. In the event of exceptional
+                circumstances, you may submit a request for an extension.
+            </p>
+
+            <p>
+                All requests for extension must be submitted on the UQ Application for Extension of Progressive
+                Assessment form: <a
+                    href="http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf">http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf</a>
+                <strong>at least 48 hours prior</strong> to the submission deadline. The application and supporting
+                documentation must be submitted to the ITEE Coursework Studies office (78&ndash;425) or by email to <a
+                    href="mailto:enquiries@itee.uq.edu.au">enquiries@itee.uq.edu.au</a>.
+            </p>
+        </section>
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <p>Any changes to this document will be listed here.</p>
+
+            <section data-version-details="1.1.2">
+                <h4 class="star"><span data-version="1.1.2">Version 1.1.2 - October 25</span></h4>
+                <ul>
+                    <li>
+                        Bugfixes:
+                        <ul>
+                            <li>Game moves no longer hardcoded to 20</li>
+                            <li>Corrected return type in <code>AbstractDot.activate</code>'s docstring</li>
+                            <li>Fixed missing objectives after reset</li>
+                        </ul>
+                    </li>
+                    <li>Made size optional for <code>load_image</code> functions and moved to <code>util.py</code></li>
+                    <li>Clarified <code>IntervalBar</code> in <a href="#sec_interval_bar"></a> &amp; <a href="#sec_companion_and_dots"></a></li>
+                    <li>Clarified when <a href="#sec_info_panel"></a> should be updated</li>
+                </ul>
+            </section>
+
+            <section data-version-details="1.1.1">
+                <h4 class="star"><span data-version="1.1.1">Version 1.1.1 - October 8</span></h4>
+                <ul>
+                    <li>
+                        Added <code>CompanionGame</code> class to <code>game.py</code>
+                    </li>
+                </ul>
+            </section>
+
+            <section data-version-details="1.1.0">
+
+                <h4 class="star"><span data-version="1.1.0">Version 1.1.0 - October 8</span></h4>
+                <p>
+                    <a class="btn btn-floating pulse hide-print"
+                       onclick="javascript:$(this).removeClass('pulse')">!!!</a> It is recommended that you <strong>immediately</strong>
+                    update your support code, download the new <code>a3.py</code> and copy your progress into it
+                </p>
+                <h5 class="star">Assignment Sheet</h5>
+                <ul>
+                    <li>Fixed typographical errors</li>
+                    <li>Added images to <a href="#sec_dot_options"></a></li>
+                    <li>Added <a href="#sec_companion_options"></a></li>
+                    <li>Reduced difficulty: <br><em>Any extras previously implemented will count towards <a
+                            href="#sec_task3"></a></em>
+                        <ul>
+                            <li>Reduced to one dot (from two) in <a href="#sec_companion_and_dots"></a></li>
+                            <li>Reduced to two actions (from four) in <a href="#sec_action_bar"></a></li>
+                        </ul>
+                    </li>
+                    <li>Added description of Remaining Moves label in <a href="#sec_info_panel"></a></li>
+                </ul>
+                <h5 class="star">Support Code</h5>
+                <ul>
+                    <li>Significantly improved animation mechanics (heavy modifications to <code>game.py</code>) and
+                        dependencies
+                    </li>
+                    <li><code>dot.py</code>:
+                        <ul>
+                            <li><code>AbstractDot</code>: Removed <code>__eq__</code>; Added <code>after_resolved</code>,
+                                <code>can_connect</code>, <code>will_be_removed</code>, <code>PRIORITY</code></li>
+                            <li>Added <code>AbstractKindlessDot</code>, <code>WildcardDot</code></li>
+                        </ul>
+                    </li>
+                    <li>Tweaked <code>AbstractCompanion.activate</code>'s docstring (added yield)</li>
+
+                    <li>Corrected docstring for <code>ObjectivesView.draw</code></li>
+                    <li>Major modifications to <code>a3.py</code>:
+                        <ul>
+                            <li>Added some suggestions (search file for "useful")</li>
+                            <li>Renamed <code>DotsApp._score</code> to <code>_refresh_status</code> and removed
+                                parameter
+                            </li>
+                            <li>Removed <code>DotsApp._animate,</code> <code>remove</code></li>
+                            <li>Other modifications: <code>DotsApp._connect</code>, <code>_drag</code>,
+                                <code>_drop</code></li>
+                            <li>Events: Removed <code>activate</code>, <code>animate</code>; Added <code>reset</code>
+                            </li>
+                        </ul>
+                    </li>
+                    <li>Added animation delays for each step type (see <code>ANIMATION_DELAYS</code> in
+                        <code>a3.py</code>)
+                    </li>
+                    <li>Moved some classes from <code>game.py</code> to <code>cell.py</code>, <code>factory.py</code>
+                    </li>
+                </ul>
+
+            </section>
+
+        </section>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="index_bundle.js"></script></body>
+
+<!--Holy sheet, this is a big document!-->
+<!--   ¯\_(ツ)_/¯   -->
+
+</html>

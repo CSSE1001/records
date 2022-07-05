@@ -1,0 +1,423 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Peter O'Shea">
+    <title>A3 CSSE1001/7030 Semester 2, 2018</title>
+
+    <link rel="stylesheet" href="style/index.css" type="text/css">
+</head>
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Queue</h1>
+    <p>Assignment 3<br> CSSE1001/7030<br> Semester 2, 2018</p>
+    <p>Version 1.0.1<br> 25 marks </p>
+    <p>Due <span data-version="1.0.1">Monday</span> 22nd October, 2018, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>
+                    This assignment will give you an opportunity to create a Graphical User Interface (GUI) and to apply
+                    the techniques for designing good software that you have been learning in class.
+                </p>
+
+                <p>
+                    Part 1 of the assignment requires you to create a queueing application to mimic the one that is used
+                    currently for CSSE1001/7030 pracs.
+                </p>
+
+                <p>
+                    An example of what this queue should look like is below
+                </p>
+
+                <div class="card">
+                    <a name="fig_basic_gui"></a>
+                    <div class="card-image">
+                        <img src="public/images/base.png"
+                             alt="Image of Basic GUI Example">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Basic GUI Example</span>
+                    </div>
+                </div>
+
+                <p>
+                    Unlike the existing web queue, however, the application you write is to be a desktop application,
+                    rather than a web application. It must be written entirely in python using tkinter. You are not
+                    required to make the application work with multiple users over a network.
+                </p>
+
+                <p>
+                    The GUI in your software is to have the same labels, buttons and text as the existing web
+                    application, but the "Request Help" buttons will have slightly different functions. When a user
+                    presses either the "Request Quick Help" button or "Request Long Help" button, the application must
+                    display a dialog box which asks the user for their name. Once they have entered their name, the
+                    application should join the user to the queue, display their name on the screen, and regularly
+                    update the amount of time they have been waiting on the queue (roughly once every ten seconds).
+                    Further, the "Questions Asked" heading really refers to the questions answered since opening the
+                    application, and is tracked separately for quick & long help.
+                </p>
+
+                <p>
+                    <span data-version="1.0.1">
+                        Note that mac and linux users may experience issues using the background/bg keyword with buttons.
+                        Your assignment only needs to work on the windows computers in the lab.
+                        Interested students can investigate highlightbackground as an alternative.
+                    </span>
+                </p>
+
+                <p>
+                    When a student is added to the queue, they must be added in such a way that no student who has asked
+                    a greater number of questions is placed ahead of them. A student may be removed from the queue by either pressing the red button - voluntarily cancelling their request, or by pressing the green button - marking the request as accepted.
+                </p>
+
+            </section>
+
+            <section>
+                <h2 class="header">Part One</h2><a name="sec_part_one"></a>
+
+                <section>
+                    <h3 class="header">Queue Header</h3><a name="sec_queue_header"></a>
+
+                    <p>
+                        The first task when implementing part 1 of the assignment is to create a GUI for the top half of
+                        the queue. The half includes the yellow notice at the top, the blue and green headers for each
+                        type of question, a list of example questions and buttons for requesting help. The text for each section must match exactly.
+                    </p>
+
+                    <p>
+                        An example of this is shown below.
+                    </p>
+
+                    <div class="card">
+                        <a name="fig_basic_gui"></a>
+                        <div class="card-image">
+                            <img src="public/images/header.png"
+                                 alt="Image of Basic GUI Example">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Queue Header</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="header">Student Queue</h3><a name="sec_student_queue"></a>
+
+                    <p>
+                        The second task is to implement a table that lists students in a queue. This section should have
+                        the base functionality of being able to add students to the queue by clicking the request help
+                        button. It should also have the ability to remove students from the queue by clicking either the
+                        red button or the green button.
+                    </p>
+
+                    <p>
+                        To receive marks for this section you do not need to implement the functionality listed in the
+                        functionality section. This means that the "Questions Asked" and "Time" columns may contain the
+                        placeholders of "0" and "a few seconds" respectively.
+                    </p>
+
+                    <p>
+                        The screen output from performing this task is shown below.
+                    </p>
+
+                    <div class="card">
+                        <a name="fig_basic_gui"></a>
+                        <div class="card-image">
+                            <img src="public/images/queue.png"
+                                 alt="Image of Basic GUI Example">
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Student Queue</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section>
+                    <h3 class="header">Full Queue Functionality</h3><a name="sec_functionality"></a>
+
+                    <p>
+                        The final task of part 1 is to implement the full functionality of the queue (minus networking).
+                        This functionality is documented below.
+                    </p>
+
+                    <ul class="browser-default">
+                        <li>
+                            Keep track of how many times a question has been asked by the same student since opening the
+                            application. This number should be tracked separately for each queue and should not be
+                            updated if they were removed by clicking the red button.
+                        </li>
+                        <li>
+                            Keep track of the approximate time a student has been waiting on the queue according to the following table. Where <code>X</code> is used in the display, the value should be rounded down - i.e. a wait time of 13:37 should be displayed as "13 minutes ago".
+                            <table class="striped">
+                                <thead>
+                                <tr>
+                                    <th>Wait Time</th>
+                                    <th>Display</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>< 1 minute</td>
+                                    <td>a few seconds ago</td>
+                                </tr>
+                                <tr>
+                                    <td>< 2 minutes</td>
+                                    <td>a minute ago</td>
+                                </tr>
+                                <tr>
+                                    <td>< 1 hour</td>
+                                    <td><code>X</code> minutes ago</td>
+                                </tr>
+                                <tr>
+                                    <td>< 2 hours</td>
+                                    <td>1 hour ago</td>
+                                </tr>
+                                <tr>
+                                    <td>>= 2 hours</td>
+                                    <td><code>X</code> hours ago</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </li>
+                        <li>
+                            Prevent the same student from joining multiple times
+                        </li>
+                        <li>
+                            Display the average wait time for the queue, e.g. An average wait of about 12 minutes for 2
+                            students.
+                        </li>
+                        <li>
+                            Order the queue first by "Questions Asked" in descending order, then by "Time" in ascending
+                            order. I.e. Students who have asked fewer questions should be placed to the top. If two
+                            students have asked the same number of questions, the one who has waited longer should be
+                            placed to the top.
+                        </li>
+                    </ul>
+
+                    <p>
+                        In order to keep track of how long students have been waiting on the queue, you should record a
+                        timestamp using the <a href="https://docs.python.org/3.6/library/time.html"><code>time</code> module</a>. You must not base the accuracy of your timing on
+                        assumed time waited by tkinter's after method - <code>.after(10000, ...)</code> is only guaranteed to
+                        wait <strong>at least</strong> ten seconds.
+                    </p>
+                </section>
+
+            </section>
+
+            <section>
+                <h2 class="header">Part Two: Additional Features</h2><a name="sec_additional_features"></a>
+
+                <p>
+                    Part 2 of the assignment requires you to add one or more new features to the software developed in
+                    Part 1. To obtain a 7 in CSSE1001/7030, you must obtain more than 50% of the marks for Part 2 of the
+                    Assignment.
+
+                    It is up to you which additional feature(s) you add, but it must be substantial enough to
+                    demonstrate your expertise in writing software.
+
+                    Some suggested example features are:
+
+                </p>
+
+                <ol class="browser-default">
+                    <li>
+                        A python internet based queue
+                    </li>
+                    <li>
+                        Provision of a game which the user can play while they are waiting to have their questions
+                        answered
+                    </li>
+                </ol>
+
+                <p>
+                    All additional features must be written in Python. To appraise the suitability of a given additional
+                    feature, you are advised to consult with tutors or post a private query on Piazza.
+                </p>
+
+                <p>
+                    For Part 2 of the Assignment you must also submit a pdf document which describes the additional
+                    feature(s) you have implemented, a brief user manual on the how to interact with your additional
+                    feature software, and the approach you took to writing the code.
+                </p>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Masters Task</h2><a name="sec_masters"></a>
+
+            <p>
+                Masters students (i.e. CSSE7030 students) must do an additional task. They must implement a new top
+                level window to display statistics about the history of questions that have been asked.
+            </p>
+
+            <p>
+                The style is left up to the discretion of the student and your window will be marked on the
+                sophistication of the styling of the window. The window must display at least the following information:
+            </p>
+
+            <ul class="browser-default">
+                <li>
+                    A leader board of students who have asked the most questions for both types of questions. It should
+                    display a minimum of 10 students for each.
+                </li>
+                <li>Mean wait time for both types of questions.</li>
+                <li>Median wait time for both types of questions.</li>
+                <li>Mode wait time for both types of questions.</li>
+            </ul>
+
+            <p>
+                Part marks can be earned for the style of the window without having it implemented correctly.
+            </p>
+
+        </section>
+
+        <section name="criteria">
+            <h2 class="header">Criteria</h2><a name="sec_criteria"></a>
+
+            <table class="striped bordered">
+                <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th>Mark</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <th>Queue Header</th>
+                    <th>10</th>
+                </tr>
+                <tr>
+                    <td>Header Mimics Look</td>
+                    <td>8</td>
+                </tr>
+                <tr>
+                    <td>Style &amp; Documentation</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <th>Student Queue</th>
+                    <th>5</th>
+                </tr>
+                <tr>
+                    <td>Queue Mimics Look</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>Style &amp; Documentation</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <th>Full Queue Functionality</th>
+                    <th>6</th>
+                </tr>
+                <tr>
+                    <td>Queue Functions As Expected</td>
+                    <td>4</td>
+                </tr>
+                <tr>
+                    <td>Style &amp; Documentation</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <th>Extension</th>
+                    <th>4</th>
+                </tr>
+                <tr>
+                    <td>Sophistication of Style</td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <td>Functionality of Window</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <th>Total</th>
+                    <th>/25</th>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <p>
+                * The masters task will be worth 20% of their overall grade. Undergraduates can implement the masters
+                task but will receive no marks.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a name="sec_submission"></a>
+
+            <p>
+                Your assignment must be submitted via the assignment three submission link on Blackboard.
+
+                You must submit a file, <code>a3.zip</code>, containing your submission for this assignment. The zip
+                file must contain a file called <code>a3.py</code> which, when run, will display your application.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment well before the
+                submission deadline of 8:30pm. Your latest, on time, submission will be marked. Ensure that you submit
+                the correct version of your assignment. In the event of exceptional circumstances, you may submit a
+                request for an extension. See the <a
+                    href="http://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=92705">course
+                profile</a> for details of how to apply for an extension.
+            </p>
+
+            <p>
+                Requests for extensions must be made <strong>no later</strong> than 48 hours prior to the submission
+                deadline. The expectation is that with less than 48 hours before an assignment is due it should be
+                substantially completed and submittable. Applications for extension, and any supporting documentation
+                (e.g. medical certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must
+                retain the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+            <p><span data-version="1.0.1">Version 1.0.1 - October 2nd</span></p>
+            <ul class="browser-default">
+                <li>Changed due date to the correct day of the week.</li>
+                <li>Clarified that the GUI only needs to work on the lab computers.</li>
+                <li>Fixed screenshot to include average wait times.</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
+<script type="text/javascript" src="index.js"></script>
+
+</body>
+
+</html>

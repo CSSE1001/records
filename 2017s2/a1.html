@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 1 - CSSE1001 Semester 2, 2017</title>
+</head>
+<!-- LaTeX? More like LaMeTeX -->
+<link rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+<link rel="stylesheet"
+      href="http://materializecss.com/css/ghpages-materialize.css">
+
+<style>
+    header, main, footer {
+        padding: 0;
+    }
+
+    h2 {
+        font-size: 3.026rem
+    }
+
+    h3 {
+        font-size: 2.482rem;
+    }
+
+    h4 {
+        font-size: 1.938rem;
+    }
+
+    .mark-breakdown tbody tr.task th em {
+        font-weight: normal;
+    }
+
+    .mark-breakdown tbody tr.task th {
+        text-align: center;
+        /*display: inline-block;*/
+    }
+
+    .mark-breakdown tbody tr.task {
+        border-top: 1px solid #d0d0d0;
+    }
+
+    .mark-breakdown thead tr th {
+        text-align: center;
+    }
+
+    tbody tr td {
+        padding: 0.8em;
+    }
+
+    h2, h3, h4, h5, h6 {
+        padding-top: 1.5rem;
+    }
+
+    .highlight-changes [data-version="1.1.2"] {
+        background-color: #e69bc6;
+    }
+
+    .highlight-changes [data-version="1.1.1"] {
+        background-color: #e6b49c;
+    }
+
+    .highlight-changes [data-version="1.1.0"] {
+        background-color: #B1D3E6;
+    }
+
+    .highlight-changes [data-version="1.0.1"] {
+        background-color: #E6E5B1;
+    }
+
+    ul.browser-default {
+        padding-left: 2rem;
+    }
+
+    ul.browser-default li {
+        list-style-type: initial;
+    }
+
+    .container p {
+        text-align: justify;
+    }
+
+    li {
+        margin-bottom: 0.8em;
+    }
+
+    pre {
+        white-space: pre-wrap; /* Since CSS 2.1 */
+        white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+        white-space: -o-pre-wrap; /* Opera 7 */
+        word-wrap: break-word; /* Internet Explorer 5.5+ */
+    }
+
+    a[name] {
+        position: relative;
+        display: block;
+        top: -70px;
+    }
+
+    .card .card-image img {
+        width: auto;
+        margin: 0 auto;
+        max-width: 100%;
+    }
+
+    .card .card-title {
+        text-align: center;
+    }
+
+    #table-1 th,
+    #table-1 td {
+        border: 1px solid #d0d0d0;
+    }
+
+    #table-1 tbody td:nth-child(8) {
+        text-align: right;
+    }
+
+    table thead th {
+        text-align: center;
+    }
+
+    #table-1 tbody tr:nth-child(odd) td.guess {
+        background-color: #b3e5fc; /* light-blue lighten-4 */
+    }
+
+    #table-1 tbody tr:nth-child(even) td.guess {
+        background-color: #e1f5fe; /* light-blue lighten-5 */
+    }
+
+
+</style>
+
+<style media="print">
+    h2, h3, h4, h5, h6 {
+        padding-top: 0;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+    .highlight-changes [data-version] {
+        background-color: transparent;
+    }
+
+    #sec_change_log .input-field {
+        display: none;
+    }
+
+</style>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+<script src='https://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML'></script>
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    tex2jax: {inlineMath: [["$","$"],["\\(","\\)"]], preview: "none"},
+    messageStyle: "none"
+  });
+
+
+
+
+
+
+
+
+
+
+</script>
+<script>
+    $(function () {
+        // TODO: abstract & clean up
+        // TODO: change data-number to data-id/data-ref
+        var HEADER_TAGS = 'h2, h3, h4, h5, h6';
+        var hasContents = false; // WIP
+        headers = $('.container').find(HEADER_TAGS).not('.star');
+
+        if (hasContents) {
+            // dynamically create the contents section
+            var contents = $('<section>');
+            var contentsHeader = $('<h2>').addClass('star').text('Contents');
+            contentsHeader.append($('<a>').attr('name', 'sec_contents'));
+            var contentsTable = $('<table class="contents"><thead><tr><th>Section</th><th>Topic</th></tr></thead></table>');
+
+            // add the contents to the page
+            contents.append(contentsHeader, contentsTable);
+            $('.container section').first().parent().prepend(contents);
+        }
+
+        // section i = counts[i-2]
+        counts = [0, 0, 0, 0, 0];
+
+        var i_prev = -1;
+
+        headers.each(function () {
+            var elem = $(this);
+
+            elem.data('label', elem.text());
+
+            var num = parseInt(elem[0].tagName.charAt(1), 10);
+            var i = num - 2;
+
+            if (i >= i_prev) {
+                counts[i] += 1;
+            } else {
+                for (var j = i_prev; j > i; j--) {
+                    counts[j] = 0;
+                }
+                counts[i] += 1;
+            }
+
+            header_number = counts.slice(0, i + 1);
+            number = header_number.join(".");
+
+            if (hasContents) {
+                // extract the identifier of the section
+                var identifier = elem.next('a').attr('name');
+                // add some indentation to the contents
+                var indentation = '&emsp;&emsp;&emsp;'.repeat(header_number.length - 1);
+
+                // create the table row
+                var section = $('<td class="section">' + indentation + header_number[header_number.length - 1] + '</td>');
+                var topic = $('<td>' + indentation + elem.text() + '</td>');
+                var itemIndex = $('<tr class="section-layer-' + header_number.length + '"></tr>');
+
+                // add the contents table row to the table
+                itemIndex.data('ref', identifier);
+                itemIndex.append(section, topic);
+                $('.container section').first().find('table').append(itemIndex);
+
+                // attach a click event to link to the section in the contents page
+                itemIndex.click(function () {
+                    location.hash = $(this).data('ref');
+                });
+            }
+
+            text = "<span class=\"header_number\">" + number + ".&nbsp;</span>";
+            elem.prepend(text);
+            elem.data('number', number);
+
+            i_prev = i;
+        });
+
+        function getRef(id) {
+            var label = $('a[name="' + id + '"]');
+            var header = label.prev(HEADER_TAGS);
+
+            if (label.length === 0) {
+                throw new ReferenceError("Undefined label " + id);
+            } else if (label.length > 1) {
+                throw new ReferenceError("Multiple labels defined for " + id);
+            } else {
+                return {
+                    id: header.data('number'),
+                    text: header.data('label')
+                };
+            }
+        };
+
+        // enables <a href="#sec_..."></a>
+        // and <a href="#sec_...">Section <span data-ref=""/></a>
+        $('a[href]').each(function () {
+            var $elem = $(this);
+            var tag = $elem.attr('href').replace('#', '');
+
+            if (!tag.startsWith('sec_') || $elem.hasClass('star')) {
+                return;
+            }
+
+            try {
+                var refData = getRef(tag);
+            } catch (e) {
+                return console.error(e.toString())
+            }
+
+            var $ref = $elem.find('[data-ref]');
+
+            if ($ref.length) {
+                $ref.text(refData.id);
+            } else {
+                $elem.html(refData.id + '. ' + refData.text);
+            }
+        });
+
+        // enables <span data-ref="sec_..."/>
+        $('[data-ref]').each(function () {
+            var elem = $(this);
+            var tag = elem.data('ref').replace('#', '');
+
+            if (!tag.startsWith('sec_')) {
+                return;
+            }
+
+            try {
+                var refData = getRef(tag);
+            } catch (e) {
+                return console.error(e.toString())
+            }
+
+            elem.text(refData.id);
+        });
+
+
+        $('[data-version]').each(function () {
+            var $elem = $(this);
+            var version = $elem.data('version');
+
+            $elem.attr('title', 'Changed in ' + version)
+        });
+
+        const $highlighter = $('#change_highlighting');
+        const $body = $('body');
+        const highlight_class = 'highlight-changes';
+
+        $highlighter.on('change', function (ev) {
+            ev.preventDefault();
+
+            $body.toggleClass(highlight_class)
+        });
+
+        if ($body.hasClass(highlight_class)) {
+            $highlighter.prop('checked', true);
+        } else {
+            $highlighter.removeProp('checked');
+        }
+    });
+
+
+</script>
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Assignment 1</h1>
+    <p>CSSE1001/7030<br>
+        Semester 2, 2017</p>
+    <p>Version 1.0.0<br>
+        10 marks</p>
+    <p>Due Friday 25 August, 2017, 21:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>For this assignment, you are required to write Python code to implement a word guessing game.</p>
+
+                <h3 class="header">Game Rules</h3><a name="sec_game_rules"></a>
+
+                <p>The game involves trying to guess an unknown word. The guessing of the word is done in 11 steps.</p>
+
+                <p>In Step 1 of the game the player guesses a 2 letter sub-word corresponding to the first two letters
+                    of the unknown word. They score 20 points for any of the guessed letters which are in the word (but
+                    not in the correct position) and 100 points for any letter in the correct position (See, for
+                    example, line 1 of Table 1 – the unknown word is "castle").</p>
+                <p>In Step 2 the player guesses a 3 letter sub-word to correspond to the first three letters of the
+                    unknown word (See, for example, line 2 of Table 1).</p>
+                <p>In Step 3 the player suggests another 3 letter sub-word to correspond to letters 2 to 4 of the
+                    unknown word, and the usual scoring system holds (See line 3 of Table 1). In Step 4 the player
+                    suggests another 3 letter sub-word to correspond to letters 3 to 5 of the unknown word (See line 4
+                    of Table 1). In Step 5 they guess a 3 letter sub-word to correspond to letters 4 to 6 of the unknown
+                    word. (See line 5 of Table 1). </p>
+                <p>The player continues guessing sub-words according to the zig-zagging pattern shown in Table 1 until
+                    they have a final chance to guess the complete unknown word (which in the example below is
+                    "castle").</p>
+
+                <table class="striped bordered" id="table-1">
+                    <caption><strong>Table 1</strong> (Unknown word is &quot;castle&quot;)</caption>
+
+                    <thead>
+                    <tr>
+                        <th>Step number</th>
+                        <th colspan="6">Step-by-step Letter Guesses</th>
+                        <th>Score</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td class="guess">a</td>
+                        <td class="guess">t</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td class="guess">r</td>
+                        <td class="guess">a</td>
+                        <td class="guess">t</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>120</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">a</td>
+                        <td class="guess">l</td>
+                        <td class="guess">e</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>140</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">r</td>
+                        <td class="guess">i</td>
+                        <td class="guess">d</td>
+                        <td>&nbsp;</td>
+                        <td>0</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">c</td>
+                        <td class="guess">a</td>
+                        <td class="guess">b</td>
+                        <td>40</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">h</td>
+                        <td class="guess">u</td>
+                        <td class="guess">s</td>
+                        <td class="guess">k</td>
+                        <td>20</td>
+                    </tr>
+                    <tr>
+                        <td>7</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">a</td>
+                        <td class="guess">n</td>
+                        <td class="guess">t</td>
+                        <td class="guess">s</td>
+                        <td>&nbsp;</td>
+                        <td>220</td>
+                    </tr>
+                    <tr>
+                        <td>8</td>
+                        <td class="guess">c</td>
+                        <td class="guess">a</td>
+                        <td class="guess">t</td>
+                        <td class="guess">s</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>240</td>
+                    </tr>
+                    <tr>
+                        <td>9</td>
+                        <td class="guess">c</td>
+                        <td class="guess">a</td>
+                        <td class="guess">s</td>
+                        <td class="guess">t</td>
+                        <td class="guess">e</td>
+                        <td>&nbsp;</td>
+                        <td>420</td>
+                    </tr>
+                    <tr>
+                        <td>10</td>
+                        <td>&nbsp;</td>
+                        <td class="guess">s</td>
+                        <td class="guess">t</td>
+                        <td class="guess">a</td>
+                        <td class="guess">l</td>
+                        <td class="guess">e</td>
+                        <td>260</td>
+                    </tr>
+                    <tr>
+                        <td>11</td>
+                        <td class="guess">c</td>
+                        <td class="guess">a</td>
+                        <td class="guess">s</td>
+                        <td class="guess">t</td>
+                        <td class="guess">l</td>
+                        <td class="guess">e</td>
+                        <td>600</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <blockquote>
+                    <strong>Note: </strong> For simplicity, we will not consider words with duplicate letters. You may assume that any guesses made do not contain any duplicate letters. <code>words.txt</code> does not contain any words with duplicate letters.
+                </blockquote>
+            </section>
+
+            <section>
+                <h2 class="header">Assignment Tasks</h2><a name="sec_tasks"></a>
+
+                <h3 class="header">Example Output</h3><a name="sec_example"></a>
+
+                <p>The output of your program should be as follows. Note that in the following examples, italicized text is input by the player, whereas non-italicized text is printed out by the program.</p>
+
+
+                <h4 class="header">Full Game</h4><a name="sec_full_game"></a>
+                <pre>
+Welcome to the brain teasing zig-zag word game.
+
+What is your name? <em>John Smith</em>
+
+Hi John! We have selected a 6 letter word for you to guess.
+
+Let the game begin!
+                    
+Now guess 2 letters corresponding to letters 1 to 2 of the unknown word: <em>at</em>
+Your guess and score were: at____ : 40
+
+Now guess 3 letters corresponding to letters 1 to 3 of the unknown word: <em>rat</em>
+Your guess and score were: rat___ : 120
+
+Now guess 3 letters corresponding to letters 2 to 4 of the unknown word: <em>abcd</em>
+Invalid guess 'abcd'. Should be 3 characters long.
+
+Now guess 3 letters corresponding to letters 2 to 4 of the unknown word: <em>ale</em>
+Your guess and score were: _ale__ : 140
+
+Now guess 3 letters corresponding to letters 3 to 5 of the unknown word: <em>rid</em>
+Your guess and score were: __rid_ : 0
+
+Now guess 3 letters corresponding to letters 4 to 6 of the unknown word: <em>cab</em>
+Your guess and score were: ___cab : 40
+
+Now guess 4 letters corresponding to letters 3 to 6 of the unknown word: <em>husk</em>
+Your guess and score were: __husk : 20
+
+Now guess 4 letters corresponding to letters 2 to 5 of the unknown word: <em>ants</em>
+Your guess and score were: _ants_ : 220
+
+Now guess 4 letters corresponding to letters 1 to 4 of the unknown word: <em>cats</em>
+Your guess and score were: cats__ : 240
+
+Now guess 5 letters corresponding to letters 1 to 5 of the unknown word: <em>caste</em>
+Your guess and score were: caste_ : 420
+
+Now guess 5 letters corresponding to letters 2 to 6 of the unknown word: <em>stale</em>
+Your guess and score were: _stale : 260
+
+Now guess 6 letters corresponding to letters 1 to 6 of the unknown word: <em>castor</em>
+Your guess and score were: castor : 400
+
+You did not manage to guess the correct word. It was 'castle'. Better luck next time.
+Your total score was 1900.
+
+                </pre>
+
+                <h4 class="header">Correct Guess</h4><a name="sec_correct_guess"></a>
+
+                <pre>
+... # starts as above
+
+Now guess 5 letters corresponding to letters 2 to 6 of the unknown word: <em>stale</em>
+Your guess and score were: _stale : 260
+
+Now guess 6 letters corresponding to letters 1 to 6 of the unknown word: <em>castle</em>
+Your guess and score were: castle : 600
+
+Congratulations! You correctly guessed the word 'castle'.
+Your total score was 2100.
+
+                </pre>
+
+
+                <h3 class="header">Design</h3><a name="sec_design"></a>
+
+                You submission must include at least the following functions:
+
+                <h4>load_words</h4><a name="sec_select_load_words"></a>
+
+                <p><em>load_words(filename, length)</em></p>
+
+                <p>Returns a list of all words contained in <code>filename</code> that have the given <code>length</code>.</p>
+
+                <pre>
+>>> load_words('words.txt', 6)
+['abduct', 'abhors', 'abides', ... ] # output has been truncated
+>>> load_words('words.txt', 4)
+['abed', 'abet', 'able', ... ] # output has been truncated
+                </pre>
+
+                <h4>compute_score</h4><a name="sec_compute_score"></a>
+
+                <p><em>compute_score(guess, position, word)</em></p>
+                
+                <p>Computes the score for a given guess, as outlined in <a href="#sec_intro"></a>.</p>
+
+                <pre>
+>>> compute_score('abc', 0, 'bruise') # a b c _ _ _
+20
+>>> compute_score('abc', 1, 'bruise') # _ a b c _ _
+20
+>>> compute_score('brse', 2, 'bruise') # _ _ b r s e
+240
+>>> compute_score('xyz', 3, 'bruise') # _ _ _ x y z
+0
+>>> compute_score('bruise', 0, 'bruise') # b r u i s e
+600
+                </pre>
+
+                <blockquote><strong>Note: </strong>For more examples, see <a href="#table-1">Table 1</a></blockquote>
+
+                <h4>prompt_guess</h4><a name="sec_prompt_guess"></a>
+
+                <p><em>prompt_guess(position, length)</em></p>
+
+                <p>Repeatedly prompts the user to make a guess at a given position. Returns the first guess with correct length.</p>
+
+                <pre>
+>>> prompt_guess(0, 2)
+Now guess 2 letters corresponding to letters 1 to 2 of the unknown word: <em>at</em>
+'at'
+>>> guess = prompt_guess(0, 2)
+Now guess 2 letters corresponding to letters 1 to 2 of the unknown word: <em>at</em>
+>>> guess
+'at'
+>>> prompt_guess(2, 4)
+Now guess 4 letters corresponding to letters 3 to 6 of the unknown word: <em>at</em>
+Invalid guess 'at'. Should be 4 characters long.
+
+Now guess 4 letters corresponding to letters 3 to 6 of the unknown word: <em>atc</em>
+Invalid guess 'atc'. Should be 4 characters long.
+
+Now guess 4 letters corresponding to letters 3 to 6 of the unknown word: <em>atcg</em>
+'atcg'
+                </pre>
+
+                <h4>main</h4><a name="sec_main"></a>
+
+                <p><em>main()</em></p>
+                <p>Handles top-level interaction with user, as outlined in <a href="#sec_example"></a>.</p>
+
+                <h4>Design Considerations</h4><a name="sec_design_considerations"></a>
+
+                <p>Your program should not have any global variables, though it may have global constants.</p>
+
+                <p><strong>Be sure that your code is well styled. See <a href="http://csse1001.uqcloud.net/notes/commenting">http://csse1001.uqcloud.net/notes/commenting</a></strong></p>
+
+                <p>The above functions are minimum requirements. While you must implement these functions exactly, you may add additional functions if you feel this improves the design.</p>
+
+                <p>It is good design practice, and a good assessment strategy,
+                to implement a program in stages. Doing this means that you are much more likely to have a working
+                    program to submit even if you cannot implement all of the requirements. If you have not completed the entire assignment, you will receive part marks for the functions you have implemented.</p>
+
+                <p>In general you will get more marks for a few stages working perfectly than lots of stages that do not work, especially if they contain syntax errors and stop the rest of the assignment from easily running.</p>
+
+                <p><strong>It is better to submit a partial solution that works fully than a full solution that works partially.</strong></p>
+
+                <h3 class="header">Download the Files</h3><a name="sec_files"></a>
+                <p>
+                    Before beginning work on the assignment you must download the following files from the course website:
+                </p>
+                <ul class="browser-default">
+                    <li><a href="https://csse1001.uqcloud.net/assignments/assignment1/a1.py"><code>a1.py</code></a> &mdash; Template file for assignment submission.</li>
+                    <li><a href="https://csse1001.uqcloud.net/assignments/assignment1/words.txt"><code>words.txt</code></a> &mdash; Words file (no words contain duplicate letters).</li>
+                </ul>
+            </section>
+
+            <section>
+                <h2 class="header">Assignment Submission</h2><a
+                    name="sec_submission"></a>
+
+                <p>Your assignment must be submitted via the assignment one
+                    submission link on Blackboard. You must only submit the file <code>a1.py</code>.
+                </p>
+
+                <p>You may submit multiple times prior to the deadline, but only your most recent submission will be marked.</p>
+
+                <p>
+                    Late submission of the assignment will <strong>not</strong> be accepted. In
+                    the event of exceptional circumstances, you may submit a request for an extension.
+                </p>
+
+                <p>
+                    All requests for extension must be submitted on the UQ
+                    Application for Extension of Progressive Assessment form:
+                    <a href="http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf">http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf</a>
+                    <strong>at least 48 hours prior</strong> to the submission
+                    deadline. The application and supporting documentation must be
+                    submitted to the ITEE Coursework Studies office (78-425) or
+                    by email to <a href="mailto:enquiries@itee.uq.edu.au">enquiries@itee.uq.edu.au</a>.
+                </p>
+            </section>
+
+            <section>
+                <h2 class="header">Assessment and Marking Criteria</h2><a name="sec_marking_criteria"></a>
+
+                <table class="striped bordered">
+                    <thead>
+                    <tr>
+                        <th>Criteria</th>
+                        <th style="min-width: 5em">Mark</th>
+                    </tr>
+                    </thead>
+
+                    <tbody>
+                    <tr>
+                        <th>Programming Constructs<sup><a href="#footnote-1">1</a>,<a href="#footnote-2">2</a></sup></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Program is well structured and readable</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Variable and function names are meaningful</td>
+                        <td>1</td>
+                    </tr>
+                    <tr>
+                        <td>Algorithmic logic is appropriate</td>
+                        <td>2</td>
+                    </tr>
+
+                    <tr>
+                        <th>Functionality</th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Implements correct functionality with no serious errors</td>
+                        <td>4</td>
+                    </tr>
+
+                    <tr>
+                        <th>Documentation<sup><a href="#footnote-1">1</a>,<a href="#footnote-2">2</a></sup></th>
+                        <th></th>
+                    </tr>
+                    <tr>
+                        <td>Entire program is documented clearly and concisely, without excessive or extraneous
+                            comments
+                        </td>
+                        <td>2</td>
+                    </tr>
+                    <tr>
+                        <th>Total</th>
+                        <th>/10</th>
+                    </tr>
+
+                    </tbody>
+                </table>
+
+                <blockquote>
+                    <p><sup id="footnote-1">1</sup>In order to be eligible for the marks for Programming Constructs &amp; Documentation, you must have made a reasonable attempt at implementing at least two of the required functions.</p>
+                    <p><sup id="footnote-2">2</sup>See the course notes on <a href="https://csse1001.uqcloud.net/notes/style">Style</a> &amp; <a href="https://csse1001.uqcloud.net/notes/commenting">Commenting</a>.</p>
+
+                </blockquote>
+
+                <p>In addition to providing a working solution to the assignment problem, the assessment will involve
+                    discussing your code submission with a tutor. This discussion will take place in the week following
+                    the assignment submission deadline, in the practical session in which you are enrolled. <strong>You
+                        must
+                        attend that session in order to obtain marks for the assignment.</strong></p>
+            </section>
+
+            <section id="sec_change_log">
+                <h2 class="header star">Change Log</h2>
+
+                <blockquote>Any changes to this document will be listed here.</blockquote>
+
+        </div>
+    </div>
+</div>
+
+</body>
+
+<!--Holy sheet, this is a big document!-->
+
+</html>

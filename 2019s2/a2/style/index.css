@@ -1,0 +1,272 @@
+@import "materialize.min.css";
+@import "ghpages-materialize.css";
+
+header, main, footer {
+    padding: 0;
+}
+
+h2 {
+    font-size: 3.026rem
+}
+
+h3 {
+    font-size: 2.482rem;
+}
+
+h4 {
+    font-size: 1.938rem;
+}
+
+.mark-breakdown tbody tr.task th em {
+    font-weight: normal;
+}
+
+.mark-breakdown tbody tr.task th {
+    text-align: center;
+    /*display: inline-block;*/
+}
+
+.mark-breakdown tbody tr.task {
+    border-top: 1px solid #d0d0d0;
+}
+
+.mark-breakdown thead tr th {
+    text-align: center;
+}
+
+tbody tr td {
+    padding: 0.8em;
+}
+
+h2, h3, h4, h5, h6 {
+    padding-top: 1.5rem;
+}
+
+.highlight-changes [data-version="1.1.1"] {
+    background-color: #e6b49c;
+}
+
+.highlight-changes [data-version="1.1.0"] {
+    background-color: #B1D3E6;
+}
+
+.highlight-changes [data-version="1.0.2"] {
+    background-color: #e69bc6;
+}
+
+.highlight-changes [data-version="1.0.1"] {
+    background-color: #E6E5B1;
+}
+
+ol,
+ul {
+    padding-left: 2rem;
+}
+
+ol li {
+    list-style-type: decimal;
+}
+
+ul li {
+    list-style-type: initial;
+}
+
+li ul,
+li ol {
+    padding-top: 0.33em;
+}
+
+.container p {
+    text-align: justify;
+}
+
+li {
+    margin-bottom: 0.33em;
+}
+
+pre {
+    white-space: pre-wrap; /* Since CSS 2.1 */
+    white-space: -moz-pre-wrap; /* Mozilla, since 1999 */
+    white-space: -o-pre-wrap; /* Opera 7 */
+    word-wrap: break-word; /* Internet Explorer 5.5+ */
+}
+
+a[name^=sec_],
+a[name^=fig_] {
+    position: relative;
+    display: block;
+    top: -70px;
+}
+
+@media print {
+    a[name^=sec_],
+    a[name^=fig_] {
+        display: none
+    }
+}
+
+.card .card-image {
+    padding-top: 2em;
+}
+
+.card .card-image img {
+    width: auto;
+    margin: 0 auto;
+    max-width: 100%;
+}
+
+.card .card-title {
+    text-align: center;
+}
+
+.header a {
+    display: none;
+}
+
+.header:hover a {
+    display: inline-block;
+}
+
+.tab {
+    padding-left: 20px;
+}
+
+@media screen {
+    .hide-screen {
+        display: none;
+    }
+}
+
+@media print {
+    body {
+        background-color: #fff;
+    }
+
+    h2, h3, h4, h5, h6 {
+        padding-top: 0;
+    }
+
+    h1 {
+        font-size: 2.4rem;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+
+    h3 {
+        font-size: 1.4rem;
+    }
+
+    h4 {
+        font-size: 1.2rem;
+    }
+
+    .highlight-changes [data-version] {
+        background-color: transparent;
+    }
+
+    #sec_change_log .input-field {
+        display: none;
+    }
+
+    .hide-print {
+        display: none;
+    }
+
+    /* fix for wkhtmltopdf breaking on tds that span multiple rows*/
+    tr, td, th, thead, tfoot {
+        page-break-inside: avoid !important;
+    }
+}
+
+/* Interval Bar */
+table.interval-bar {
+    border: 1px solid #d6d6d6;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+table.interval-bar, table.interval-bar td {
+    border: 1px solid #d6d6d6;
+}
+
+table.interval-bar td {
+    padding: 0 0;
+    border-radius: 0;
+}
+
+table.interval-bar td.filled {
+    background-color: #62A7D5;
+}
+
+/* Dots */
+.flex-container {
+    display: -webkit-box;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+
+    -webkit-flex-flow: row wrap;
+    justify-content: space-around;
+}
+
+.flex-container > * {
+    margin-right: auto;
+}
+
+.card.dot .images {
+    display: block;
+    text-align: center;
+}
+
+.card.dot .images img {
+    margin: 2em 1em 0 1em;
+}
+
+/* Nested list styles*/
+li ul > li {
+    list-style-type: circle;
+}
+
+li li ul > li {
+    list-style-type: disc;
+}
+
+li li li ul > li {
+    list-style-type: circle;
+}
+
+li li li li ul > li {
+    list-style-type: disc;
+}
+
+li li li li li ul > li {
+    list-style-type: circle;
+}
+
+li li li li li li ul > li {
+    list-style-type: disc;
+}
+
+code {
+    padding: 0.05em 0.4em;
+    font-size: 0.9em;
+    color: #c7254e;
+    background-color: #f9f2f4;
+    border-radius: 4px;
+}
+
+body:not(.highlight-changes) [data-version-details]>* {
+    display: none;
+}
+
+[data-version-details] > :first-child,
+body:not(.highlight-changes) [data-version-details] > :first-child {
+    display: block;
+}
+
+strong {
+    font-weight: bold !important;
+}

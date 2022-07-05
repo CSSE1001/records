@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Martin">
+    <title>Assignment 1 &mdash; CSSE1001 Semester 2, 2018</title>
+<link href="styles.css" rel="stylesheet"></head>
+<!-- LaTeX? More like LaMeTeX -->
+
+<!--
+............................................................................................................................................
+............................................................................................................................................
+............................................................................................................................................
+............................................................................................................................................
+............................................................................................................................................
+...................................cc..................................................................:o:..................................
+.................................:COOO.................................................................8C8c.................................
+...............................:888OO88O:...........................................................:O88C888O:..............................
+............................c8888@8OO88888C:.....................................................:8888@8C888888O:...........................
+..........................:O88@@@@8OO8888888C:.................................................:888@@@@8C8888888Oo..........................
+.........................:88@@@@@@8OO8@@@8888C:...............................................:88@@@@@@8C88@@@888OC.........................
+.........................:88@@@@@@8OO8@@@@888O:...............................................o88@@@@@@8C88@@@@888C:........................
+.........................:88@@@@@@8OO8@@@8888Cc...............................................o88@@@@@@8C88@@@888OC:........................
+ ........................:O888@@@@8OO8@@8888CC:...............................................:8888@@@@8C88@@8888CC.........................
+ .........................:C8888@@8OO888888CC:.................................................cC8888@@8C8888888CC:.........................
+ ................:o88888888CCC888@8OO8888OCoo88888888o:...............................:C88888888cCC888@8C88888OCcO88888888c:................
+ ..............:88@@@@@@@@@8OcC8888OO888CC:8888@@@@@@888:...........................:88@@@@@@@@@88cC8888C8888CCc8888@@@@@@88O:..............
+ .............c8@@@@8888888@88cC888OO88CC:8888888888@@@88:.........................:8@@@@8888888@88:C888C888CC:8888888888@@@88:.............
+ ............:8@@@888OCOCO88888cO88OO8OC:88888OOCO88888@88:.......................:8@@@8888OCCO88888cC88C88OC:8888OCOCO8888@@88:............
+ ............c8@@88OCCCCCCCCO88CC88OO8Cc888OCCCCCCOC888888:.......................c8@@88OCCCOCCCCO88OC88C88Co888CCCCCCCCC888@88:............
+ ............:88@88CCCOCCCCCCC88:O8OO8Oc88OCCCCCCCCCC88888:.......................:88@88CCOCCCCCCCO88:O8C88Cc88CCCCCCCCCCO88888:............
+ .............c8888CCCo.....CCO8oC8OO8oO8OCo:...:CCCC8888:.........................c888OCCCC:...:CCO8CC8C8OCO8OC:....:CCCC8888:.............
+ ..............:888OCC:.....:CC88o8OO8c88OC......cCCO888:...........................c888OCC:.....:CC88o8C8Oc88OC......cCCC888:..............
+ ................:88CCc......oC88cOOOO:8OC:......CCO88c..............................:c88OCo......cC88:8C8O:88Cc......oCO8O:................
+ ....................:c:....::::::::::::::::....c::......................................::c:....::::::::::::::::....:c:....................
+ ..........................C8888888888888888O:.................................................:88888888888888888o.........................
+  .........................:OOOOOOOOOOOOOOOOc...................................................cOOOOOOOOOOOOOOOO:.........................
+  ..........................:oCCo:oooocoCCc:.....................................................:oCCo:ooCocoCCc...........................
+  ..........................o88OCcOOOO:C888:.....................................................c88OC:8C8C:C888:..........................
+  .........................:88OC:O8OO8CcCO88:...................................................c88OC:O8C88CcCO88:.........................
+  ........................o8OCC:O88OO8CCcCCO8C................................................:O8OCC:O88C88OCcCC88c........................
+   .....................:OCo:..C888OO88Cc.::oC8:.............................................:OCc:..o888C888Cc.::oCO:.....................
+   ...........................:O8@@OO88Co..........................................................:O8@8C888CC............................
+   ............................o8@@OO88C:...........................................................o8@@C888C:............................
+   .............................C8@OO8C:.............................................................o8@C88O:.............................
+    .............................:8OOO................................................................:8C8o:.............................
+    ...............................::.................................:.................................::...............................
+    .................................................................:o:.................................................................
+     ...............................................................c8o8:...............................................................
+     ............................................................:O888o888C:............................................................
+      ........................................................:8888@88o888888C:........................................................
+      ......................................................:O88@@@@88o8@88888Oo.......................................................
+       .....................................................o88@@@@@88o8@@@8888Oc.....................................................
+       ....................................................:88@@@@@@88o8@@@@888OC.....................................................
+        ...................................................:888@@@@@88o8@@@@888Co....................................................
+         ...................................................c8888@@@88o8@@8888OC:...................................................
+         ....................................................cC888@@88o8@8888CC:....................................................
+          .........................................:o888888888:CO88@88o8888OCCc888888888c:.........................................
+          .......................................:C8@@@@@@@@@88CCC8888o888OCoO888@@@@@@@88o........................................
+           .....................................:8@@@@@8888888@8OoO888o888Cc88888888888@@@88:.....................................
+            ...................................:8@@@888OOCCOCO8888C888o88CC8888OCOCCO8888@88O....................................
+             ..................................:8@@@88OCCCCCOCCO88:O88o8OCc88OCCCCCCCCC888888...................................
+              ..................................O8@88OCCCCCooCCCO8CC88o8OoO8OCCCoCCCCCCO8888o..................................
+               .................................:8888OCCC:....:CC88c88o8C:8OCC:....:CCCO888O:.................................
+                .................................:C888CCo......:CO8:O8o8Oc8OC:......CCC888c.................................
+                  ..................................:O8OC:......CO8oC8o8CC8Co......:CO8C:..................................
+                   ......................................::...:OOOOOOOOOOOOOOC:...::......................................
+                    .........................................c88888888888888888:.........................................
+                      .......................................:COCOOOOOOOOOOOOOo:.......................................
+                       ........................................:OOCooOoCooOOO:........................................
+                         .....................................:888C:O8o8CcC888:.....................................
+                           ..................................:88OCcC88o8OCoC88O:..................................
+                             ...............................:8OCCCC888o88CoCCC88:...............................
+                               ...........................:CCo::.:8888o88OC..::oCo............................
+                                 ................................:88@8o88OC:................................
+                                    ..............................8@@8o88OC..............................
+                                      ............................:8@8o88o.............................
+                                         ...........................c8o8:...........................
+                                            ..........................:..........................
+                                               ...............................................
+                                                  .........................................
+                                                      .................................
+                                                         ..........................
+                                                              .................
+                                                                  .........
+                                                               ylyd od iudqfh!
+-->
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Simple Encryption</h1>
+    <p>Assignment 1<br> CSSE1001/7030<br> Semester 2, 2018</p>
+    <p>Version 1.0.0<br> 10 marks (5%)</p>
+    <p>Due Friday 24th August, 2018, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>This assignment provides you the opportunity to apply foundational concepts taught at the beginning
+                    of the course by writing a piece of software to encrypt and decrypt text.
+
+                <p>Text is encrypted with a simple cipher where each letter of the alphabet is replaced with another
+                    letter that occurs a fixed number of letters later. This fixed number is known as the coding
+                    offset.</p>
+
+                <p>If the coding offset is 3, for example, <code>a</code> is replaced with <code>d</code>,
+                    <code>b</code> is replaced with <code>e</code>, <code>z</code> is replaced with <code>c</code>, etc., as shown below:</p>
+
+                <div class="card">
+                    <a name="fig_caesar_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/caesar-example@1x.png"
+                             srcset="public/images/caesar-example@1x.png 1x, public/images/caesar-example@2x.png 2x"
+                             alt="Image of Basic GUI Example">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Encrypting with a Coding Offset of 3</span>
+                    </div>
+                </div>
+
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Tasks</h2><a name="sec_tasks"></a>
+
+            <section>
+                <h3 class="header">Example Output</h3><a name="sec_examples"></a>
+
+                <p>Some example output has been truncated and replaced with ellipses (...). Any lines that have been wrapped onto the next after exceeding the width of this document should be treated as a single line.</p>
+
+<pre>
+Welcome to the simple encryption tool!
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> e
+Please enter some text to encrypt: you will always remember this as the day
+Please enter a shift offset (1-25): 7
+The encrypted text is: fvb dpss hsdhfz yltltily aopz hz aol khf
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> d
+Please enter some text to decrypt: asdf ghjkl qwerty uiop z xcvbnm
+Please enter a shift offset (1-25): 17
+The decrypted text is: jbmo pqstu zfnach drxy i glekwv
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> d
+Please enter some text to decrypt: a bmkl kso lzw sv sfv lzgmyzl al dggcwv xmf
+Please enter a shift offset (1-25): 18
+The decrypted text is: i just saw the ad and thought it looked fun
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> ep zpv tff uiptf uxp xffwjmt epdups
+Invalid command
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> a
+Please enter some encrypted text: ep zpv tff uiptf uxp xffwjmt epdups
+Encryption offset: 1
+Decrypted message: do you see those two weevils doctor
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> a
+Please enter some encrypted text: nmd
+Multiple encryption offsets: 4, 12, 21, 25
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> a
+Please enter some encrypted text: asdf ghjkl qwerty uiop z xcvbnm
+No valid encryption offset
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+  d) Decrypt some text
+  a) Automatically decrypt English text
+  q) Quit
+> q
+Bye!
+</pre>
+
+            </section>
+
+            <section>
+                <h3 class="header">Getting Started</h3><a name="sec_getting_started"></a>
+
+                <p>Download the following files and place them in the same directory:</p>
+                <ul>
+                    <li><code>a1.py</code>: The main assignment file - <strong>write your code here</strong></li>
+                    <li><code>a1_support.py</code>: Contains useful supporting functions</li>
+                    <li><code>words.txt</code>: A list of all words considered English</li>
+                </ul>
+
+            </section>
+
+            <section>
+                <h3 class="header">Design</h3><a name="sec_design"></a>
+
+                <p>You are expected to use good programming practice in your code and you must incorporate at least the
+                    following functions. You can assume that:</p>
+                <ul>
+                    <li>text contains only spaces and letters of the English alphabet (both upper & lowercase)</li>
+                    <li>the coding offset is between 1 and 25, inclusive</li>
+                </ul>
+
+                <section>
+                    <h4 class="header">encrypt</h4><a name="sec_fn_encrypt"></a>
+                    <p><em>encrypt(text, offset) -> str</em></p>
+
+                    <p>Encrypts <code>text</code> by replacing each letter with the letter some fixed number of
+                        positions (the <code>offset</code>) down the alphabet. Returns the encrypted text.</p>
+
+                    <pre>
+>>> encrypt("you will always remember this as the day", 7)
+'fvb dpss hsdhfz yltltily aopz hz aol khf'
+>>> encrypt("music is the shorthand of emotion", 2)
+'owuke ku vjg ujqtvjcpf qh goqvkqp'
+>>> encrypt("qgnrag hgorkey gtj cnovvkj ixkgs", 9)
+'zpwajp qpxatnh pcs lwxeets rgtpb'
+</pre>
+                </section>
+
+                <section>
+                    <h4 class="header">decrypt</h4><a name="sec_fn_decrypt"></a>
+                    <p><em>decrypt(text, offset) -> str</em></p>
+
+                    <p>Decrypts <code>text</code> that was encrypted by the <code>encrypt</code> function above. Returns
+                        the decrypted text.</p>
+
+                    <pre>
+>>> decrypt("a bmkl kso lzw sv sfv lzgmyzl al dggcwv xmf", 17)
+'j kvtu tbx uif be boe uipvhiu ju mpplfe gvo'
+>>> decrypt("a bmkl kso lzw sv sfv lzgmyzl al dggcwv xmf", 18)
+'i just saw the ad and thought it looked fun'
+>>> decrypt("asdf ghjkl qwerty uiop z xcvbnm", 17)
+'jbmo pqstu zfnach drxy i glekwv'
+</pre>
+                </section>
+
+                <section>
+                    <h4 class="header">find_encryption_offsets</h4><a name="sec_fn_find_encryption_offsets"></a>
+                    <p><em>find_encryption_offsets(encrypted_text) -> tuple&lt;int, ...&gt; </em></p>
+
+                    <p>Returns a tuple containing all possible offsets that could have been used if to encrypt some
+                        English text into <code>encrypted_text</code>.</p>
+
+                    <pre>
+>>> find_encryption_offsets("iynjo fuhsudj ev jxu jycu yj mehai qbb jxu jycu")
+(16,)
+>>> find_encryption_offsets("vftg amnl aqkkxmn mjmcqlm emkveoxtmn lvbmlomz")
+()
+>>> find_encryption_offsets("nmd")
+(4, 12, 21, 25)
+</pre>
+                </section>
+
+                <section>
+                    <h4 class="header">main</h4><a name="sec_fn_main"></a>
+                    <p><em>main() -> None</em></p>
+
+                    <p>Handles top-level interaction with user, as outlined in <a href="#sec_examples"></a>. You may assume that the user will always enter at least one word each time, and that they will always choose a valid offset (between 1 and 25, inclusive).</p>
+
+                </section>
+
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Extension</h2><a name="sec_extension"></a>
+
+            <p>Extend the program to accept <code>0</code> as an input when a shift offset is requested. If the user types this, encrypted/decrypted text should be shown for all offsets (1 to 25, inclusive), as shown below:</p>
+        </section>
+
+<pre>
+...
+> e
+Please enter some text to encrypt: all we can do is smile back
+Please enter a shift offset (1-25): 0
+The encrypted text is:
+  01: bmm xf dbo ep jt tnjmf cbdl
+  02: cnn yg ecp fq ku uokng dcem
+  03: doo zh fdq gr lv vploh edfn
+  04: epp ai ger hs mw wqmpi fego
+  05: fqq bj hfs it nx xrnqj gfhp
+  06: grr ck igt ju oy ysork hgiq
+  07: hss dl jhu kv pz ztpsl ihjr
+  08: itt em kiv lw qa auqtm jiks
+  09: juu fn ljw mx rb bvrun kjlt
+  10: kvv go mkx ny sc cwsvo lkmu
+  11: lww hp nly oz td dxtwp mlnv
+  12: mxx iq omz pa ue eyuxq nmow
+  13: nyy jr pna qb vf fzvyr onpx
+  14: ozz ks qob rc wg gawzs poqy
+  15: paa lt rpc sd xh hbxat qprz
+  16: qbb mu sqd te yi icybu rqsa
+  17: rcc nv tre uf zj jdzcv srtb
+  18: sdd ow usf vg ak keadw tsuc
+  19: tee px vtg wh bl lfbex utvd
+  20: uff qy wuh xi cm mgcfy vuwe
+  21: vgg rz xvi yj dn nhdgz wvxf
+  22: whh sa ywj zk eo oieha xwyg
+  23: xii tb zxk al fp pjfib yxzh
+  24: yjj uc ayl bm gq qkgjc zyai
+  25: zkk vd bzm cn hr rlhkd azbj
+
+Please choose an option [e/d/a/q]:
+  e) Encrypt some text
+...
+</pre>
+
+        <p>Further, extend the functions in <a href="#sec_design"></a> to accept all characters (not just English letters and spaces). These characters should be ignored when encrypting or decrypting. When automatically decrypting English text: </p>
+
+        <ul>
+            <li>Ignore contractions (words containing an apostrophe - i.e. we're, you've, goose's, etc.)</li>
+            <li>Treat words joined together by a hyphen or dash as separate words (i.e. sea-song is treated as two words: sea & song)</li>
+        </ul>
+
+        <p>For example:</p>
+
+        <pre>
+...
+> a
+Please enter some encrypted text: X gtbtbqtg wxb addzxcv gdjcs iwt rdktg pcs lwxhiaxcv id wxbhtau ph wt sxs hd, pcs iwtc qgtpzxcv dji xc iwpi das htp-hdcv iwpi wt hpcv hd duitc puitglpgsh: "Uxuittc btc dc iwt stps bpc'h rwthi; Nd-wd-wd, pcs p qdiiat du gjb!"
+Encryption offset: 15
+Decrypted message: I remember him looking round the cover and whistling to himself as he did so, and then breaking out in that old sea-song that he sang so often afterwards: "Fifteen men on the dead man's chest; Yo-ho-ho, and a bottle of rum!"
+...
+        </pre>
+
+        <section>
+            <h2 class="header">Marking Criteria</h2><a name="sec_marking_criteria"></a>
+
+            <p>In addition to providing a working solution to the assignment problem, you are required to discuss their
+                submission with a tutor. This discussion will take place in the week following the assignment submission
+                deadline, in the practical session in which you are enrolled. <strong>You must attend this
+                    session.</strong> It is treated as an assessment item, so absence without reason may result in an
+                overall mark of zero for this assignment.</p>
+
+            <p>For each of the following criteria, part marks will be awarded if the criterion is not fully achieved.</p>
+
+            <table class="striped bordered">
+                <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th style="min-width: 5em">Mark</th>
+                </tr>
+                </thead>
+
+                <tbody>
+                <tr>
+                    <th>Programming Constructs<sup><a href="#footnote-1">1</a>,<a href="#footnote-2">2</a></sup></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Program is well structured and readable</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Variable and function names are meaningful</td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <td>Algorithmic logic is appropriate</td>
+                    <td>1</td>
+                </tr>
+
+                <tr>
+                    <th>Documentation<sup><a href="#footnote-1">1</a>,<a href="#footnote-2">2</a></sup></th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Entire program is documented clearly and concisely, without excessive or extraneous comments
+                    </td>
+                    <td>2</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th>/10</th>
+                </tr>
+
+                <tr>
+                    <th>Functionality</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Implements correct functionality with no serious errors</td>
+                    <td>4</td>
+                </tr>
+
+                <tr>
+                    <th>Extension</th>
+                    <th></th>
+                </tr>
+                <tr>
+                    <td>Implements extended functionality correctly</td>
+                    <td>1</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <blockquote>
+                <p><sup id="footnote-1">1</sup>In order to be eligible for the marks for Programming Constructs &amp;
+                    Documentation, you must have made a reasonable attempt at implementing at the required
+                    functions.</p>
+                <p><sup id="footnote-2">2</sup>See the course notes on <!--<a
+                        href="https://csse1001.uqcloud.net/notes/style">Style</a> &amp; --><a
+                        href="https://csse1001.uqcloud.net/notes/commenting">Commenting</a>.</p>
+
+            </blockquote>
+
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+
+
+            <p>Your assignment must be submitted via the assignment one submission link on Blackboard. You must only
+                submit the file <code>a1.py</code>.
+            </p>
+
+            <p>You may submit multiple times prior to the deadline, but only your most recent submission will be
+                marked.</p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. In the event of exceptional
+                circumstances, you may submit a request for an extension.
+            </p>
+
+            <p>
+                All requests for extension must be submitted on the UQ Application for Extension of Progressive
+                Assessment form: <a
+                    href="http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf">http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf</a>
+                <strong>at least 48 hours prior</strong> to the submission deadline. The application and supporting
+                documentation must be submitted to the ITEE Coursework Studies office (78-425) or by email to <a
+                    href="mailto:enquiries@itee.uq.edu.au">enquiries@itee.uq.edu.au</a>.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <p>Any changes to this document will be listed here.</p>
+
+        </section>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="index_bundle.js"></script></body>
+
+<!--Holy sheet, this is a big document!-->
+<!--   ¯\_(ツ)_/¯   -->
+
+</html>

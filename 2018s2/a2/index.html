@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Brae Webb">
+    <title>A2 CSSE1001/7030 Semester 2, 2018</title>
+    
+    <link rel="stylesheet" href="style/index.css" type="text/css">
+</head>
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Uno++</h1>
+    <p>Assignment 2<br> CSSE1001/7030<br> Semester 2, 2018</p>
+    <p>Version 1.1.0<br> 10 marks </p>
+    <p>Due Friday 21st September, 2018, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>
+                    This assignment follows a programming pattern called MVC
+                    (the Model, View, Controller) pattern. You have been provided
+                    with the view and controller classes but you will be required
+                    to implement several modelling classes.
+                </p>
+
+                <p>
+                    The modelling classes are from the popular card game, Uno.
+                    Each class you're required to implement has a specification
+                    that is outlined in this document. A specification is a
+                    description of each method in a class as well as their parameters
+                    and return values.
+                </p>
+
+                <p>
+                    Once you have implemented the modelling classes, you will have
+                    completed a digital version of Uno that follows the MVC pattern.
+                </p>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Gameplay</h2><a name="sec_gameplay"></a>
+
+            <p>
+                Uno is a card based game consisting primarily of cards with both
+                a colour and a number. Each player starts with a deck of seven
+                cards. The player whose cards are visible is the starting player.
+                Once the player makes a move by selecting their card to play,
+                their cards will be hidden and it will move to the next players
+                turn.
+            </p>
+
+            <p>
+                There are two piles in the middle of the board. The left pile
+                is the pickup pile, a player should click this pile if they have
+                no cards to play, it will add a card to their deck. The right pile
+                is the putdown pile, a player has to pick a card from their deck
+                which matches the card on top of the putdown pile.
+            </p>
+
+            <p>
+                The aim of the game is to have no cards left in your deck. Each
+                turn a player can either select a card from their pile which matches
+                the card on top of the putdown pile, or, they can pickup a new
+                card from the pickup pile if they have no matching cards.
+            </p>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Getting Started</h2><a name="sec_getting_started"></a>
+
+            <section>
+                <h3 class="header">Files</h3><a name="sec_files"></a>
+
+                <ul>
+                    <li>a2.py - file where you write your submission</li>
+                    <li>a2_support.py - contains supporting code and part of the controller</li>
+                    <li>gui.py - contains the view</li>
+                    <li>player.txt - a list of random player names to use for computer players</li>
+                    <li>images/ - a directory of card images</li>
+                </ul>
+            </section>
+
+            <section>
+                <h3 class="header">Classes</h3><a name="sec_classes"></a>
+
+                In the diagram below, an arrow indicates that one class stores
+                an instance of another class. An arrow with a head indicates
+                that one class is a subclass of another class. Red classes are
+                classes that have been provided already.
+                <p>
+                    <img src="public/images/uml.png" />
+                </p>
+            </section>
+
+            <p><strong><span data-version="1.0.1">
+                The type hints shown in the methods below are purely for your
+                own understanding. Type hints do not need to be used in your
+                assignment.
+            </span></strong></p>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Cards</h2><a name="sec_cards"></a>
+
+            A card represents a card in the uno game which has colour and number
+            attributes.
+            <section>
+                <h3 class="header">Card</h3><a name="sec_card"></a>
+
+                <p>The basic type of colour and number.</p>
+
+                <p>Instances of Card should be initialized with Card(number, colour).
+                The following methods must be implemented:</p>
+
+                <p><strong>get_number(self):</strong> Returns the card number</p>
+                <p><strong>get_colour(self):</strong> Returns the card colour</p>
+                <p><strong>set_number(self, number: int):</strong> Set the number value of the card</p>
+                <p><strong>set_colour(self, colour: <span data-version="1.0.1">a2_support.</span>CardColour):</strong> Set the colour of the card</p>
+                <p><strong>get_pickup_amount(self):</strong> Returns the amount of cards the next player should pickup</p>
+                <p><strong>matches(self, card: Card):</strong> Determines if the next card to be placed on the pile matches this card.</p>
+                <p>"Matches" is defined as being able to be placed on top of this card legally.</p>
+                <p>A "match" for the base Card is a card of the same colour or number.</p>
+                <p><strong>play(self, player: Player, game: a2_support.UnoGame):</strong> Perform a special card action. The base Card class has no special action.</p>
+                <p><strong>Hint: Look at the a2_support.UnoGame methods</strong></p>
+                <p><strong>__str__(self):</strong> Returns the string representation of this card.</p>
+                <p><strong>__repr__(self):</strong> Same as __str__(self)</p>
+            </section><br/>
+
+            <p>For the following examples, assume that the below code has been executed:</p>
+
+            <pre>
+>>> anna = ComputerPlayer("Anna Truffet")
+>>> players = [anna, HumanPlayer("Henry O'Brien"), ComputerPlayer("Josh Arnold")]
+>>> deck = Deck([Card(1, "red"), Card(2, "blue"), Card(3, "red"), Card(4, "green"), Card(5, "red")])
+>>> game = a2_support.UnoGame(deck, players)
+            </pre>
+
+            <p><strong>Each of the following classes should be a subclass of Card and should only alter methods required to
+                implement the functionality of the card as described.</strong></p>
+
+            <section>
+                <h3 class="header">SkipCard</h3><a name="sec_skip_card"></a>
+
+                <p>A card which skips the turn of the next player. Matches with cards of the same colour.</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = SkipCard(0, "blue")
+>>> game.current_player().get_name()
+'Anna Truffet'
+>>> card.play(anna, game)
+>>> game.current_player().get_name()
+"Henry O'Brien"
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">ReverseCard</h3><a name="sec_reverse_card"></a>
+
+                <p>A card which reverses the order of turns. Matches with cards of the same colour.</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> card = ReverseCard(0, "red")
+>>> game.current_player().get_name()
+'Anna Truffet'
+>>> game.next_player().get_name()
+"Henry O'Brien"
+>>> game.next_player().get_name()
+'Josh Arnold'
+>>> game.next_player().get_name()
+'Anna Truffet'
+>>> card.play(anna, game)
+>>> game.next_player().get_name()
+'Josh Arnold'
+>>> game.next_player().get_name()
+"Henry O'Brien"
+>>> game.next_player().get_name()
+'Anna Truffet'
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">Pickup2Card</h3><a name="sec_pickup2_card"></a>
+
+                <p>A card which makes the next player pickup two cards. Matches with cards of the same colour</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> game.next_player().get_deck().get_cards()
+[]
+>>> card = Pickup2Card(0, "red")
+>>> card.play(anna, game)
+>>> game.next_player().get_deck().get_cards()
+[Card(4, green), Card(3, red)]
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">Pickup4Card</h3><a name="sec_pick_colour_pickup4_card"></a>
+
+                <p>A card which makes the next player pickup four cards. Matches with any card.</p>
+
+                <h4 class="header">Examples</h4>
+                <pre>
+>>> game.next_player().get_deck().get_cards()
+[]
+>>> card = Pickup4Card(0, "red")
+>>> card.play(anna, game)
+>>> game.next_player().get_deck().get_cards()
+[Card(4, green), Card(3, red), Card(2, blue), Card(1, red)]
+                </pre>
+            </section>
+
+            <section>
+                <h3 class="header">Examples</h3><a name="sec_card_examples"></a>
+
+                <pre>
+>>> card = Card(23, "yellow")
+>>> card.__str__()
+'Card(23, yellow)'
+>>> card
+Card(23, yellow)
+>>> card = Card(42, "red")
+>>> card.get_number()
+42
+>>> card.get_colour()
+'red'
+>>> card.set_number(12)
+>>> card.get_number()
+12
+>>> card.get_pickup_amount()
+0
+>>> special_card = Pickup2Card(0, "red")
+>>> special_card.get_pickup_amount()
+2
+>>> special_card.matches(card)
+True
+>>> card.matches(special_card)
+True
+>>> blue_card = ReverseCard(0, "blue")
+>>> special_card.matches(blue_card)
+False
+                </pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Deck</h2><a name="sec_deck"></a>
+
+            <p>A collection of ordered Uno cards. A Deck should be initialized with Deck(starting_cards=None).<br>
+                <span data-version="1.1.0">When no parameter is given to the constructor
+                    (i.e. when starting_card is None) start with an empty Deck</span></p>
+
+            <p><strong>get_cards(self):</strong> Returns a list of cards in the deck.</p>
+            <p><strong>get_amount(self):</strong> Returns the amount of cards in a deck.</p>
+            <p><strong>shuffle(self):</strong> Shuffle the order of the cards in the deck.</p>
+            <p><strong>pick(self, amount: int=1):</strong> Take the first 'amount' of cards off the deck and return them.</p>
+            <p><span data-version="1.0.1"><strong>add_card(self, card: Card):</strong> Place a card on top of the deck.</span></p>
+            <p><strong>add_cards(self, cards: list&lt;Card&gt;):</strong> Place a list of cards on top of the deck.</p>
+            <p><strong>top(self):</strong> Peaks at the card on top of the deck and returns it or None if the deck is empty.</p>
+
+            <section>
+                <h3 class="header">Examples</h3><a name="sec_deck_examples"></a>
+
+                <pre>
+>>> card = Card(42, "red")
+>>> special_card = Pickup2Card(0, "red")
+>>> blue_card = ReverseCard(0, "blue")
+>>> cards = [card, special_card, blue_card]
+>>> deck = Deck(cards)
+>>> deck.get_cards()
+[Card(42, red), Pickup2Card(0, red), ReverseCard(0, blue)]
+>>> deck.get_amount()
+3
+>>> deck.top()
+ReverseCard(0, blue)
+>>> new_card = SkipCard(0, "green")
+>>> deck.add_card(new_card)
+>>> deck.add_cards([card, special_card, blue_card])
+>>> deck.get_amount()
+7
+>>> deck.get_cards()
+[Card(42, red), Pickup2Card(0, red), ReverseCard(0, blue), SkipCard(0, green), Card(42, red), Pickup2Card(0, red), ReverseCard(0, blue)]
+>>> deck.pick()
+[ReverseCard(0, blue)]
+>>> deck.pick(amount=2)
+[Pickup2Card(0, red), Card(42, red)]
+>>> deck.shuffle()
+>>> deck.get_cards()
+[Card(42, red), Pickup2Card(0, red), SkipCard(0, green), ReverseCard(0, blue)]
+                </pre>
+            </section>
+
+        </section>
+
+        <section>
+
+            <h2 class="header">Players</h2><a name="sec_players"></a>
+
+            <p>A player represents one of the players in a game of uno.</p>
+            <section>
+                <h3 class="header">Player</h3><a name="sec_player"></a>
+
+                <p>The base type of player which is not meant to be initiated
+                    (i.e. an abstract class).</p>
+
+                <p>The Player class should be initiated with Player(name) and implement the following methods:</p>
+
+                <p><strong>get_name(self):</strong> Returns the name of the player.</p>
+                <p><strong>get_deck(self):</strong> Returns the players deck of cards.</p>
+                <p><strong>is_playable(self):</strong> Returns True iff the players moves aren't automatic.</p>
+                <p>Raises a <strong>NotImplementedError</strong> on the base Player class.</p>
+                <p><strong>has_won(self):</strong> Returns True iff the player has an empty deck and has therefore won.</p>
+                <p><strong>pick_card(self, putdown_pile: Deck):</strong> Selects a card to play from the players current deck.</p>
+                <p>Raises a <strong>NotImplementedError</strong> on the base Player class. </p>
+                <p><span data-version="1.0.1">Returns None for non-automated players or when a card cannot be played.</span></p>
+                <p><span data-version="1.0.1">If a card can be found, the card should be removed.</span></p>
+            </section><br/>
+
+            <p><strong>Each of the following classes should be a subclass of Player and should only alter methods required to
+                implement the functionality as described.</strong></p>
+
+            <section>
+                <h3 class="header">HumanPlayer</h3><a name="sec_human_player"></a>
+
+                <p>A human player that selects cards to play using the GUI.</p>
+            </section>
+
+            <section>
+                <h3 class="header">ComputerPlayer</h3><a name="sec_computer_player"></a>
+
+                <p>A computer player that selects cards to play automatically.</p>
+            </section>
+
+            <section>
+                <h3 class="header">Examples</h3><a name="sec_player_examples"></a>
+
+                <pre>
+>>> player = Player("Peter O'Shea")
+>>> player.get_name()
+"Peter O'Shea"
+>>> player.get_deck()
+<__main__.Deck object at 0x10e56cd68>
+>>> player.get_deck().get_cards()
+[]
+>>> player.has_won()
+True
+>>> player.get_deck().add_card(Card(32, "red"))
+>>> player.has_won()
+False
+>>> human = HumanPlayer("Peter Sutton")
+>>> human.is_playable()
+True
+>>> human.pick_card(deck)
+>>> print(human.pick_card(deck))
+None
+>>> player.is_playable()
+Traceback (most recent call last):
+  File "<stdin>", line 18, in <module>
+  File "a2.py", line 323, in is_playable
+    raise NotImplementedError("is_playable to be implemented by subclasses")
+NotImplementedError: is_playable to be implemented by subclasses
+                </pre>
+            </section>
+
+        </section>
+
+
+        <section>
+            <h2 class="header">Criteria</h2><a name="sec_criteria"></a>
+
+            <table class="striped bordered">
+                <thead>
+                <tr>
+                    <th>Criteria</th>
+                    <th style="min-width: 5em">Mark</th>
+                </tr>
+                </thead>
+
+                <tbody>
+
+                <tr>
+                    <th>Functionality</th>
+                    <th>8</th>
+                </tr>
+                <tr>
+                    <td>Card classes</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Deck class</td>
+                    <td>3</td>
+                </tr>
+                <tr>
+                    <td>Player classes</td>
+                    <td>2</td>
+                </tr>
+
+                <tr>
+                    <th>Style &amp; Documentation</th>
+                    <th>2</th>
+                </tr>
+                <tr>
+                    <td>Program is well structured and readable</td>
+                    <td>0.5</td>
+                </tr>
+                <tr>
+                    <td>Variable and function names are meaningful</td>
+                    <td>0.5</td>
+                </tr>
+                <tr>
+                    <td>
+                        Entire program is documented clearly and concisely,
+                        without excessive or extraneous comments
+                    </td>
+                    <td>1</td>
+                </tr>
+                <tr>
+                    <th>Total</th>
+                    <th>/10</th>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <p>
+                As apart of this assessment, you will be required to discuss
+                your code with a tutor. This discussion will occur in the week
+                following your assignment submission in the practical session
+                to which you are enrolled. <strong>You must attend this session
+                to obtain marks for this assignment.</strong>
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a name="sec_submission"></a>
+
+            <p>
+                Your assignment must be submitted via the assignment three submission link on Blackboard.
+
+                You must submit a file, <code>a2.py</code>, containing your submission for this assignment.
+                You do not need to submit any other files.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment well before the
+                submission deadline of 6pm. Your latest, on time, submission will be marked. Ensure that you submit the
+                correct version of your assignment. In the event of exceptional circumstances, you may submit a request
+                for an extension. See the <a
+                    href="http://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=92705">course
+                profile</a> for details of how to apply for an extension.
+            </p>
+
+            <p>
+                Requests for extensions must be made <strong>no later</strong> than 48 hours prior to the submission
+                deadline. The expectation is that with less than 48 hours before an assignment is due it should be
+                substantially completed and submittable. Applications for extension, and any supporting documentation
+                (e.g. medical certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must
+                retain the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/>
+                <label for="change_highlighter">Toggle hange Highlighting/Details</label>
+            </p>
+
+            <p><span data-version="1.1.0">Version 1.1.0 - September 17th</span></p>
+            <p>Task Sheet:</p>
+            <ul class="browser-default">
+                <li>Clarified behaviour for keyword parameters</li>
+                <li>Fixed examples so they are consistent</li>
+            </ul>
+
+            <p>a2_support.py</p>
+            <ul class="browser-default">
+                <li>Prevent the Pickup4Card from being played first</li>
+            </ul>
+
+            <p>gui.py</p>
+            <ul class="browser-default">
+                <li>Fixed image loading bug for some Mac users</li>
+            </ul>
+
+            <p><span data-version="1.0.1">Version 1.0.1 - September 2nd</span></p>
+            <p>Task Sheet:</p>
+            <ul class="browser-default">
+                <li>Included missing add_card</li>
+                <li>Clarified the use of type hints</li>
+                <li>Adjusted Card.set_colour type hint to reference a2_support</li>
+                <li>Implemented the new game functionality in gui.py</li>
+                <li>Clarified pick_card method for ComputerPlayer</li>
+            </ul>
+            <p>a2_support.py</p>
+            <ul class="browser-default">
+                <li>Modified FULL_DECK and build_deck so zero cards cannot match special cards</li>
+                <li>Improved imports</li>
+            </ul>
+            <p>gui.py</p>
+            <ul class="browser-default">
+                <li>Implemented the new game functionality</li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"
+        integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44="
+        crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+
+<script type="text/javascript" src="index.js"></script>
+
+</body>
+
+</html>

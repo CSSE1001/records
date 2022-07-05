@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 3 &mdash; CSSE1001 Semester 2, 2019</title>
+    <link rel="stylesheet" href="ghpages-materialize.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/main-all.css">
+</head>
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Mario</h1>
+    <p>Assignment 3<br> CSSE1001/7030<br> Semester 2, 2019</p>
+    <p>Version 1.1.0<br> 20 marks </p>
+    <p>Due Friday 18th October, 2019, 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>The goal of this assignment is to extend the existing support code of a mario style 2D-platformer
+                    written in Python using tkinter.
+                </p>
+
+                <p>To be successful in completing this assignment you will have to use the concepts and skills
+                    that you have learnt. Specifically, you will need to have a good understanding of GUI programming,
+                    inter-class interactions, extending classes and file IO.
+                </p>
+
+                <p>This document outlines the tasks that you will need to implement for this assignment.
+                </p>
+
+                <div class="card">
+                    <a name="fig_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/example.png"
+                             alt="Image of An Example Running">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Basic Running of the Game</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="header">Getting Started</h3><a name="sec_getting_started"></a>
+
+                <p>The archive file <code>a3_files.zip</code> contains all the necessary files to start this assignment.
+                    A significant amount of support code has been provided to allow for the basic working game 
+                    functionality to be implemented relatively easily. 
+                </p>
+
+                <p>
+                    The main assignment file is <code>app.py</code>, which contains an incomplete implementation of
+                    <code>MarioApp</code>, the top-level GUI application class. You should add code to 
+                    <code>app.py</code> and modify <code>MarioApp</code> to implement the necessary functionality.
+                </p>
+
+                <p>
+                    All features and code you write should be placed inside <code>app.py</code><span data-version="1.1.0">,
+                    <code>level.py</code> or <code>player.py</code>.</span>
+                    <strong>You are not permitted to modify any files inside the
+                        <span data-version="1.1.0">game</span> directory.</strong>
+                    <strong>Your assignment must be able to be launched by running <code>app.py</code></strong>
+                </p>
+                
+                <p>
+                    Because this assignment deals with multiple files, while not required, you may wish to investigate a
+                    more sophisticated IDE. One option is <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,
+                    which is <a href="https://www.jetbrains.com/student/">free for students</a>.
+                </p>
+                
+                <section>
+                    <h4>Pymunk Library</h4><a name="pymunk"></a>
+
+                    <p>Physics is implemented in the game using the <a href="http://www.pymunk.org/en/latest/">Pymunk
+                        library</a>. It may be useful in completing the assignment to have an understanding of
+                        some of the components of the Pymunk library as you may need to refer to these libraries.
+                    </p>
+                    <p><strong>You will need to install this library in order to implement your tasks for this assignment.</strong>
+                        Pymunk can be installed by running the included <code>setup.py</code>.
+                    </p>
+
+                </section>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Overview</h2><a name="sec_tasks"></a>
+
+            <p>The assignment is broken down into three main tasks:</p>
+            <ol>
+                <li>The first task involves modifying the app.py file to implement basic launching of the game
+                    and some additional functionality</li>
+                <li>The second task involves extending the game mechanics to add more functionality to the game</li>
+                <li>The third task is for you to independently design and implement a sufficiently complex feature of your choosing</li>
+            </ol>
+
+            <p>
+                <strong>For postgraduates:</strong> There is an additional task for you to complete. You will need
+                to appropriately implement animations using sprite sheets in the <code>spritesheets</code> folder.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Task 1 - Basic GUI</h2><a name="sec_task1"></a>
+
+            <section>
+                <h3 class="header">1.1 - Working Game</h3>
+
+                <p>For this task, you will need to write code in <code>app.py</code>,
+                    which will start the game when the file is run. This will
+                    require you to write the <code>main</code> function to launch
+                    the <code>MarioApp</code> GUI.
+                </p>
+
+                <p>
+                    You should modify <code>MarioApp</code> so that the window title is 
+                    something appropriate (e.g. "Mario")
+                </p>
+
+                <p>Once the game runs, you will need to implement keyboard
+                    bindings. You should find an appropriate location in the class
+                    to make <code>bind</code> calls for each of the keyboard
+                    presses to the appropriate method. The binds should behave as follows:
+                </p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Key</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td>W, UP, SPACE</td>
+                        <td>Makes the player jump (Hint: see <code>MarioApp._jump</code>).
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>A, LEFT</td>
+                        <td>Moves the player to the left (Hint: see <code>MarioApp._move</code>).
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>S, DOWN</td>
+                        <td>Makes the player duck (Hint: see <code>MarioApp._duck</code>).
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>D, RIGHT</td>
+                        <td>Moves the player to the right (Hint: see <code>MarioApp._move</code>).
+                    </tr>
+                    </tbody>
+                </table>
+
+            </section>
+
+            <section>
+                <h3 class="header">1.2 - File Menu and Dialogs</h3>
+
+                <p>Implement a menu for the game which has a top level "File" menu.
+                    Within the "File" menu, you will need the following buttons:
+                </p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Button</th>
+                        <th>Purpose</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td>Load Level</td>
+                        <td>Prompts the user with a popup text input dialog.
+                            When the player inputs a level filename, load that
+                            level replacing the currently loaded level.
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>Reset Level</td>
+                        <td>Reset all player progress (e.g. health, score, etc) in the current level. 
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>Exit</td>
+                        <td>Exits the game.</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>When a player runs out of health, you should show a dialogue asking
+                    whether they want to restart the current level or exit the game.</p>
+
+                <p>Note: On Mac OS X, the file menu should appear in the global menu bar (top of the screen).</p>
+            </section>
+
+            <section>
+                <h3 class="header">1.3 - Status Display</h3>
+
+                <p>Implement a custom tkinter widget (i.e. a class which inherits from <code>tk.Frame</code>)
+                    which displays the score and health of the player at the bottom of the window.
+                </p>
+
+                <p>The player's score should be shown as a single number. The health of the
+                    player should be displayed as a 'health bar' (similar to the image below).
+                    The health bar should be coloured as follows:
+                    <ul class="browser-default">
+                        <li>When the player has greater than or equal to 50% of their maximum health,
+                            it should be coloured green.</li>
+                        <li>When the player has between 25% and 50% of their maximum health,
+                            it should be coloured orange.</li>
+                        <li>When the player has less than or equal to 25% of their maximum health,
+                            it should be coloured red.</li>
+                    </ul></p>
+
+                <p>This widget needs to be updated when the score and health of the player updates during gameplay.
+                </p>
+
+                <div class="card">
+                    <a name="fig_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/health.gif"
+                             alt="Example Health Bar">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Animated Health Bar Example</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="header">1.4 - Bounce Block <img src="public/images/bounce.png"/></h3>
+
+                <p>Implement a type of block which will propel the player into
+                    the air when they walk over or jump on top of the block.
+                </p>
+
+                <p>The velocity with which you propel the player should be sensible
+                    but noticeable.
+                </p>
+
+                <p>Hint: You should implement a bounce block by making a new
+                    class which extends <code>Block</code>.
+                </p>
+                
+                <p>You may (and should) utilise the <code>bounce_block</code> image files found in <code>a3_files.zip</code></p>
+
+                <p>The bounce block is represented by the character, <code>b</code> in level files.</p>
+            </section>
+
+            <section>
+                <h3 class="header">1.5 - Mushroom Mob <img src="public/images/mushroom.png"/></h3>
+
+                <p>Implement a new type of mob which has the following properties:</p>
+                <ul class="browser-default">
+                    <li> The mob should move at a reasonably slow rate</li>
+                    <li> When the mob collides with a block, player, or other mob it should
+                        reverse its direction (HINT: <code>Mob.set_tempo</code>)</li>
+                    <li> When the mob collides with the side of a player, the
+                        player should lose 1 health point and be slightly repelled
+                        away from the mob</li>
+                    <li> When a player lands on top of the mob, the player should
+                        bounce off the top of the mob and the mob should be destroyed</li>
+                </ul>
+
+                <p>You may find it useful to look at the existing mob classes and collision
+                    handling methods before commencing this task.</p>
+                
+                <p>You may (and should) utilise the <code>mushroom</code> image files found in <code>a3_files.zip</code></p>
+
+                <p>The mushroom mob is represented by the character, <code>@</code> in level files.</p>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Task 2 - Extending the Game</h2><a name="sec_task1"></a>
+            <section>
+                <h3 class="header">2.1 - Star Item <img src="public/images/star.png"/></h3>
+
+                <p>Implement a type of item that makes the player invincible for 10 seconds
+                    (that is, they should not be able to take any damage during this time).
+                    Any mobs that the player collides with during this time should be immediately
+                    destroyed. 
+                </p>
+
+                <p>During the time the player is invincible, the player's health bar should
+                    be coloured yellow.</p>
+                
+                <p>You should utilise the <code>star</code> image files found in <code>a3_files.zip</code></p>
+
+                <p>The star is represented by the character, <code>*</code> in level files.</p>
+            </section>
+
+            <section>
+                <h3 class="header">2.2 - Goals <img src="public/images/flag.png"/> <img src="public/images/tunnel.png"/></h3>
+
+                <p>Implement a new type of block that acts as a goal and allows changing between levels.
+                The block should be constructed with an id and the name of the next
+                level file. Your must include at least the following two types of goals:</p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Sprite</th>
+                        <th>Purpose</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td>Flagpole</td>
+                        <td><img src="public/images/flag.png"/></td>
+                        <td>When a player collides with this, immediately take the player to the next level. 
+                            If the player lands on top of the flag pole, their health should be increased. <!--by how much?-->
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>Tunnel</td>
+                        <td><img src="public/images/tunnel.png"/></td>
+                        <td>By default this should act as a normal block. However, if the player presses
+                            the down key while standing on top of this block, the player should be taken to 
+                            another level.
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>A player's current state (coins, health, etc) should not change when the level changes, 
+                apart from their position.</p>
+
+                <p>You may find the <code>GOAL_SIZES</code> constant defined in <code>app.py</code>
+                    useful in determining the size of the various goal types.</p>
+                
+                <p>You may also find the <code>flag</code> and <code>tunnel</code> image files in <code>a3_files.zip</code> useful.</p>
+
+                <p>The flags and tunnels are represented by the characters, <code>I</code> and <code>=</code>
+                    respectively in level files.</p>
+
+                <p><em>The levels loaded by the flag and tunnel may be hardcoded until the next task is completed</em></p>
+            </section>
+
+            <section>
+                <h3 class="header">2.3 - Loading Configuration</h3>
+
+                <p>Implement the ability to load a configuration file for a game of mario.
+                    When the game is launched the user should be prompted to enter the file path
+                    for a configuration file.</p>
+                <p>The configuration file will be in a similar format to the example given below.</p>
+                <div class="card">
+                    <div class="card-content">
+                <pre>
+==World==
+gravity : 400
+start : level1.txt
+
+==Player==
+character : luigi
+x : 30
+y : 30
+mass : 100
+health : 4
+max_velocity : 100
+
+==level1.txt==
+tunnel : bonus.txt
+goal : level2.txt
+
+==bonus.txt==
+goal : level1.txt
+
+==level2.txt==
+tunnel : small_room.txt
+goal : level3.txt
+<span data-version="1.1.0">
+==small_room.txt==
+goal : level2.txt
+</span>
+==level3.txt==
+goal : END
+                </pre>
+                    </div>
+                </div>
+
+                <p>At the minimum, a configuration file will include a <code>==World==</code>
+                    tag, a <code>==Player==</code> tag and a tag for the level specified as
+                    start in <code>==World==</code>
+                </p>
+
+                <p>A <code>==World==</code> tag should have a <code>gravity</code> property which will set
+                    the gravity of a world when it is constructed. It should also contain
+                    a <code>start</code> property which will be the filepath of the first level to load.
+                </p>
+
+                <p>A <code>==Player==</code> tag should have the following properties:</p>
+                <ul class="browser-default">
+                    <li>character: This can be either mario or luigi and will change the image displayed in game.</li>
+                    <li>x: This is the starting x co-ordinate of the player.</li>
+                    <li>y: This is the starting y co-ordinate of the player.</li>
+                    <li>mass: This is the weight of the player set when adding the player to the world.</li>
+                    <li>health: This is the maximum amount of health a player will have.</li>
+                    <li>max_velocity: This is the maximum x velocity that a player can reach when moving.</li>
+                </ul>
+
+                <p>Each of the levels should have it's own tag, e.g. <code>==level==</code> where
+                    level is the file path of that level.<br/>
+                    A level tag should have a <code>goal</code> property which is the filename
+                    of the level to load when the player reaches a flag goal block.
+                    If the next level is END then it should prompt the user that the game is
+                    over and close the game window.
+                    <br/>
+                    A level tag may also have a <code>tunnel</code> property which is the filename
+                    of the level to load when the player enters a tunnel block.
+                </p>
+
+                <p>If the configuration file is invalid, or missing and cannot be parsed, you should alert
+                    the user via a <code>tkinter</code> error message box and then exit the game.</p>
+            </section>
+
+            <section>
+                <h3 class="header">2.4 - Switches <img src="public/images/switch.png"/></h3>
+                <p>Implement a new type of block that acts like a switch. When a player lands on-top of
+                a switch, all bricks within a close radius of the switch should disappear. A player
+                should not be able to trigger a switch by walking into the side of it (the player should
+                stop moving as if it were any other block).</p> 
+
+                <p>When a switch is pressed, it should remain in a 'pressed' state
+                    (<img src="public/images/switch_pressed.png"/>) for 10 seconds. During this time,
+                    the player should not be able to collide with this block (HINT: returning <code>False</code>
+                    from a collision handler will turn off collisions). After this time, the switch should revert to its original state and all invisible bricks should become visible again.</p>
+
+                <p>It is up to you to pick a sensible radius for the switch. It needs to be noticable
+                    when playing with the supplied level files.</p>
+
+                <p>You may (and should) utilise the <code>switch</code> and <code>switch_pressed</code> image files found in <code>a3_files.zip</code></p>
+
+                <p>The switch is represented by the character, <code>S</code> in level files.</p>
+            </section>
+
+            <section>
+                <h3 class="header">2.5 - High Scores</h3>
+
+                <p>In this task you should implement a way to store the high scores for each level in a file.
+                </p>
+
+                <p>The highscore information should be stored in (a) txt file(s) in a reasonable format.
+                    The exact format of the file(s) and way the data is stored is up to you but marks
+                    may be deducted for inappropriate save format.
+                </p>
+
+                <p>When a player reaches a goal (and therefore finishes a level),
+                    prompt the user via a dialog for their name and store the score they had 
+                    at the end of the level to the relevant file for the level (creating it if it doesn't exist). 
+                    Adding a new entry to the file shouldn't remove any existing entries already in it.
+                </p>
+
+                <p>Add a button to the file menu called "High Scores". When clicked this will
+                    open a new custom <code>tk.TopLevel</code> window displaying
+                    the names and scores of the top ten highest scorers for the current level,
+                    sorted in descending order by score. Note that the file might have more or less than
+                    ten entries, but you shouldn't display more than the top ten entries in the window.
+                    If the file doesn't exist, the dialog shouldn't display any entries.
+                </p>
+
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Task 3 - Over to You</h2><a name="sec_task1"></a>
+
+            <p>For this task you are expected to demonstrate your ability to intelligently
+                extend the features of the base game. The features that you choose to
+                implement are left up to you. For full marks in this task your features
+                will need to be of sufficient complexity. For example, sound effects
+                are generally <em>not</em> deemed to be of 'sufficient complexity'.
+            </p>
+
+            <p>It is highly encouraged that you only attempt this task if you feel
+                confident in your programming ability. You will need to discuss
+                your plans for this task with a tutor in a practical or via a private
+                question on Piazza. The tutor will be able to advise you
+                as to whether your intended feature is of sufficient complexity to gain marks.
+            </p>
+
+            <p>If you are attempting to implement this task then you must submit a feature
+                PDF which outlines exactly what features you have implemented and how
+                to use them when running your assignment. The PDF should include
+                screenshots of the features and a brief description of how the
+                features were implemented.
+            </p>
+
+            <h4>Hints</h4>
+
+            <p><span data-version="1.1.0">If you are thinking about using pygame for your task three please ensure that
+                you discuss it with a tutor as pygame should be avoided where possible.
+            </span>
+            </p>
+
+            <p><span data-version="1.1.0">If you attempt task 3 and it requires additional assets then
+                you are allowed to zip your entire project and submit that. Ensure that extracting
+                the zip will have app.py at the top level. You must mention in your features.pdf document
+                that you have submitted a zip and what additional assets were included.
+            </span>
+            </p>
+
+            <p><span data-version="1.1.0">If your feature wants to have different functionality for
+                the <code>W</code> and <code>UP</code> keys you may rebind those keys.
+            </span>
+            </p>
+
+            <p><span data-version="1.1.0">If your feature.pdf does not clearly explain your
+                feature then you may not receive marks for that feature.
+            </span>
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Postgraduate Task</h2><a name="sec_task1"></a>
+
+            <p>The task for postgraduate students is to implement a class <code>SpriteSheetLoader</code>
+                which is able to load images from a sprite sheet. A sprite sheet is an image which
+                consists of multiple smaller images, see the spritesheets folder for reference.
+                The <code>SpriteSheetLoader</code> should be able to load one of the smaller images
+                from a sprite sheet based on the smaller images location and position within the sheet.
+            </p>
+
+            <p>Hint: To implement this, you will want to investigate using the
+                <a href="https://pillow.readthedocs.io/en/stable/">Pillow library</a></p>
+
+            <p>Hint: To implement this, you may also want to investigate making a
+                new <code>ViewRenderer</code> subclass to handle sprite sheets.
+                Ensure that loaded images are stored in the <code>self._images</code>
+                dictionary within the new <code>ViewRenderer</code> subclass.
+            </p>
+
+            <p>In addition to loading images from a spritesheet, you will need
+                to implement animations for the following entities.
+            </p>
+
+            <ul class="browser-default">
+                <li>Player: When the player is walking, jumping or falling animate the
+                    player with the appropriate sprites from the <code>characters</code> sprite sheet.</li>
+                <li>Mushroom Mob: When the mushroom mob is walking, animate the walk using the
+                    appropriate sprites from the <code>enemies</code> sprite sheet.
+                </li>
+                <li>Mushroom Mob: When the mushroom mob is jumped on, animate the squishing using the
+                    appropriate sprites from the <code>enemies</code> sprite sheet.
+                </li>
+                <li>Coins: Animate the coin to be spinning using the
+                    appropriate sprites from the <code>items</code> sprite sheet.
+                </li>
+                <li>Bounce Block: When the bounce block is used, animate the
+                    extension of the bounce block using the sprites in the <code>items</code> sprite sheet.</li>
+            </ul>
+        </section>
+
+        <section><h2 class="header">Marking</h2><a name="sec_marking"></a>
+
+            <p>
+            Your style mark will be scaled by your percentage achieved from task 1.
+            </p>
+            <p>
+                Style = Style Marks * Task 1 Percentage
+            </p>
+
+            <p>Your total mark will be made up of functionality marks and style marks.
+                Functionality marks are worth 15 of the 20 available marks and style marks
+                are worth the other 5 marks.
+            </p>
+
+            <p>
+                Total = (Style Percentage * 5) + (Functionality Percentage * 15)
+            </p>
+
+            <section><h3>Functionality Assessment</h3><a name="sec_functionality"></a>
+
+                <p>Your assignment will be marked by tutors who will run your <code>app.py</code>
+                    file and evaluate the completeness and correctness of the tasks you've implemented.
+                </p>
+
+                <p>The table below specifies the mark breakdown for each of the tasks for
+                    CSSE1001 and CSSE7030 students.
+                </p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>CSSE1001 Weighting</th>
+                        <th>CSSE7030 Weighting</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td>Task 1</td>
+                        <td>35%</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Task 2</td>
+                        <td>35%</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Task 3</td>
+                        <td>30%</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Postgraduate</td>
+                        <td>0%</td>
+                        <td>15%</td>
+                    </tr>
+                    </tbody>
+                </table>
+
+                <p>The weighting of each of the sub tasks within the
+                    tasks is given in the table below.
+                </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th>Task</th>
+                        <th>Sub-Task</th>
+                        <th>Weight</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td rowspan="5">Task 1</td>
+                        <td>Working Game</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>File Menu and Dialogs</td>
+                        <td>15%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Status Display</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Bounce Block</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Mushroom Mob</td>
+                        <td>25%</td>
+                    </tr>
+                    <tr class="task">
+                        <td rowspan="5">Task 2</td>
+                        <td>Star Item</td>
+                        <td>10%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Goals</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Loading Configuration</td>
+                        <td>30%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Switches</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>High Scores</td>
+                        <td>20%</td>
+                    </tr>
+                    <tr class="task">
+                        <td rowspan="1">Task 3</td>
+                        <td></td>
+                        <td>100%</td>
+                    </tr>
+                    <tr class="task">
+                        <td rowspan="2">Postgraduate</td>
+                        <td>Sprite Loading</td>
+                        <td>50%</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Animation</td>
+                        <td>50%</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Code Style</h3><a name="sec_code_style"></a>
+
+                <p>The style of your assignment will be assessed by one of the tutors, and you will
+                    be marked on the broad categories listed below.
+                </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Weight</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Documentation</span></th>
+                        <td>All classes, methods and functions have appropriate documentation in the form
+                            of docstrings. The parameters and return values where applicable have been
+                            documented appropriately including an accurate description and the types.
+                            Where there exists code whose meaning is not immediately obvious or clear upon
+                            reading, its meaning has been clarified using appropriate inline comments.
+                            Documentation is concise and is not excessive or extraneous.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Algorithmic Logic & Design</span></th>
+                        <td>All algorithmic logic is suitable for solving the intended objective of the algorithm.
+                            Algorithms are not overly complex or without purpose. All algorithms have been
+                            simplified to accomplish the objective with a succinct and clear approach.
+                        </td>
+                        <td><strong>30%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Readability</span></th>
+                        <td>All code is clear and easy to read. Lines of code have been sufficiently
+                            abstracted and clarified through the use of good variable naming so that every
+                            line is easily interpreted and the intention is clear. Lines are not excessive
+                            so as to distract from the intention. Blocks of related code have been grouped
+                            together through vertical whitespace to produce logical groups of code.
+                            Excessive or insufficient whitespace which detracts from the structure of code
+                            is not present. Code adheres to common Python style practices such as line length,
+                            line breaks, indentation, etc.
+                        </td>
+                        <td><strong>20%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Good Object Oriented Practices</span></th>
+                        <td>Inheritance is used appropriately to reduce duplicated code. Inheritance has been
+                            used where appropriate to succinctly and clearly extend functionality of existing classes.
+                            Classes have been designed in a way which provides a logical and clear structure of classes.
+                            Appropriate information is passed between and stored within classes. Private class
+                            attributes have only been used within the declaring class or its subclasses. Methods
+                            have been included where it improves ability to utilise a class.
+                        </td>
+                        <td><strong>40%</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+            <p>Your assignment must be submitted via the assignment three submission link on Blackboard.
+                You must submit a python file, <code>app.py</code>, containing your implementation of the assignment.
+                If you attempted task 3 then you must also submit a PDF file, <code>features.pdf</code>, containing
+                a description of your features.
+                Both files should be uploaded individually to blackboard.
+                If you modify <code>player.py</code> or <code>level.py</code> then you must also upload those files.
+                If you require additional assets for task 3, upload all your assets, python files and features pdf
+                in a single zip archive named <code>a3.zip</code>.
+                Once submitted download the support code and your app.py submission from blackboard
+                and place the app.py in the extracted support code file to ensure everything works as expected.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment <em>well</em>
+                before the submission deadline. Your latest on-time, submission will be marked. Ensure that you submit
+                the correct version of your assignment. An incorrect version that does not work <strong>will</strong>
+                be marked as your final submission.
+            </p>
+
+            <p>
+                In the event of exceptional circumstances, you may submit a request for an extension. See the
+                <a href="https://course-profiles.uq.edu.au/student_section_loader/section_1/98098">course
+                    profile</a> for details of how to apply for an extension. Requests for extensions must be made
+                <strong>no later</strong> than <u>48 hours</u> prior to the submission deadline. The expectation
+                is that with less than 48 hours before an assignment is due it should be substantially completed
+                and submittable. Applications for extension, and any supporting documentation (e.g. medical
+                certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must retain
+                the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <h4 class="star"><span data-version="1.1.0">Version 1.1.0 - Sep 30</span></h4>
+            <h5 class="star">Assignment Sheet</h5>
+            <ul class="browser-default">
+                <li>Added a marking criteria.</li>
+                <li>Added a hints section to task 3.</li>
+                <li>Fixed configuration file example to include settings for the references small_room.txt</li>
+            </ul>
+
+            <h5 class="star">Support Code</h5>
+            <span>app.py</span>
+            <ul class="browser-default">
+                <li>World creation in <code>MarioApp.__init__</code> replaced with <code>MarioApp.reset_world</code></li>
+                <li><code>MarioApp.reset_world</code> fixed when changing levels</li>
+                <li><code>MarioApp.scroll</code> behaviour changed</li>
+            </ul>
+            <span>level.py</span>
+            <ul class="browser-default">
+                <li><code>load_world</code> now accepts and passes args to <code>WorldBuilder.add_entity</code></li>
+            </ul>
+            <span>world.py</span>
+            <ul class="browser-default">
+                <li>New method <code>World.get_things_in_range</code> added</li>
+            </ul>
+            <span>player.py and entities.py</span>
+            <ul class="browser-default">
+                <li>Removed <code>Player.is_jumping</code> and <code>Player.set_jumping</code></li>
+                <li>Added <code>DynamicEntity.is_jumping</code> and <code>DynamicEntity.set_jumping</code></li>
+            </ul>
+        </section>
+
+    </div>
+</div>
+
+<script src="http://code.jquery.com/jquery-2.2.4.min.js"></script>
+<script src="index.js"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Martin, Brae Webb">
+    <title>Assignment 3 &mdash; CSSE1001 Semester 1, 2018</title>
+<link href="styles.css" rel="stylesheet"></head>
+<!-- LaTeX? More like LaMeTeX -->
+
+<!--
+8QQQQ%HyffCICCCyCftv<^+~~""''``         "*GMg0gRRggggRRggggRRRMRRRRMbbOOOODDO9$G
+0&QQQ%MhCfCfCCCyInt)|<^+!~:,"''```````     '~r/nGMg000ggRRggRRMRRRRMMbbOOODH99$P
+g%QQQQ8HffCCIICCCft1)*<r=!~~:"''.--```````      `"*4MgggRgggRRMMRRMMMbMMbbOOOHU2
+00&QQQ&0yffCCCCCyC{F(l*r^+!~:""''..`````-..'''....-`"!]ZMRRRggRRRRMMbbMMMMbOOOK2
+%0BQQQQ&KfCfCyyyCCnFF)?*r++!:"''-```````-.'""'"""""''.'.~<C9RRRRMRMMbObMbMMMbbDP
+%00QQQQQ0GnCCooyyCIs{]/|l<^!~"''--``````-.'"",!++!!!~"''.` -!4MMRMRRMbMbMMMMMbHe
+80gBQQQQ&0SfCyyyyCfs{t7))?^+!~"'''-`````-.',~+^>*<r=+!:,,'--.:bRRRRRRMMbbMMMMMOG
+880%QQQQQQ0SCCyyyyCnIttF()*<^+!:"''.-```-'"~+===r*?**<>r^+!:,"PRRgggRMMMbbMMRMMK
+g%%%&QQQQQQByCCCyyCffnn{tF)/*<^+~~:""'-.''"~=r?){CCfCCCIt]\*rr280gRRRMMMMMMMMMMO
+M%%%BQQQQQQQMCCCCyyCCCfICf{7v?<>!!!!~~,"'''"~<tyGOHKkZe5nv*?)){080RRRMbbMMMbMMMM
+G8%BBQQQQQQQQRCCCCyCyCCCCCInF)??\*=!!!!~"'"~!<fOQQQQQ8b9kZyCn]>fg00gRMMMMRMMMMMM
+nR%%BQQQQQQQQQHfCCCyyyyyCCCftF)/ll|r!!~~!!+rr/PQQQQ@@@@@QMA2Cn<~{RgggRMMMRMMMMMM
+<9%%B&QQQQQQQQQXCyCCyyyyCffft17)*<<>^+;+++!~*IK@@@@@@@@@@QM9eoF!~9gggRRMMMMMMMMM
+!yg0%&QQQQQQQQQBCCyCCyyyyyfII{F]/*r^==!~::''!(Q@@@@@@@@@@@@Qg9n+]g0ggRRMMMMMMbMM
+~Fbg8BQQQQ&QQQQQGfCyCCyyyyyCIn17(\>^;!~,""''.4@@@@@@@@@@@@@&m>'`^R0gggRMMMMMMbbb
+!)HR8BQQQQ&QQQQQMyCCyyIsfCCCCI(7F7)*r;~"'.-`.O@@@@@@@@@@@@Qm="``+MgRggRMMMbMbbbb
+>F$M0%&Q&&&&QQQQBXCCfyyCfCCyCCt])])/*r~".```":CQ@@@@@@@@@@P^'``'^MRRgggRMbMMMbbb
+1CXbR0B&&&&&QQQQQ0CCCfCyyCyyCyfn1/|/*r~'`````  '|DRUyC5DR?.  `':(ggRggggRMMMbbOO
+SPXORg8BBBB&QQQQQBGfCCIIyyfyyyfCC{7?^=!"''""``          ``` `':rU00RgggggMMbbbbb
+MOUHMR0BBBB&QQQQQQRyICyfIyCCyoyCCCCn?+=;=+r+,'.-`-`````````'"~<h%800ggRgRMMMbOOb
+BRK9RR0%BB&QQQQQQQQbCsyyffCICyyCCCCfCF(v]?>*<^+!!!!!!!~~~~,~+\KQQB%800gggMMMbbOb
+0MK9RRg8B&&QQQQQQQQQAnfyCsCCCCymmyyCCCCyCFv)))1(v))7](()/vFFFHQQQ&B%%000RRMMMbbb
+MO$KgRg0%&QQQQQQQQQQ82fCyCICCffy544yCCfCyCCffCyCCyyCyCCyomoy9@QQQQ&BB%880gRMRMbb
+OD$Kg0g08&&QQQQQQQQQQRyCCyfCyCfCCy4S5CCCCCyyyyo5yoo545m2PGGD@QQQQ&BB%8000gRRRMbM
+OH$$R%gg8B&QQQQQQQQQQQ9yCCCCoyCfCySeeh2SheGAKKD&QQQQQQQ@@@@@@QQQQ&BB%000gggRRMMM
+Mb9$MB800%B&QQQQQQQQQQBoS5yIC5yfCy54hhhPGGGGkUDQ@@@@@@@@@@@@@QQQQ&BB%0g000gRRRMM
+0RbKOB&%g0BQQQQQQQQQQQQmmeZmfCyyCCyyy4SS2h4m4PGQ@@@@@@@@@@@@QQQQ&Q&%%8000gggRRMM
+B8RHH8QB0%B&QQQQQQQQQQQkC2GAeCC5PP4yyyoo5oyCy5meQ@@@@@@@@@QQQQQQQ&&B%%%0gggRRRRM
+Q&0O9gQQ88B&QQQQQQQQQQQ0fy4XKKyCme$OXyyyyyfnFF{tC%@@@@@@@@QQQQQQQQ&B%%%0gggggRMM
+QQ%MHMQQB8%BQQ&QQQQQQQQQyCySKHKCfySkOb2CyCCn)*>>>?U@@@@@QQQQQQQQQQBB%800gggggRMM
+Q&BMHO&QQ%%BQ&&QQQQQQQQQh{fyG9ODyCy5Z9RbyCyf1*=!~!!)Q@@QQQQQQQQQQ&B%8000ggggRRMM
+QB%MHO0QQB%B&&&QQQQQQQQQ9{IC4UD0QyCyy4KMM4yyC7r!~:,:)QQQQQQQQQQQQQ&B8000gggggRRM
+QB%RDORQQ&%B&&&&QQQQQQQ@0InIyG9B@gCCyCoXMRhCyCF|+~,""=eQQQQQQQQQ&QQB80gggggg0gRM
+B%8RDOMBQQ%%B&&&&&QQQQQ@QPnfye9B@@HCCffyGO09y5yC\=!~,",!oBQQQQQQQQ&&B%0ggggg0gRM
+%0gMDOM0QQB8BB&BB&QQQQ@@@OnfCS9B@@QAyCfCyGO%QGZ4C{F)r!~,"~y&QQQQQ&&&&B80ggggggRR
+8gRMDDMg&Q&%%B%BBQQQQQQ@@gfyy4HB@@@QG4fCyyUMQQPZ4P45{/^=!,"=PRQQQQQ&&B80000ggggR
+gRMbDDMRBQQB%%%%BQQQQQQ@@Qyyy46g@@@@QPyCyy4URQ@MkG42yC]|>=~,""^CRQQQ&%8008000ggR
+RMMbOOMR8QQ&8%%%BQQQQQQQ@@KCyS$M@@@@@Q4o5CCm$g@@@QR$SmyC{F|r!~""~|RQ&B%00%gg0gRM
+RMMOOORR0BQQ%%%%%QQQQQQQ@@0fy5GOQ@@@@@QZ5yyyokB@@@@@QMG44yCI7*^!~~^OQ&%88%0000RM
+RMMOObRR0%QQ%008%QQQQQQQ@@QGCyeOQ@QQ@@@Q5yCIfoAQ@@@@@@@QHGZeSyff{1*CQ&B8008%80RR
+MMMOOMggg%&Q8g08%QQQQQQQ@@@byy2KQ@Q@@@@@B4yCIfoAQ@@@@@@@@Q0OKUKXPy{K&BB8008%80gR
+MMbDOMRgg8BQ%g8%B&QQQQQ@@@@Mfy4$B@QQ@@@@@QeyCCCoKQ@@@@@@@@@@@@@@QgO&Q&B%%8%%80gR
+MbbDHMgg08%B%08%%&QQQQQQ@@@gsy2KB@QQ@@@@@@Q9SoCfyXQ@@@@@@@@@@@@@@@QQQ&B%8%%%%80R
+MbbD9Mgg08%%%08%&&QQQQQQ@@@QyyhKQQQQQ@@@@@@@UmyffykQ@@@@@@@@@@@@@QQQ&&%%%%%BB%0g
+MbO99Mg00888B88%&QQQQQQQ@@@QmyeHQQQQQQ@@@@@@QGoyfIyK@@@@@@@@@@@@QQQQ&&B%%%%%B%0g
+MMbH9Mg00%%8&%0%&QQQQQQ@@@@QmCZM@QQQQQQ@@@@@@QXe4ytC&@@@@@@@@@QQQQQQBBB%%%%BB80g
+RMMODMg00%00&B8BQQQQQQ@@@@@@9PbQQQQQQQ@@@@@@@@QHPhys6@@@@@Q@QQQQQQQQ&B&BBBBB&B0R
+RRRMOMg8080gBB%BQQQQQQ@@@@@@@@@@QQQQQQ@@Q@@@@@@Q9h5ob@@@@@QQQQQQQQQQQ&BBBBBBBB0R
+0ggMOMg0000gBB8BQQQQQQ@@@@@@@@@QQQQQQQ@@Q@@@@@@@QbAR@@@@QQQQQQQQQQQQQQQ&B&BBB%0R
+%%%gMRR00000B&%&QQQQQQ@@@@@@@@QQQQQQQQ@@QQQ@@@@@@@@@@@QQQQQQQQQQQQQQQQQ&%BB&&B%g
+-->
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Towers</h1>
+    <p>Assignment 3<br> CSSE1001/7030<br> Semester 1, 2018</p>
+    <p>Version 1.1.1<br> 20 marks </p>
+    <p>Due Friday 1st June, 2018, 18:00</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>This assignment provides you the opportunity to apply concepts taught throughout the course to extend
+                    the functionality of a basic tower defence game.
+
+                <p>
+                    The assignment will focus on the concept of Graphical User Interfaces (GUIs) and object-oriented
+                    programming. You will be required to extend the functionality of the base game to achieve marks.
+                </p>
+
+                <p>Students are encouraged to review some tower defence games, to better understand how this type of
+                    game is played and for inspiration on advanced features.</p>
+
+                <p>Because this assignment deals with multiple files, while not required, you may wish to investigate a
+                    more sophisticated IDE. One option is <a href="https://www.jetbrains.com/pycharm/">PyCharm</a>,
+                    which is <a
+                            href="https://www.jetbrains.com/student/">free for students</a>.</p>
+            </section>
+
+            <section>
+                <h3>Game Play</h3><a name="sec_gameplay"></a>
+
+                <div class="hide-screen">
+                    <p>A video overview of the assignment can be found here: <a
+                            href="https://www.youtube.com/embed/roE4p1frvwA">https://www.youtube.com/embed/roE4p1frvwA</a>
+                    </p>
+                </div>
+                <div class="video-container hide-print">
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/roE4p1frvwA?rel=0"
+                            frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+                </div>
+
+            </section>
+        </section>
+
+
+        <section>
+            <h2 class="header">Overview</h2><a name="sec_overview"></a>
+
+            <section>
+                <h3 class="header">Getting Started</h3><a name="sec_getting_started"></a>
+
+                <p>The archive <code>a3_files.zip</code> contains all the necessary files to start this assignment. A
+                    significant amount of support code has been supplied to make it possible to begin with a simple
+                    application that is almost working.</p>
+
+                <p>The main assignment file is <code>a3.py</code>, which contains an incomplete implementation of <code>TowerGameApp</code>,
+                    the top-level GUI application class. The other files are support code which <strong>must
+                        not</strong> be edited. Initially, you do not need to understand much of this code, but as you
+                    progress through the tasks, you will need to understand more of this code
+                    <!-- - see the <a href="./appendices.html#sec_support_appendix">support code appendix</a> for an overview-->
+                    . You should add code to <code>a3.py</code> and modify <code>TowerGameApp</code> to implement the
+                    necessary functionality.</p>
+
+                <p><em>You are permitted to create additional files to simplify the separation of tasks (i.e. task1.py,
+                    task2.py, etc.), although this is not required. If you do this, <code>a3.py</code> must be the entry
+                    point to your application. One way to achieve this is to move <code>TowerGameApp</code> to a
+                    separate file, such as <code>base.py</code>. <strong>Regardless of how you structure your files, the
+                        code must all be able to be demonstrated by running <code>a3.py</code></strong>.</em></p>
+
+            </section>
+
+            <!--<section><h3 class="header">Important Concepts</h3><a name="sec_important_concepts"></a>-->
+
+            <!--<p>TODO: any important concepts, such as event emitting</p>-->
+            <!--<p>Perhaps this should be in an appendix</p>-->
+            <!--</section>-->
+
+
+        </section>
+
+
+        <section>
+            <h2 class="header">Assignment Tasks</h2><a name="sec_tasks"></a>
+
+            <section><h3>Task Overview</h3><a name="sec_task_overview"></a>
+
+                <p>This assignment is broken down into three main tasks:</p>
+
+                <ol>
+                    <li>The first task involves adding lines of code to clearly marked sections within the main
+                        assignment file
+                    </li>
+                    <li>The second task involves extending the design to add more interesting functionality to the game
+                    </li>
+                    <li>And the third task involves adding sophisticated functionality to further improve the gameplay
+                        experience
+                    </li>
+                </ol>
+                <p><strong>For post-graduate students only</strong>, there is an extra task that involves doing
+                    independent research.</p>
+
+                <p>In general, as the tasks progress, they are less clearly prescribed and increase in difficulty.</p>
+
+
+            </section>
+
+            <section><h3>Task Breakdown</h3><a name="sec_task_breakdown"></a>
+
+                <p>CSSE1001 students will be marked out of 20 &amp; CSSE7030 students will be marked out of 26 based on
+                    the following breakdown. Tasks may be attempted in any order, but it is recommended to follow this
+                    breakdown, top-down, completing as much as possible of each task before moving on to the next. </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Sub&ndash;Task</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Task 1 -->
+                    <tr class="task">
+                        <th rowspan="6"><span>Task 1<br><em>Basic Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>9 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>App Class<br/>
+                        </td>
+                        <td>1 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Tower Placement<br/>
+                        </td>
+                        <td>3 marks</td>
+                    </tr>
+                    <tr>
+                        <td>StatusBar Class<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>File Menu &amp; Dialogs<br/>
+                        </td>
+                        <td>1 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Play Controls<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+
+                    <!-- Task 2 -->
+                    <tr class="task">
+                        <th rowspan="5"><span>Task 2<br><em>Intermediate Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>7 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td><span data-version="1.1.1">Buy &amp;</span> Sell Towers</td>
+                        <td>1 mark</td>
+                    </tr>
+                    <tr>
+                        <td>Custom Tower &amp; Enemy</td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td><span data-version="1.1.0">Shop</span></td>
+                        <td>3 marks</td>
+                    </tr>
+                    <tr>
+                        <td>High Scores</td>
+                        <td>1 marks</td>
+                    </tr>
+                    <tr></tr>
+
+                    <!-- Task 3 -->
+                    <tr class="task">
+                        <th rowspan="4">
+                            <span>Task 3<br><em>Advanced Features</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>4 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>Advanced Tower<br/>
+                        </td>
+                        <td>1.25 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Advanced Enemy<br/>
+                        </td>
+                        <td>1.25 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Upgrade Tower<br/>
+                        </td>
+                        <td>1.5 marks</td>
+                    </tr>
+
+                    <!-- Masters Task -->
+                    <tr class="task">
+                        <th rowspan="4">
+                            <span>Post-Graduate Task<br><em>Independent Research</em></span>
+                        </th>
+                        <td></td>
+                        <th><strong>6 marks</strong></th>
+                    </tr>
+                    <tr>
+                        <td>Selection of Library or Technique<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Application of Library or Technique<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+                    <tr>
+                        <td>Integration into Existing Game<br/>
+                        </td>
+                        <td>2 marks</td>
+                    </tr>
+
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Mark Breakdown</h3><a name="sec_mark_breakdown"></a>
+
+                For each task, marks will scaled according to the following breakdown.
+
+                <!--TODO: revisit this-->
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Code Quality -->
+                    <tr class="task">
+                        <th rowspan="3" style="max-width: 150px"><span>Code Quality</span>
+                        </th>
+                        <td>Code is readable. Appropriate and meaningful identifier names have been used. Simple and
+                            clear code structure. Repeated code has been avoided.
+                        </td>
+                        <td><strong>15%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Code has been simplified where appropriate and is not overly convoluted.
+                        </td>
+                        <td><strong>10%</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>Documented clearly and concisely, without excessive or extraneous comments.
+                        </td>
+                        <td><strong>15%</strong></td>
+                    </tr>
+
+                    <!-- Functionality -->
+                    <tr class="task">
+                        <th rowspan="2">
+                            <span>Functionality</span>
+                        </th>
+                        <td>Components are functional, without major bugs or unhandled exceptions. <br><em>Assessed
+                            through user testing/playing, not automated testing.</em>
+                        </td>
+                        <td><strong>60%</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Task 1 &ndash; Basic GUI</h2><a
+                name="sec_task1"></a>
+
+            <div class="card">
+                <a name="fig_basic_gui"></a>
+                <div class="card-image">
+                    <img src="public/images/basic-gui@1x.png"
+                         srcset="public/images/basic-gui@1x.png 1x, public/images/basic-gui@2x.png 2x"
+                         alt="Image of Basic GUI Example">
+                </div>
+                <div class="card-content">
+                    <span class="card-title">Basic GUI Example</span>
+                </div>
+            </div>
+
+            <p>There are a significant number of comments in <code>a3.py</code> intended to help you complete this task.
+            </p>
+
+
+            <section>
+                <h3 class="header">App Class</h3><a name="sec_app_class"></a>
+
+                <p>Write a <code>main</code> function that launches the <code>TowerGameApp</code> GUI. Call this <code>main</code>
+                    function inside an <code>if __name__ == ...</code> block.</p>
+
+                <p>Modify <code>TowerGameApp</code> so that the title of the window is set to something appropriate
+                    (i.e. Towers).</p>
+
+            </section>
+            <section>
+                <h3 class="header">Tower Placement</h3><a name="sec_tower_placement"></a>
+
+                <p>Allow the user to place a tower by clicking a grid cell with the mouse. While their mouse is being
+                    moved over the <code>GameView</code>, show a preview of the tower and its range in the current cell
+                    as well as the new path the enemies would take if a tower were placed there. When the mouse leaves
+                    the <code>GameView</code>, hide the preview.</p>
+
+                <p>If placing a tower in the current grid cell would make it impossible for the enemies to move through
+                    the grid, or there is already a tower there, the preview should indicate that this would not be a
+                    legal placement by showing an X shape instead of the tower.</p>
+
+                <p data-version="1.1.0"><strong>Note:</strong> For this task, you do not need to ensure that the user
+                    can afford the tower.</p>
+
+                <p>See <code>GameView.draw_preview</code>, <code>GameView.draw_path</code>,
+                    <code>GameView.draw_towers</code>, <code>TowerGame.place</code></p>
+
+            </section>
+            <section>
+                <h3 class="header">StatusBar Class</h3><a name="sec_status_bar"></a>
+
+                <p>Define a class named <code>StatusBar</code>, which inherits from <code>tk.Frame</code>. This class is
+                    used to display information to the user about their status in the game. The <code>StatusBar</code>'s
+                    widgets must:</p>
+
+                <ol>
+                    <li>be updated whenever necessary (i.e. after an enemy dies, etc. - see <code>Task 1.3 (Status Bar):
+                        Update ...</code> comments)
+                    </li>
+                    <li>be laid out <em>approximately</em> according to <a href="#fig_basic_gui">Basic GUI Example</a>
+                    </li>
+                    <li>contain the following widgets:
+                        <ul>
+                            <li><strong>Wave (first row; centre)</strong> A label to display the current wave</li>
+                            <li><strong>Score (second row; centre)</strong> A label to display the player's score</li>
+                            <li><strong>Gold (third row; left)</strong> A label to display the amount of coins the
+                                player has in their wallet, with an image of gold coins to the right
+                            </li>
+                            <li><strong>Lives Remaining (third row; left)</strong> A label to display the number of
+                                lives the user has remaining, with an image of a heart to the right
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+
+                <p><strong>Note: </strong> For convenience, you should have a setter method for each of the relevant
+                    widgets. i.e. <code>set_score(score)</code>, etc.</p>
+
+                <p>The <code>StatusBar</code> class should be added to the application in a frame to the right of the
+                    <code>GameView</code>. Other widgets will be added to this frame in subsequent tasks.</p>
+
+            </section>
+            <section>
+                <h3 class="header">File Menu &amp; Dialogs</h3><a name="sec_file_menu_dialogs"></a>
+
+                <p>
+                    Implement a menu bar, with a <code>File</code> menu. The File menu should have the following
+                    entries:
+                </p>
+                <ul>
+                    <li><code>New Game</code>: Restarts the game</li>
+                    <li><code>Exit</code>: Exits the application</li>
+                </ul>
+
+                <p>When the user attempts to exit the application, either by the file menu or otherwise, they should
+                    first be prompted with a dialog to confirm that they indeed want to quit the application. Further,
+                    when the game is over, the user should be shown a dialog informing them of the outcome (either win
+                    or loss).</p>
+
+                <p><strong>Note:</strong> On Mac OS X, the file menu should appear in the global menu bar (top of the
+                    screen).</p>
+
+            </section>
+            <section>
+                <h3 class="header">Play Controls</h3><a name="sec_play_controls"></a>
+
+                <p>Add a frame to the right of the <code>GameView</code>, below the <code>StatusBar</code>. Then, add a
+                    button to the frame to send another wave of enemies against the player. Lastly, add a second button
+                    to the frame to pause/resume the current wave. Both buttons should be disabled when the game is over
+                    and (re)enabled when a new game is started.</p>
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 2 &ndash; Intermediate Features</h2><a name="sec_task2"></a>
+
+            <section>
+                <h3 class="header"><span data-version="1.1.1">Buy &amp;</span> Sell Towers</h3><a
+                    name="sec_sell_tower"></a>
+
+                <p data-version="1.1.1">Further to <a href="#sec_tower_placement"></a>, if the player cannot afford the
+                    currently selected tower, do not allow them to place it. Otherwise, after placing a tower
+                    successfully, deduct the value of the tower from the player's wallet.</p>
+
+                <p>Add a feature that allows the player to sell a tower by right clicking on it. The tower should be
+                    removed from the grid and 80% of its value should be put back into the player's wallet.</p>
+
+                <p>See <code>TowerGame.remove</code></p>
+            </section>
+
+            <section>
+                <h3 class="header">Custom Tower &amp; Enemy</h3><a
+                    name="sec_custom_tower_enemy"></a>
+
+                <p>Implement a subclass of <code>AbstractEnemy</code> that is immune to <code>projectile</code> &amp;
+                    <code>explosive</code> damage. Next, implement a subclass of <code>AbstractTower</code> that deals
+                    <code>energy</code> damage (for use against your custom enemy).</p>
+            </section>
+
+            <section>
+                <h3 class="header"><span data-version="1.1.0">Shop</span></h3><a
+                    name="sec_shop"></a>
+
+                <div class="card">
+                    <a name="fig_shop_view"></a>
+                    <div class="card-image">
+                        <img src="public/images/shop-view@1x.png"
+                             srcset="public/images/shop-view@1x.png 1x, public/images/shop-view@2x.png 2x"
+                             alt="Image of Shop View Example">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title"><span data-version="1.1.0">Shop</span></span>
+                    </div>
+                </div>
+
+                <p>The shop allows the user to select other types of towers to use against the enemies. </p>
+
+                <div data-version="1.1.0">
+                    <p>As shown above, the shop must:</p>
+                    <ul>
+                        <li>be displayed to the right of the <code>GameView</code>, below the <code>StatusBar</code>
+                            &amp;
+                            above the play controls
+                        </li>
+                        <li>display each of the available towers, <span data-version="1.1.0">along</span> with their
+                            name &amp; <span
+                                    data-version="1.1.0">coin cost</span>. The <span
+                                    data-version="1.1.0">coin cost</span> should be displayed in red if the user is
+                            unable to afford the tower (this should be updated whenever the user gains or spends <span
+                                    data-version="1.1.0">coins</span>)
+                        </li>
+                        <li>have at least three towers available (i.e. <code>SimpleTower</code>,
+                            <code>MissileTower</code>,
+                            &amp; your custom tower from <a href="#sec_custom_tower_enemy"></a>)
+                        </li>
+                    </ul>
+
+                    <p>This task involves implementing the <code>ShopTowerView</code> GUI class required to display an
+                        individual tower in the shop.</p>
+
+
+                    <p>The <code>ShopTowerView</code> class must inherit from <code>tk.Frame</code> and have at least
+                        the following methods:</p>
+                    <ul>
+                        <li><strong>__init__:</strong> Must have at least the following <span data-version="1.1.0">parameters</span>:
+                            <ul>
+                                <li><span
+                                        data-version="1.1.0"><span>master:</span> The <code>Tkinter</code> parent widget</span>
+                                </li>
+                                <li><span>tower:</span> The tower to display (an instance of <code>AbstractTower</code>)
+                                </li>
+                                <li><span>click_command:</span> A callback function to be called when the tower is
+                                    clicked
+                                </li>
+                                <li><span>*args &amp; **kwargs:</span> Positional &amp; keyword arguments to be passed
+                                    to the <code>tk.Frame</code> constructor
+                                </li>
+                            </ul>
+                        </li>
+                        <li><span
+                                data-version="1.1.0"><strong>set_available(</strong>available: bool<strong>):</strong></span>
+                            Updates the widget to show whether the tower is available (white text) or not (red text)
+                        </li>
+                    </ul>
+
+                    <p>The following code snippets will be useful in completing this task (can also be found in <code>a3_files/snippets.txt</code>):
+                    </p>
+
+                    <ul class="collapsible">
+                        <li>
+                            <div class="collapsible-header">Creating the Shop (used in
+                                <code>TowerGameApp.__init__</code>)
+                            </div>
+                            <div class="collapsible-body">
+          <pre><code class="python">towers = [
+    SimpleTower,
+    MissileTower,
+    YourSuperAwesomeTask2Tower
+]
+
+shop = tk.Frame(self._right_frame)
+shop.pack(fill=tk.X)
+
+# Create views for each tower & store to update if availability changes
+self._tower_views = []
+for tower_class in towers:
+    tower = tower_class(self._game.grid.cell_size // 2)
+
+    view = ShopTowerView(shop, tower,  # bg=BACKGROUND_COLOUR, highlight="#4b3b4a",
+                         click_command=lambda class_=tower_class: self.select_tower(class_))
+    view.pack(fill=tk.X)
+    self._tower_views.append((tower, view))  # Can use to check if tower is affordable when refreshing view
+</code></pre>
+                            </div>
+                        </li>
+                        <li>
+                            <div class="collapsible-header">Drawing a Tower (used in <code>ShopTowerView.__init__</code>)
+                            </div>
+                            <div class="collapsible-body">
+            <pre><code class="python">tower.position = (tower.cell_size // 2, tower.cell_size // 2)  # Position in centre
+tower.rotation = 3 * math.pi / 2  # Point up
+TowerView.draw(self._canvas, tower)
+
+# Don't forget to import TowerView from tower_view.py!</code></pre>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+            </section>
+
+            <section>
+                <h3 class="header">High Scores</h3><a
+                    name="sec_high_scores"></a>
+
+                <p>Add an item to the file menu called <em>HighScores</em>. When clicked, this should display a new
+                    window which displays the names and scores of the top ten scoring players. When the user runs out of
+                    lives, they should be prompted for their name if their score is enough to get in the high scores
+                    list.</p>
+
+                <p><strong>Note: </strong>The <code>HighScoreManager</code> class will be useful for managing high
+                    scores.</p>
+            </section>
+
+
+        </section>
+
+        <section>
+            <h2 class="header">Task 3 &ndash; Advanced Features</h2><a
+                name="sec_task3"></a>
+
+            <section>
+                <h3 class="header">Advanced Tower</h3><a
+                    name="sec_advanced_tower"></a>
+
+                <p>Create a more sophisticated tower and add it to the shop. This tower must make the game substantially
+                    more interesting by offering functionality that differs from the provided towers. Possible options
+                    for a new tower could be a flame throwing tower, boost tower, slow tower, ...
+                </p>
+
+                <p>A key determination in marking this advanced feature is that the new tower requires non-trivial
+                    algorithmic logic to implement its functionality.</p>
+
+                <!--TODO: elaborate & write samples-->
+            </section>
+
+            <section>
+                <h3 class="header">Advanced Enemy</h3><a
+                    name="sec_advanced_enemy"></a>
+
+                <p>Create a more sophisticated enemy and add it to the game. This enemy must make the game substantially
+                    more interesting by offering functionality that differs from the provided enemies. Possible options
+                    for a new enemy could be one that shoots at towers, dealing damage to them, or an enemy that spawns
+                    new enemies, ...
+                </p>
+
+                <p>A key determination in marking this advanced feature is that the new enemy requires non-trivial
+                    algorithmic logic to implement its functionality.</p>
+
+                <!--TODO: elaborate & write samples-->
+            </section>
+
+            <section>
+                <h3 class="header">Upgrade Tower</h3><a
+                    name="sec_upgrade_tower"></a>
+
+                <p>Allow players to upgrade a tower. If a player left-clicks on a tower in the grid allow them to select
+                    an upgrade option for the tower. This will activate a set of checkbox options in a control
+                    underneath the play controls. Each option will have an associated cost. Selecting an option will
+                    deduct the cost from the player's wallet and add that feature to the tower.</p>
+
+                <!--TODO: add suggestions-->
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">CSSE7030 Task &ndash; Independent Research</h2><a
+                name="sec_postgraduate_task"></a>
+
+            <section>
+                <h3 class="header">Advanced Feature</h3><a
+                    name="sec_advanced_feature"></a>
+
+                <p>Research a library or design technique that has not been covered in CSSE7030. Use this to implement a
+                    significant new feature in the game. For example: you could add sound effects to the game; you could
+                    create multiple levels of game play, with additional challenge on each level; You could use a design
+                    pattern to facilitate new functionality within the game (e.g. towers aging and losing
+                    effectiveness).</p>
+            </section>
+
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+
+            <p>
+                <strong>Note:</strong> There will not be a practical interview for the third assignment.
+            </p>
+
+            <p>Your assignment must be submitted via the assignment three submission link on Blackboard.
+
+                You must submit a zip file, <code>a3.zip</code>, containing <code>a3.py</code> and all the files
+                required to run your application (including images). You may omit the support code &mdash; if you do so,
+                the most recent version will be used.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment well before the
+                submission deadline of 6pm. Your latest, on time, submission will be marked. Ensure that you submit the
+                correct version of your assignment. In the event of exceptional circumstances, you may submit a request
+                for an extension. See the <a
+                    href="http://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=92705">course
+                profile</a> for details of how to apply for an extension.
+            </p>
+
+            <p>
+                Requests for extensions must be made <strong>no later</strong> than 48 hours prior to the submission
+                deadline. The expectation is that with less than 48 hours before an assignment is due it should be
+                substantially completed and submittable. Applications for extension, and any supporting documentation
+                (e.g. medical certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must
+                retain the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <!--<section data-version="1.1.0">-->
+        <!--<h2 class="header">Appendices</h2><a-->
+        <!--name="sec_appendices"></a>-->
+
+        <!--<p>See the <a href="./appendices.html">online appendices</a>.</p>-->
+        <!---->
+        <!--</section>-->
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <!--<p>Any changes to this document will be listed here.</p>-->
+
+            <h4 class="star"><span data-version="1.1.1">Version 1.1.1 - May 18</span></h4>
+
+            <ul>
+                <li>Clarified <a href="#sec_sell_tower"></a></li>
+                <li>Moved <code>SimpleTower._get_target</code> to <code>AbstractTower</code></li>
+            </ul>
+
+            <h4 class="star"><span data-version="1.1.0">Version 1.1.0 - May 17</span></h4>
+            <p>
+                <a id="update-to-1-0-1" class="btn btn-floating pulse hide-print">!!!</a> It is recommended that you
+                <strong>immediately</strong> update your support code. However, if you began working on the assignment
+                in version 1.0.0, you may submit it with version 1.0.0 of the support code.
+            </p>
+            <h5 class="star">Assignment Sheet</h5>
+            <ul>
+                <li>Fixed typographical errors</li>
+                <li>Restructured <a href="#sec_shop"></a> &amp; added helpful snippets</li>
+                <li>Extended <a href="#sec_sell_tower"></a> to cover paying for towers</li>
+                <!--<li>Added appendix</li>-->
+            </ul>
+            <h5 class="star">Support Files</h5>
+            <ul>
+                <li>Added missing docstrings to <code>a3.py</code></li>
+                <li>Added <code>name</code> attribute to <code>Unit</code> &amp; its subclasses</li>
+                <li>Implemented <code>PulseTower</code> &amp; added <code>Pulse</code></li>
+                <li>Restructured <code>Unit</code> &amp; subclasses to accept most configurables as default parameters
+                    to <code>__init__</code></li>
+                <li>Merged <code>AbstractTower.attack</code> into <code>.step</code></li>
+                <li>Refactored <code>Unit.step</code> to accept <code>GameData</code> as parameter to support arbitrary
+                    unit queries (i.e. collision detection, multiple targets, etc.)
+                </li>
+                <li>Fixed bugs:
+                    <ul>
+                        <li><code>TowerGame.reset</code> did not reset path or clear enemies</li>
+                        <li>Preview flickered while game was playing</li>
+                        <li>Placing tower over enemies crashed game; now enemies are moved to an adjacent cell,
+                            preferring their previous cell
+                        </li>
+                        <li>Enemies oscillated around centre of path-corner cell if they couldn't reach centre (i.e.
+                            their speed was not a divisor of <code>cell_size</code>)
+                        </li>
+                    </ul>
+                </li>
+                <li>Combined <code>tower/range_view.py</code> into <code>advanced_view.py</code> &amp; simplified</li>
+                <li>Abstracted view logic for enemies &amp; obstacles to <code>advanced_view.py</code></li>
+                <li>Refactored <code>GameView</code>'s dependency on <code>Tower/RangeView</code> to default parameters
+                </li>
+                <li>Removed <code>AbstractEnemy.get_real_position</code> method in favour of <code>AbstractEnemy.position</code>
+                </li>
+                <li>Moved type hint definitions to <code>utilities.py</code></li>
+                <li>Converted <code>View.calculate_bounds</code> to function and moved to <code>utilities.py</code></li>
+            </ul>
+
+        </section>
+
+    </div>
+</div>
+
+<script type="text/javascript" src="index_bundle.js"></script></body>
+
+<!--Holy sheet, this is a big document!-->
+<!--   ¯\_(ツ)_/¯   -->
+
+</html>

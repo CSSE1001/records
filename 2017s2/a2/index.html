@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="author" content="Benjamin Martin, Brae Webb">
+    <title>Assignment 2 - CSSE1001 Semester 2, 2017</title>
+</head>
+<!-- LaTeX? More like LaMeTeX -->
+
+<body class="highlight-changes" style="display: none;">
+
+<header class="center-align">
+    <h1 class="header">Scrabble</h1>
+    <p>Assignment 2<br>
+        CSSE1001/7030<br>
+        Semester 2, 2017</p>
+    <p>Version 1.0.1</p>
+    <p>20 marks : 10%<br>
+        Due Friday 22 September, 2017, 21:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col s12">
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>For this assignment, you will be writing code that supports a simple Scrabble game.</p>
+
+                <p>
+                    Rather than using functions, like assignment 1, you will be using Object-Oriented Programming
+                    (OOP). Further, this assignment has been designed according to the Model-View-Controller (MVC)
+                    design pattern. Your task is to write most of the Model. The View, Controller, and remainder of the
+                    Model are provided, along with
+                    some support code.</p>
+
+                <p>As is typical with projects where more than one person is responsible for writing code, there needs
+                    to be a way of describing how the various components interact. This is achieved by defining an
+                    Application Programming Interface (API). Your classes must be implemented according to the API that
+                    has been specified, which will ensure that your code will interact
+                    properly with the supplied View/Controller code.</p>
+
+                <p>One benefit to adhering to MVC is that the model can be developed and tested independently of the
+                    view or controller. It is recommended that you follow this approach. This means testing your model
+                    iteratively as you develop your code.</p>
+
+                <section>
+
+                    <h3>Rules &amp; Important Definitions</h3><a name="sec_rules"></a>
+
+                    <p>Scrabble is a game where players take turns using the tiles in their racks to form words on the
+                        game board. If you are unfamiliar with this game, it is recommended that you research the basic
+                        gameplay.</p>
+
+                    <p>This assignment will follow the standard <a href="http://www.scrabblepages.com/scrabble/rules/">rules
+                        of Scrabble</a>, with the following additions:</p>
+
+                    <ul class="browser-default">
+                        <li>The game will also end if all players skip their turns consecutively</li>
+                        <li>All legal words are contained in the file <code>words_alpha.txt</code></li>
+                        <li>The starting player is assigned randomly</li>
+                    </ul>
+
+                    <p>The concept of a position is used throughout this assignment, including in the provided support
+                        code. A position is a (row, column) pair, with <code>(0, 0)</code> being the top left corner.
+                        This is demonstrated below.</code></p>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <div style="height: 2em;">&nbsp;</div>
+                            <img src="public/images/position-example.png"/>
+
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Scrabble Board Positions</span>
+                        </div>
+                    </div>
+
+
+                </section>
+
+            </section>
+
+            <section>
+                <h2 class="header">Getting Started</h2><a name="sec_getting_started"></a>
+
+                <section>
+
+                    <h3 class="header">Files</h3><a name="sec_files"></a>
+
+                    <p>
+                        Before beginning work on the assignment you must download the relevant files from the course
+                        website:</p>
+
+                    <ul class="browser-default">
+                        <li><a
+                                href="https://csse1001.uqcloud.net/assignments/assignment2/a2.py"><code>a2.py</code></a>
+                            is the template file for your submission; you should write your code here and <strong>must
+                                not</strong> modify any of the other files
+                        </li>
+                        <li><a href="https://csse1001.uqcloud.net/assignments/assignment2/a2_files.zip"><code>a2_files.zip</code></a>
+                            contains:
+                            <ul class="browser-default">
+                                <li><code>a2_support.py</code>: Contains useful support code</li>
+                                <li><code>letters.txt</code>: Contains letter frequency &amp; score</li>
+                                <li>*<code>words_alpha.txt</code>: A list of all valid Scrabble words</li>
+                                <li>*<code>scrabble.py</code>: Supplied modelling classes</li>
+                                <li>*<code>scrabble_gui.py</code>: A GUI for Scrabble that will work if your assignment
+                                    is implemented according to the API outlined in this document
+                                </li>
+                                <li>*<code>ee.py</code>: A third-party library required by the GUI</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                    <blockquote>
+                        <strong>Note:</strong> Files marked with <code>*</code> do not need to be understood to complete
+                        this assignment<br>
+                    </blockquote>
+
+                    <p><strong>Do not begin writing code until you have reviewed <code>a2_support.py</code></strong>. Be
+                        sure to review <a href="#sec_submission"></a> &amp; <a href="#sec_marking_criteria"></a></p>
+                </section>
+
+                <section>
+                    <h3 class="header">Classes</h3><a name="sec_classes"></a>
+
+                    <div class="card">
+                        <div class="card-image">
+                            <!--<div class="hide-screen">-->
+                            <div style="height: 2em;">&nbsp;</div>
+                            <img src="public/images/uml.png"/>
+                            <!--</div>-->
+                            <!--<div class="hide-print">-->
+                            <!--<div><div class="mxgraph" style="max-width:100%;border:1px solid transparent;" data-mxgraph="{&quot;highlight&quot;:&quot;#0000ff&quot;,&quot;nav&quot;:true,&quot;resize&quot;:true,&quot;toolbar&quot;:&quot;zoom layers lightbox&quot;,&quot;edit&quot;:&quot;_blank&quot;,&quot;xml&quot;:&quot;&lt;mxfile userAgent=\&quot;Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/60.0.3112.101 Safari/537.36\&quot; version=\&quot;7.2.9\&quot; editor=\&quot;www.draw.io\&quot; type=\&quot;google\&quot;&gt;&lt;diagram id=\&quot;ab5235fb-24a0-b24c-e99c-f9ae524ac011\&quot; name=\&quot;Page-1\&quot;&gt;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&lt;/diagram&gt;&lt;/mxfile&gt;&quot;}"></div>-->
+                            <!--<script type="text/javascript" src="https://www.draw.io/js/viewer.min.js"></script></div>-->
+
+                            <!--</div>-->
+
+                        </div>
+                        <div class="card-content">
+                            <span class="card-title">Simplified UML Diagram</span>
+                        </div>
+                    </div>
+
+                    <p>Above is a simplified UML diagram of the class structure of this assignment. There is a box for
+                        each class in the Model, with a brief description.</p>
+                    <p>Here, a plain arrow from <code>A</code> to <code>B</code> indicates
+                        that <code>A</code> has a property of type <code>B</code> or a property that is a sequence whose
+                        elements are of
+                        type <code>B</code>. For example, the <code>Scrabble</code> class has a
+                        <code>Board</code> and a list of <code>Player</code>s, respectively.</p>
+                    <p>Further, an "Extends" arrow from <code>A</code> to <code>B</code> indicates that <code>A</code>
+                        inherits from <code>B</code>.</p>
+
+                    <p>The blue coloured classes are the assignment tasks. Red classes have been provided for you, for
+                        simplicity.</p>
+
+                    <p>These classes may be implemented in any order, but it is recommended to follow the order in which
+                        they are listed.</p>
+
+                    <p data-version="1.0.1">The parameter &amp; return types for most methods can be inferred from the example code. Where this is not clear, annotations are included with the method description.</p>
+                </section>
+
+                <section>
+                    <h3 class="header">Help</h3><a name="sec_help"></a>
+
+                    <p>If you are ever unsure or stuck, the best way to seek help is by attending a practical session
+                        and asking a tutor. You can also post on the course discussion board, even outside of class
+                        time. Be sure to clarify any potential ambiguities that you encounter.</p>
+
+                    <p>Shortly after release, a video overview of the assignment will be posted on the <a
+                            href="https://csse1001.uqcloud.net/assignments/#assignment2">assignment page</a> of the
+                        course website.</p>
+
+                </section>
+
+            </section>
+
+            <section>
+                <h2 class="header">Tiles</h2><a
+                    name="sec_tiles"></a>
+
+                <p>
+                    The most fundamental piece of a Scrabble game is the tile. A Scrabble tile has a letter and a
+                    corresponding base score.
+                </p>
+
+                <section>
+                    <h3 class="header">Tile</h3><a
+                        name="sec_tile"></a>
+
+                    <p>The <code>Tile</code> class is used to represent a regular Scrabble tile.</p>
+
+                    <p>Instances of <code>Tile</code> should be initialized with <code>Tile(letter, score)</code>. The
+                        following methods must be implemented:</p>
+
+
+                    <p><strong>get_letter(self):</strong> Returns the letter of the tile</p>
+                    <p><strong>get_score(self):</strong> Returns the base score of the tile</p>
+                    <p><strong>__str__(self):</strong> Returns a human readable string, of the form <code>{letter}:{score}</code>
+                    </p>
+                    <p><strong>__repr__(self):</strong> Same as <code>__str__</code></p>
+                    <p><strong>reset(self):</strong> Does nothing (this method will be overridden in the following
+                        subclass)
+                </section>
+
+                <section>
+                    <h3 class="header">Wildcard</h3><a
+                        name="sec_wildcard"></a>
+
+                    <p>The <code>Wildcard</code> class is used to represent a wildcard Scrabble tile. The user can
+                        choose the letter this tile represents when they play it on the board.</p>
+
+                    <p><code>Wildcard</code> inherits from <code>Tile</code> and should be initialized with <code>Wildcard(score)</code>.
+                        The following methods must be implemented:</p>
+
+                    <p><strong>set_letter(self, letter):</strong> Sets the letter of the tile</p>
+                    <p><strong>reset(self):</strong> Resets this tile back to its wildcard state (i.e. unsets the
+                        letter)</p>
+                </section>
+
+                <section>
+                    <h3 class="header">Examples</h3><a
+                        name="sec_tile_examples"></a>
+
+                    <pre>
+&gt;&gt;&gt; tile1 = Tile('m', 3)
+&gt;&gt;&gt; tile2 = Tile('d', 2)
+&gt;&gt;&gt; tile1.get_letter()
+'m'
+&gt;&gt;&gt; tile1.get_score()
+3
+&gt;&gt;&gt; str(tile2)
+'d:2'
+&gt;&gt;&gt; print(tile2)
+d:2
+&gt;&gt;&gt; wild = Wildcard(0)
+&gt;&gt;&gt; wild
+?:0
+&gt;&gt;&gt; wild.set_letter('r')
+&gt;&gt;&gt; wild
+r:0
+&gt;&gt;&gt; wild.reset()
+&gt;&gt;&gt; wild
+?:0
+
+                    </pre>
+                </section>
+
+            </section>
+
+            <section>
+                <h2 class="header">Bonuses</h2><a
+                    name="sec_bonuses"></a>
+
+                <p>
+                    Bonuses are a critical part of a Scrabble game. They allow the score of a letter or a word to
+                    be doubled or tripled.
+                </p>
+
+
+                <p><code>Bonus</code> is a very simple superclass that is used to represent a generic bonus. <code>WordBonus</code>
+                    &amp; <code>LetterBonus</code> inherit from it.</p>
+
+                <p>While not intended to be initialized directly, the constructor for <code>Bonus</code> should take a
+                    single argument,
+                    <code>value</code>, which is the value of this bonus. The reason for doing this is so that each type
+                    of bonus can be represented by using a subclass with minimal additional functionality. Although this
+                    case is quite simple, in general, this concept is very powerful.</p>
+
+                <p>The following method must be implemented on <code>Bonus</code>:</p>
+                <p><strong>get_value(self):</strong> Returns the value of this bonus</p>
+
+                <p>The following method must be implemented on both <code>WordBonus</code> &amp;
+                    <code>LetterBonus</code>:</p>
+                <p><strong>__str__(self):</strong> Returns a human readable string, of the form
+                    <code>{type}{value}</code>, where <code>type</code> is <code>W</code> for <code>WordBonus</code>
+                    &amp; <code>L</code> for <code>LetterBonus</code></p>
+
+                <section>
+                    <h3 class="header">Examples</h3><a name="sec_bonus_examples"></a>
+
+                    <pre>
+&gt;&gt;&gt; double_word = WordBonus(2)
+&gt;&gt;&gt; double_word.get_value()
+2
+&gt;&gt;&gt; print(double_word)
+W2
+&gt;&gt;&gt; triple_letter = LetterBonus(3)
+&gt;&gt;&gt; triple_letter.get_value()
+3
+&gt;&gt;&gt; print(triple_letter)
+L3
+                    </pre>
+                </section>
+
+            </section>
+
+            <section>
+                <h2 class="header">Player</h2><a
+                    name="sec_player"></a>
+
+                <p>How could we play Scrabble without something to represent a player? The <code>Player</code> class
+                    represents a player and their rack of tiles.</p>
+
+                <p>The constructor for <code>Player</code> should take a single argument, the player's <code>name</code>.
+                    The following methods must be implemented:</p>
+
+                <p><strong>get_name(self):</strong> Return's the player's name</p>
+
+                <p><strong>add_tile(self, tile):</strong> Adds a tile to the player's rack</p>
+                <p><strong>remove_tile(self, index):</strong> Removes <span data-version="1.0.0">and returns</span> the
+                    tile at <code>index</code> from the player's
+                    rack</p>
+                <p><strong>get_tiles(self):</strong> Returns a list of all tiles in the player's rack <span data-version="1.0.1">(Return type: <code>list&lt;Tile&gt;</code>)</span></p>
+
+                <p><strong>get_score(self):</strong> Return's the player's score</p>
+                <p><strong>add_score(self, score):</strong> Adds <code>score</code> to the player's total score</p>
+
+                <p><strong>get_rack_score(self):</strong> Returns the total score of all letters in the player's rack
+                </p>
+                <p><strong>reset(self):</strong> Resets the player for a new game, emptying their rack and clearing
+                    their score</p>
+
+                <p><strong>__contains__(self, tile):</strong> Returns <code>True</code> iff the player has
+                    <code>tile</code> in their rack</p>
+                <p><strong>__len__(self):</strong> Returns the number of letters in the player's rack</p>
+                <p><strong>__str__(self):</strong> Returns a string representation of this player and their rack, of the
+                    form <code>{name}:{score}\n{tiles}</code>, where <code>tiles</code> is a comma (&amp;space)
+                    separated list of all the tiles in the player's rack, in order</p>
+
+
+                <section>
+                    <h3 class="header">Examples</h3><a
+                        name="sec_player_examples"></a>
+
+                    <pre>
+&gt;&gt;&gt; player = Player("Michael Scott")
+&gt;&gt;&gt; tiles = [Tile('t', 1), Tile('w', 4), Wildcard(0), Tile('s', 1), Tile('s', 1)]
+&gt;&gt;&gt; for tile in tiles: player.add_tile(tile)
+
+&gt;&gt;&gt; print(player)
+Michael Scott:0
+t:1, w:4, ?:0, s:1, s:1
+&gt;&gt;&gt; player.add_score(50)
+&gt;&gt;&gt; player.get_rack_score()
+7
+&gt;&gt;&gt; player.remove_tile(1)
+w:4
+&gt;&gt;&gt; player.get_rack_score()
+3
+&gt;&gt;&gt; len(player)
+4
+&gt;&gt;&gt; tile  # Note that this is the last tile, which has the same values as the second last, but is not the same object
+s:1
+&gt;&gt;&gt; tile in player
+True
+&gt;&gt;&gt; player.remove_tile(3)
+s:1
+&gt;&gt;&gt; tile in player
+False
+&gt;&gt;&gt; print(player)
+Michael Scott:50
+t:1, ?:0, s:1
+                </pre>
+
+                </section>
+
+                <section>
+                    <h2 class="header">TileBag</h2><a
+                        name="sec_bag"></a>
+
+                    <p>Where will we pickup new tiles after we've made a play? The <code>TileBag</code> class is used to
+                        hold Scrabble tiles.</p>
+
+                    <p><code>TileBag</code>'s constructor takes a single argument, a <code>data</code> dictionary whose
+                        keys are letters (lowercase) and whose values are pairs of <code>(count, score)</code>, where
+                        count is the number of tiles to create with this letter, and score is the tile's score. See the
+                        examples below. The following methods must be implemented:</p>
+
+                    <p><strong>__len__(self):</strong> Returns the number of tiles remaining in the bag</p>
+                    <p><strong>__str__(self):</strong> Returns a human readable string, of each tile joined by a comma
+                        and a space; i.e. "b:3, o:1, o:1, m:3" <span data-version="1.0.0">&mdash; the order the tiles are displayed does not matter</span></p>
+
+                    <p><strong>draw(self):</strong> Draws and returns a random tile from the bag</p>
+                    <p><strong>drop(self, tile):</strong> Drops a tile into the bag</p>
+                    <p><strong>shuffle(self):</strong> Shuffles the bag</p>
+                    <p><strong>reset(self):</strong> Refills the bag and shuffles it, ready for a new game</p>
+
+                    <blockquote><strong>Note: </strong> <span data-version="1.0.0">For efficiency, the bag should only be automatically shuffled when initialized
+                        or reset. You may assume that the user will shuffle the bag manually after dropping some tiles.
+                        The reason for this is that when dropping multiple tiles, shuffling only needs to occur after
+                        the last tile is dropped. Shuffling after each drop would be inefficient. The difference is not noticeable with this small amount of data.</span>
+                    </blockquote>
+
+                    <section>
+                        <h3 class="header">Examples</h3><a
+                            name="sec_bag_examples"></a>
+
+                        <p><span data-version="1.0.0">Since the bag is shuffled randomly when initialized, this order of letters in each line of output will differ
+                            each time.</span></p>
+
+                        <pre>
+&gt;&gt;&gt; data = {'b': (1, 5), 'z': (2, 8), 'e': (5, 1)}
+&gt;&gt;&gt; bag = TileBag(data)
+&gt;&gt;&gt; print(bag)
+z:8, e:1, e:1, e:1, e:1, b:5, z:8, e:1
+&gt;&gt;&gt; for i in range(3): print(bag.draw())
+e:1
+z:8
+b:5
+&gt;&gt;&gt; len(bag)
+5
+&gt;&gt;&gt; bag.drop(Wildcard(0))
+&gt;&gt;&gt; len(bag)
+6
+&gt;&gt;&gt; print(bag)
+z:8, e:1, e:1, e:1, e:1, ?:0
+&gt;&gt;&gt; bag.shuffle()
+&gt;&gt;&gt; print(bag)
+z:8, e:1, ?:0, e:1, e:1, e:1
+&gt;&gt;&gt; bag.reset()
+&gt;&gt;&gt; print(bag)
+e:1, e:1, z:8, z:8, e:1, e:1, <span data-version="1.0.1">b:5</span>, e:1
+                        </pre>
+
+                    </section>
+
+                </section>
+
+                <section>
+                    <h2 class="header">Board</h2><a name="sec_board"></a>
+
+                    <p>And how could we play without somewhere to arrange tiles? The Scrabble tiles can be played on the
+                        <code>Board</code> class. It also keeps track of which cells have bonuses.</p>
+
+                    <p>A <code>Board</code> should be initialized with <code>Board(size, word_bonuses, letter_bonuses,
+                        start)</code>, where:</p>
+
+                    <ul class="browser-default">
+                        <li><code>size</code> is the number of rows/columns on the board (i.e. 15)</li>
+                        <li><code>word_bonuses</code> is a dictionary with scale of word bonuses as the key, and a list
+                            of positions where this scale occurs (see the examples below)
+                        </li>
+                        <li><code>letter_bonuses</code> as with <code>word_bonuses</code> above, but with letter bonuses
+                            instead
+                        </li>
+                        <li><code>start</code> is the (row, column) position of the starting cell</li>
+                    </ul>
+
+
+                    <p><strong>get_start(self):</strong> Returns the starting position</p>
+                    <p><strong>get_size(self):</strong> Returns the number of (rows, columns) on the board
+                    </p>
+                    <p><strong>is_position_valid(self, position):</strong> Returns True iff the position is
+                        valid (i.e.
+                        it is on the board)</p>
+
+                    <p><strong>get_bonus(self, position):</strong> Returns the bonus for a position on the
+                        board, else None if there is no bonus <span data-version="1.0.1">(Return type: <code>Bonus</code>)</span></p>
+                    <p><strong>get_all_bonuses<span data-version="1.0.0">(self):</span></strong> Returns a dictionary of
+                        all
+                        bonuses, keys being positions and values being bonuses <span data-version="1.0.1">(Return type: <code>dict&lt;tuple&lt;int, int&gt;, Bonus&gt;</code>)</span>. <span data-version="1.0.0">Since <code>Bonus</code> is not intended to be instantiated directly, these values should be instances of <code>Bonus</code>' subclasses.</span>
+                    </p>
+
+                    <p><strong>get_tile(self, position):</strong> Returns the tile at position, else None if
+                        no tile has been placed there yet <span data-version="1.0.1">(Return type: <code>Tile</code>)</span></p>
+                    <p><strong>place_tile(self, position, tile):</strong> Places a tile at position; raises
+                        an
+                        IndexError if position is invalid</p>
+
+                    <p><strong>__str__:</strong> Returns a human readable representation of the game board
+                        as shown in the examples below. <span data-version="1.0.0">The <code>Tile</code>'s string should be aligned to the left, four characters wide. The <code>Bonus</code>'s string should be aligned to the right, three characters wide. These two should have a single space in between. See the examples for what to use if no <code>Tile</code>/<code>Bonus</code> exists at a position.</span> <span data-version="1.0.1">Assume that tiles have a maximum score of 99 and that a bonus' value will never exceed 9.</span>
+                    </p>
+
+                    <p><strong>reset(self): Resets the board for a new game</strong></p>
+
+                    <section>
+                        <h3 class="header">Examples</h3><a
+                            name="sec_board_examples"></a>
+
+                        <pre>
+&gt;&gt;&gt; word_bonuses = {2: [(2,2)], 3: [(0, 0), (0, 4), (4, 0), (4, 4)]}
+letter_bonuses = {2: [(0, 3), (4, 1)], 3: [(1, 0), (3, 4)]}
+&gt;&gt;&gt; board = Board(5, word_bonuses, letter_bonuses, (2, 2))
+&gt;&gt;&gt; board.get_size()
+(5, 5)
+&gt;&gt;&gt; board.get_start()
+(2, 2)
+&gt;&gt;&gt; board.is_position_valid((2, 1))
+True
+&gt;&gt;&gt; board.is_position_valid((2, 8))
+False
+&gt;&gt;&gt; board.get_bonus((2, 2))  # the 0x... part will differ
+&lt;WordBonus object at 0x10590acf8&gt;
+&gt;&gt;&gt; print(board.get_bonus((2, 2)))
+W2
+&gt;&gt;&gt; print(board.get_bonus((3, 4)))
+L3
+&gt;&gt;&gt; print(board.get_bonus((1, 1)))
+None
+&gt;&gt;&gt; board.get_tile((2, 3))
+&gt;&gt;&gt; board.place_tile((2, 1), Tile('B', 3))
+&gt;&gt;&gt; board.place_tile((2, 2), Tile('A', 1))
+&gt;&gt;&gt; board.place_tile((2, 3), Tile('Z', 10))
+&gt;&gt;&gt; board.get_tile((2, 3))
+Z:10
+<span data-version="1.0.0">&gt;&gt;&gt; print(board)
+---------------------------------------------------
+| None W3 | None    | None    | None L2 | None W3 |
+---------------------------------------------------
+| None L3 | None    | None    | None    | None    |
+---------------------------------------------------
+| None    | B:3     | A:1  W2 | Z:10    | None    |
+---------------------------------------------------
+| None    | None    | None    | None    | None L3 |
+---------------------------------------------------
+| None W3 | None L2 | None    | None    | None W3 |
+---------------------------------------------------
+</span>&gt;&gt;&gt; type(board.get_tile((2, 3)))
+&lt;class 'Tile'&gt;
+&gt;&gt;&gt; board.place_tile((2, 3), Tile('E', 1))
+&gt;&gt;&gt; board.get_tile((2, 3))
+E:1
+</pre>
+
+                    </section>
+
+                </section>
+
+                <!--<section>-->
+                <!--<h2 class="header">Bonus &mdash; Class Method</h2><a-->
+                <!--name="sec_bonus"></a>-->
+
+                <!--<p>Implement the <code>load_from_file</code> method as a class method of the <code>TileBag</code>-->
+                <!--class, according to the following stub, so that it can load files like letters.txt:</p>-->
+
+                <!--<pre>-->
+                <!--@classmethod-->
+                <!--def load_from_file(cls, filename):-->
+                <!--"""(TileBag) Loads a tile bag from a file-->
+
+                <!--Parameters:-->
+                <!--filename (str): The name of the file to load-->
+
+                <!--Notes:-->
+                <!--Each line of the file must be in the format {letter}:{count}:{score}.-->
+                <!--I.e.: A:9:1\nB:2:3\nC:2:3-->
+                <!--First line of the file is treated as a header and ignored-->
+                <!--Whitespaces are ignored-->
+                <!--"""-->
+
+                <!--data = {}-->
+
+                <!--# Add code here to load the file-->
+                <!--# ...-->
+
+                <!--return cls(data)-->
+                <!--</pre>-->
+
+                <!--<blockquote>-->
+                <!--<strong>Aside:</strong> A class method allows you to call a method without an instance (i.e.-->
+                <!--self). One reason to do this is to allow a class to be initialized in different ways. See-->
+                <!--<code>WordBook.load_from_file</code> in <code>scrabble.py</code>-->
+                <!--</blockquote>-->
+                <!--</section>-->
+
+
+                <section>
+                    <h2 class="header">Assignment Submission</h2><a
+                        name="sec_submission"></a>
+
+                    <p>Your assignment must be submitted via the assignment three
+                        submission link on Blackboard.
+
+                        You must submit <span data-version="1.0.1"><code>a2.py</code></span> <strong>only</strong>. Do not submit any of the support files
+                        or sample tests.
+                    </p>
+
+                    <p>
+                        Late submission of the assignment will <strong>not</strong> be accepted. In
+                        the event of exceptional circumstances, you may submit a request for an extension.
+                    </p>
+
+                    <p>
+                        All requests for extension must be submitted on the UQ
+                        Application for Extension of Progressive Assessment form:
+                        <a href="http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf">http://www.uq.edu.au/myadvisor/forms/exams/progressive-assessment-extension.pdf</a>
+                        <strong>at least 48 hours prior</strong> to the submission
+                        deadline. The application and supporting documentation must be
+                        submitted to the ITEE Coursework Studies office (78-425) or
+                        by email to <a href="mailto:enquiries@itee.uq.edu.au">enquiries@itee.uq.edu.au</a>.
+                    </p>
+                </section>
+
+                <section>
+                    <h2 class="header">Assessment and Marking Criteria</h2><a name="sec_marking_criteria"></a>
+
+                    <table class="striped bordered">
+                        <thead>
+                        <tr>
+                            <th>Criteria</th>
+                            <th style="min-width: 5em">Mark</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+                        <tr>
+                            <th>Functionality</th>
+                            <th>16</th>
+                        </tr>
+                        <tr>
+                            <td>Tile classes</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Bonus classes</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Player</td>
+                            <td>4</td>
+                        </tr>
+                        <tr>
+                            <td>TileBag</td>
+                            <td>3</td>
+                        </tr>
+                        <tr>
+                            <td>Board</td>
+                            <td>7</td>
+                        </tr>
+
+                        <tr>
+                            <th>Style<sup><a href="#footnote-1">1</a></sup> &amp; Documentation<sup><a
+                                    href="#footnote-2">2</a></sup></th>
+                            <th>4</th>
+                        </tr>
+                        <tr>
+                            <td>Program is well structured and readable</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Variable and function names are meaningful</td>
+                            <td>1</td>
+                        </tr>
+                        <tr>
+                            <td>Entire program is documented clearly and concisely, without excessive or extraneous
+                                comments
+                            </td>
+                            <td>2</td>
+                        </tr>
+                        <tr>
+                            <th>Total</th>
+                            <th>/20</th>
+                        </tr>
+
+                        </tbody>
+                    </table>
+
+                    <blockquote>
+                        <p><sup id="footnote-1">1</sup>In order to be eligible for the marks for Programming Constructs
+                            &amp; Documentation, you must have made a reasonable attempt at implementing <span
+                                    data-version="1.0.0">most</span> of
+                            the required <span data-version="1.0.0">classes</span>.</p>
+                        <p><sup id="footnote-2">2</sup>See the course notes on <a
+                                href="https://csse1001.uqcloud.net/notes/style">Style</a> &amp; <a
+                                href="https://csse1001.uqcloud.net/notes/commenting">Commenting</a>.</p>
+
+                    </blockquote>
+
+                    <p>In addition to providing a working solution to the assignment problem, the assessment will
+                        involve
+                        discussing your code submission with a tutor. This discussion will take place in the week
+                        following
+                        the assignment submission deadline, in the practical session in which you are enrolled. <strong>You
+                            must attend that session in order to obtain marks for the assignment.</strong></p>
+                </section>
+
+                <section id="sec_change_log">
+                    <h2 class="star">Change Log</h2>
+
+                    <p>
+                        <input type="checkbox" class="filled-in" id="change_highlighter"/>
+                        <label for="change_highlighter">Toggle Change Highlighting</label>
+                    </p>
+
+                    <p>Any changes to this document will be listed here.</p>
+
+                    <p><span data-version="1.0.1">Version 1.0.1 - September 17</span></p>
+                    <p><em>The purpose of this update is to improve clarity &amp; reduce ambiguity. There are no breaking changes.</em></p>
+                    <ul class="browser-default">
+                        <li>Fixed typographical errors</li>
+                        <li>Fixed error handling in <code>scrabble_gui.py</code></li>
+                        <li>Explicitly specified ambiguous return types for some methods on <a href="#sec_player"></a> &amp; <a href="#sec_board"></a></li>
+                        <li>Converted bonus positions in <code>a2_support.py</code> to lists (from sets)</li>
+                    </ul>
+
+                    <p><span data-version="1.0.0">Version 1.0.0 - September 11</span></p>
+                    <ul class="browser-default">
+                        <li>Removed redundant <code>position</code> parameter for <code>get_all_bonuses</code> &amp;
+                            clarified return type
+                        </li>
+                        <li>Clarified <code>Board.__str__</code> &amp; added example of non-empty <code>Board</code>
+                        </li>
+                        <li><code>scrabble_gui.py</code>: Fixed bug &amp; refactored</li>
+                        <li>Standardized import statements in <code>scrabble.py, scrabble_gui.py</code></li>
+                        <li>Corrected typographical error in Programming Constructs
+                            &amp; Documentation footnote, in <a href="#sec_marking_criteria"></a>
+                        </li>
+                        <li>Clarified <code>get_tiles</code> &amp; <code>remove_tile</code> on <a href="#sec_player"></a></li>
+                        <li>Clarified <a href="#sec_bag"></a></li>
+                    </ul>
+                </section>
+
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="index_bundle.js"></script></body>
+
+<!--Holy sheet, this is a big document!-->
+<!--   ¯\_(ツ)_/¯   -->
+
+</html>

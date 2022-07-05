@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="UTF-8">
+    <title>Assignment 1 &mdash; CSSE1001 Semester 2, 2019</title>
+    <link rel="stylesheet" href="ghpages-materialize.css">
+    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" href="styles/main-all.css">
+</head>
+
+<body class="highlight-changes">
+
+<header class="center-align">
+    <h1 class="header">Sudo Mario Bros</h1>
+    <p>Assignment 1<br> CSSE1001/7030<br> Semester 2, 2019</p>
+    <p>Version 1.0.0<br> 10 marks </p>
+    <p>Due 23 Aug 19 20:30</p>
+</header>
+
+<div class="container">
+    <div class="row">
+        <section>
+
+            <section>
+                <h2 class="header">Introduction</h2><a name="sec_intro"></a>
+
+                <p>The goal of this assignment is to produce a simplistic 2D platformer game with Python.</p>
+
+                <p>This assignment will give you an opportunity to utilise the concepts that you have already
+                    learnt this semester. You will be asked to write several functions, outlined in this document,
+                    to successfully implement the expected game.
+                </p>
+
+                <div class="card">
+                    <a name="fig_example"></a>
+                    <div class="card-image">
+                        <img src="public/images/example.png"
+                             alt="Image of An Example Running">
+                    </div>
+                    <div class="card-content">
+                        <span class="card-title">Basic Running of the Game</span>
+                    </div>
+                </div>
+            </section>
+
+            <section>
+                <h3 class="header">Getting Started</h3><a name="sec_getting_started"></a>
+
+                <p>The archive <code>a1_files.zip</code> contains all the necessary files to start this assignment. Some
+                    support code has been provided to assist with loading levels of the game. Additionally some map
+                    files have been provided (level1.txt, level2.txt, etc).
+                </p>
+
+                <p>The main assignment file is <code>a1.py</code>, which contains the base you will use to
+                    implement your assignment.</p>
+
+                <p>The other provided file is <code>a1_support.py</code>, which contains some code to help
+                    you implement your assignment. You are not required to use this file to implement your assignment
+                    but it is strongly recommended.
+                </p>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Concepts</h2><a name="sec_concepts"></a>
+
+            <p>There are a couple of important concepts to help you understand how to complete the assignment.</p>
+
+            <p><strong>levels</strong>: Levels are stored as text files which represent the playing
+                field or map of the game. Levels are loaded from the text files using the <code>load_level</code>
+                function in the support code. This will return a string representation of the level which
+                is used by your program to play the game.
+            </p>
+
+            <p><strong>positions</strong>: Positions are represented as tuples which store two integers.
+                The first integer in a position tuple is the <strong>x</strong> coordinate, starting at zero from
+                the left side of the game window. The second integer in a position tuple is the <strong>y</strong>
+                coordinate, starting at zero from the bottom side of the game window.
+            </p>
+
+            <p><strong>directions</strong>: Directions are represented by characters, and can only have one of the values "r", "l", "u" or "d" (representing right, left, up, and down respectively). For any function which deals with directions, you are not required to handle any inputs which do not have one of these values.
+            </p>
+
+            <p><strong>tiles</strong>: Tiles are characters from a level file. There are 7 different possible tiles.
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="task">
+                            <td> </td>
+                            <td>An air tile, represented by a space, a player can move onto these tiles without consequence.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>@</td>
+                            <td>A monster tile, a player needs to attack this before moving to this tile, otherwise the player will die.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>$</td>
+                            <td>A coin tile, when a player moves to this tile their score will increase by one.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>*</td>
+                            <td>A player tile, this is how the player is represented in the game.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>#</td>
+                            <td>A wall tile, a player cannot pass through this tile, if they move onto a wall
+                                tile they will rise until there is an air tile available.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>^</td>
+                            <td>A checkpoint tile, only relevant for the bonus task, see the checkpoint section.</td>
+                        </tr>
+                        <tr class="task">
+                            <td>I</td>
+                            <td>A goal tile, when a player moves onto this tile they win the game.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </p>
+        </section>
+
+
+        <section>
+            <h2 class="header">Implementation</h2><a name="sec_implementation"></a>
+
+            <p>To successfully complete this assignment you will need to implement the following functions exactly as
+                they are described.</p>
+
+            <p>
+                <strong><code>get_position_in_direction(position, direction)</code></strong><br/>
+                <span>
+                    Return the position that would result from moving from given position in the given direction.<br/>
+                    If the direction "r" is given, increase the x coordinate by 1.<br/>
+                    If the direction "l" is given, decrease the x coordinate by 1.<br/>
+                    If the direction "u" is given, increase the y coordinate by 1.<br/>
+                    If the direction "d" is given, decrease the y coordinate by 1.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>get_tile_at_position(level, position)</code></strong><br/>
+                <span>
+                    Return the character representing the tile at the given position in a level string.
+                    Hint: refer to <code>position_to_index</code> in the support file.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>get_tile_in_direction(level, position, direction)</code></strong><br/>
+                <span>
+                    Determine the new position which results from moving the given position in the given direction, and return the character representing the tile found at this new position.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>remove_from_level(level, position)</code></strong><br/>
+                <span>
+                    Return a level string exactly the same as the one given, but with the given position replaced by an air tile.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>move(level, position, direction)</code></strong><br/>
+                <span>
+                    Return the updated position that results from moving the character from the given position in the given direction.<br/>
+
+                    If the tile at the updated position is a wall tile, adjust the position up until an air tile is found and return
+                    that as the position instead.<br/>
+
+                    If the tile immediately below the next position is an air tile, adjust the position down until the tile below
+                    is a not an air tile and return that as the position instead.<br/>
+
+                    It is important that you check whether the next position is a wall tile before checking if the tile below is
+                    an air tile.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>print_level(level, position)</code></strong><br/>
+                <span>
+                    Print the level (i.e. string) with the tile of the given position replaced by the player tile.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>attack(level, position)</code></strong><br/>
+                <span>
+                    Check if the position to the left of the player is a monster, if it is then print
+                    <code>Attacking the monster on your left!</code> and return the level with the monster tile removed.<br/>
+
+                    Check if the position to the right of the player is a monster, if it is then print
+                    <code>Attacking the monster on your right!</code> and return the level with the monster tile removed.<br/>
+
+                    If neither the left side nor the right side of the player contains a monster, then print
+                    <code>No monsters to attack!</code> and return the level unchanged.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>tile_status(level, position)</code></strong><br/>
+                <span>
+                    If the tile at the position is the goal tile then print
+                    <code>Congratulations! You finished the level</code><br/>
+
+                    If the tile at the position is a monster tile then print
+                    <code>Hit a monster!</code><br/>
+
+                    If the tile at the position is either a coin tile or checkpoint tile, remove the tile from the
+                    level.<br/>
+
+                    Finally, return a tuple containing the tile character and the level.
+                </span>
+            </p>
+
+            <p>
+                <strong><code>main</code></strong><br/>
+                <p>Handles the main interaction with the user.</p>
+
+                <p>
+                    When the game starts, it should ask the user for a file to load a level from as follows: <code>Please enter the name of the level file (e.g. level1.txt): </code>
+                </p>
+
+                <p>Once the user enters the name of the level file, it should load that level from the file and print
+                    the current score as <code>Score: 0</code> followed by printing the loaded level with the player
+                    at the starting position of x=0, y=1.
+                </p>
+
+                <p>The program should then repeatedly ask the user <code>Please enter an action (enter '?' for help): </code>
+                </p>
+
+                <p>After each action is input, it should perform the action and print out the current score and the level.
+                    Actions are described in the table below.
+                </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th>Character</th>
+                        <th>Description</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td>?</td>
+                        <td>Print out the string <code>HELP_TEXT</code> defined in <code>a1_support.py</code></td>
+                    </tr>
+                    <tr class="task">
+                        <td>r</td>
+                        <td>Move the player to the right, if the player hits a monster or goal, stop the game.
+                            If the player hits a coin, increase their score.
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>l</td>
+                        <td>Move the player to the left, if the player hits a monster or goal, stop the game.
+                            If the player hits a coin, increase their score.
+                        </td>
+                    </tr>
+                    <tr class="task">
+                        <td>a</td>
+                        <td>Attack a monster immediately left or right of the player.</td>
+                    </tr>
+                    <tr class="task">
+                        <td>n</td>
+                        <td>Reset to the last checkpoint reached - <strong>Bonus Task Only</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <td>q</td>
+                        <td>Stop the game (don't print the level or prompt the user again).</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </p>
+
+        <section>
+            <h3>Bonus &ndash; Checkpoints</h3><a name="sec_bonus"></a>
+
+            <p>This task involves adding checkpoints to the game. A checkpoint is a tile in the game which
+                triggers the saving of the current state (level map, player position and player score) when the player moves
+                to that tile.
+            </p>
+
+            <p>If the player is killed by an enemy then the level should be reset to the last state saved
+                by a checkpoint.
+            </p>
+
+            <p>Checkpoints should be implemented as apart of your <code>main</code> function.</p>
+
+            <p>The marks associated with this task are additional marks that will increase the total to
+                above 10 marks. You will still be limited to a total of 10 marks for this assignment.
+                The intention of this task is to allow you to demonstrate a good understanding of the content
+                that will allow for some marks to be lost in other areas while still receiving full marks.
+            </p>
+        </section>
+
+        <section>
+            <h2 class="header">Examples</h2><a name="sec_examples"></a>
+            <pre>
+Please enter the name of the level file (e.g. level1.txt): level1.txt
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+*       #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+ *      #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+  *     #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+   *    #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+    *   #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+     *  #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+      * #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+          ###             ######
+       *#######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+        * ###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           @               ####
+         *###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+          *@               ####
+          ###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): a
+Attacking the monster on your right!
+Score: 0
+
+                             $
+          *                ####
+          ###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+           *               ####
+          ###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+            *              ####
+          ###             ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+                           ####
+          ###*            ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+                           ####
+          ### *           ######
+        #######  $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+                           ####
+          ###             ######
+        #######* $    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 0
+
+                             $
+                           ####
+          ###             ######
+        ####### *$    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): r
+Score: 1
+
+                             $
+                           ####
+          ###             ######
+        #######  *    $  ########   I
+#####################################
+Please enter an action (enter '?' for help): l
+Score: 1
+
+                             $
+                           ####
+          ###             ######
+        ####### *     $  ########   I
+#####################################
+Please enter an action (enter '?' for help): l
+Score: 1
+
+                             $
+                           ####
+          ###             ######
+        #######*      $  ########   I
+#####################################
+Please enter an action (enter '?' for help):
+            </pre>
+        </section>
+
+        <section><h2 class="header">Marking</h2><a name="sec_marking"></a>
+
+            <p>The marks in this section add to a total of 20, which will
+                be scaled down to the 10 marks available for this assignment.
+                Marks will be awared based on the formula below:
+            </p>
+
+            <pre style="align-content: center">
+Total Mark = min( (functionality + bonus + style)/2, 10 )
+            </pre>
+
+            <section><h3>Functionality Assessment</h3><a name="sec_functionality"></a>
+
+                <p>Your assignment will be marked automatically using the test suite provided.
+                    Marks will be awarded based on how many tests pass.
+                </p>
+
+                <p>Syntax errors which prevent your assignment from running will be removed
+                    from your assignment where reasonable, deducting one mark per syntax error for up to 3 syntax errors.
+                    What is considered a reasonable fix to your assignment is left to the
+                    judgement of the tutor who marks your assignment and their judgement is final.
+                </p>
+
+                <table class="mark-breakdown">
+                    <thead>
+                    <tr>
+                        <th>Function</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr class="task">
+                        <td><code>get_position_in_direction</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>get_tile_at_position</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>get_tile_in_direction</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>remove_from_level</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>move</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>print_level</code></td>
+                        <td>1</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>attack</code></td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>tile_status</code></td>
+                        <td>2</td>
+                    </tr>
+                    <tr class="task">
+                        <td><code>main</code></td>
+                        <td>3</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Total</td>
+                        <td>15</td>
+                    </tr>
+                    <tr class="task">
+                        <td>Bonus Task</td>
+                        <td>1</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Code Style</h3><a name="sec_code_style"></a>
+
+                <p>The style of your assignment will be assessed by one of the tutors, and you will
+                    be marked on the broad categories listed below.
+                </p>
+
+                <table class="mark-breakdown striped">
+                    <thead>
+                    <tr>
+                        <th></th>
+                        <th>Description</th>
+                        <th>Marks</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <!-- Code Quality -->
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Readability</span>
+                        </th>
+                        <td>Code is readable. Appropriate and meaningful identifier names have been used. Simple and
+                            clear code structure. Repeated code has been avoided.
+                        </td>
+                        <td><strong>2</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Simplicity</span>
+                        </th>
+                        <td>Code has been simplified where appropriate and is not overly convoluted.
+                        </td>
+                        <td><strong>1</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Documentation</span>
+                        </th>
+                        <td>Documented clearly and concisely, without excessive or extraneous comments.
+                        </td>
+                        <td><strong>2</strong></td>
+                    </tr>
+                    <tr class="task">
+                        <th rowspan="1" style="max-width: 150px"><span>Total</span>
+                        </th>
+                        <td></td>
+                        <td><strong>5</strong></td>
+                    </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section><h3>Feedback Sessions</h3><a name="sec_feedback"></a>
+                <p>In week 6, you must attend the practical that you are
+                    signed onto on mySI-net where the tutor who assessed your assignment
+                    will provide you with feedback.
+                </p>
+
+                <p>When you arrive at the feedback session please take a seat but don't sit in the row
+                    furthest from the door as this will be where tutors will be providing feedback and
+                    it will be need to be kept free for privacy.
+                </p>
+
+                <p>Allow for being in attendance at the practical for the full 2 hours, when your name
+                    is called walk over to the tutor who called your name and they will provide you
+                    with feedback on your assignment. You can leave once you have discussed your assignment
+                    with a tutor.
+                </p>
+            </section>
+        </section>
+
+        <section>
+            <h2 class="header">Assignment Submission</h2><a
+                name="sec_submission"></a>
+            <p>Your assignment must be submitted via the assignment one submission link on Blackboard.
+                You must submit a Python file, <code>a1.py</code>, containing your implementation of the assignment.
+            </p>
+
+            <p>
+                Late submission of the assignment will <strong>not</strong> be accepted. Do not wait until the last
+                minute to submit your assignment, as the time to upload it may make it late. Multiple submissions are
+                allowed, so ensure that you have submitted an almost complete version of the assignment <em>well</em>
+                before the submission deadline. Your latest on-time, submission will be marked. Ensure that you submit
+                the correct version of your assignment. An incorrect version that does not work <strong>will</strong>
+                be marked as your final submission.
+            </p>
+
+            <p>
+                In the event of exceptional circumstances, you may submit a request for an extension. See the
+                <a href="https://www.courses.uq.edu.au/student_section_loader.php?section=5&profileId=98649">course
+                    profile</a> for details of how to apply for an extension. Requests for extensions must be made
+                <strong>no later</strong> than <u>48 hours</u> prior to the submission deadline. The expectation
+                is that with less than 48 hours before an assignment is due it should be substantially completed
+                and submittable. Applications for extension, and any supporting documentation (e.g. medical
+                certificate), must be submitted via <a href="https://my.uq.edu.au/">my.UQ</a>. You must retain
+                the original documentation for a <em>minimum period</em> of six months to provide as verification
+                should you be requested to do so.
+            </p>
+        </section>
+
+
+        <section id="sec_change_log">
+            <h2 class="star">Change Log</h2>
+
+            <p class="hide-print">
+                <input type="checkbox" class="filled-in" id="change_highlighter"/> <label for="change_highlighter">Toggle
+                Change Highlighting/Details</label>
+            </p>
+
+            <p>Any changes to this document will be listed here.</p>
+
+        </section>
+
+    </div>
+</div>
+
+</body>
+
+</html>
